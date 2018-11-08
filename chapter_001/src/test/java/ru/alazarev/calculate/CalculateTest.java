@@ -13,8 +13,6 @@ import static org.junit.Assert.assertThat;
 public class CalculateTest {
 	/**
 	 * Test echo.
-	 * @param name Your name.
-	 * @return Echo plus your name.
 	 */
 	@Test
 	public void whenTakeNameThenTreeEchoPlusName() {
