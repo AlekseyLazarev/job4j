@@ -1,7 +1,7 @@
 package ru.alazarev.calculate;
 
 /**
- *Class Calculate решение задачи части 001. Урок 1.1. Создание Hello World [#141]
+ *Class Calculate решение задачи части 001. Урок 1.1. Создание Hello World [#141].
  *@author Aleksey Lazarev
  *@since 07.11.2018
  */

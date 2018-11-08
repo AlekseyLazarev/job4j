@@ -1,4 +1,4 @@
-/**
+/**Class package-info created for description content package ru.alazarev.
 * Package for calculate task.
 *
 * @author Aleksey Lazarev
