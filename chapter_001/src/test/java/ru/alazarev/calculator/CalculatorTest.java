@@ -3,7 +3,12 @@ package ru.alazarev.calculator;
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
+/**
+ * Test.
+ * @author Aleksey Lazarev
+ * @version 0.1
+ * @since 09.11.2018
+ */
 public class CalculatorTest {
     /**
      * Test add method.

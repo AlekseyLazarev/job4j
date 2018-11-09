@@ -1,7 +1,7 @@
 package ru.alazarev.calculator;
 
 /**
- *Class Calculator решение задачи части 001. Урок 3.1. Элементарный калькулятор. [#185]
+ *Class Calculator решение задачи части 001. Урок 3.1. Элементарный калькулятор. [#185].
  *@author Aleksey Lazarev
  *@since 09.11.2018
  */

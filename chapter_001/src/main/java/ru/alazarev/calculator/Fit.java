@@ -1,7 +1,9 @@
 package ru.alazarev.calculator;
 
 /**
- * Ideal weight calculation program.
+ *Class Fit решение задачи части 001. Урок 3.3. Идеальный вес. [#41584].
+ *@author Aleksey Lazarev
+ *@since 09.11.2018
  */
 public class Fit {
 

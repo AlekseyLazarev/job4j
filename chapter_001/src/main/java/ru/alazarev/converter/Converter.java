@@ -1,11 +1,13 @@
 package ru.alazarev.converter;
 
 /**
- * Class money converter.
+ *Class Converter решение задачи части 001. 3.2. Конвертер валюты. [#41583].
+ *@author Aleksey Lazarev
+ *@since 09.11.2018
  */
 public class Converter {
-    private static int euro = 76;
-    private static int dollar = 67;
+    private static final int euro = 76;
+    private static final int dollar = 67;
     /**
      * Convert rub into euro.
      * @param value In rub.

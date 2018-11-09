@@ -1,5 +1,5 @@
 /**Class package-info created for description content package ru.alazarev.
- * Class CaclculateTest made for test add, sub, div, mul.
+ * Class CalculateTest made for test add, sub, div, mul.
  * Class FitTest made for test ideal man weight, ideal woman weight.
  * @author Aleksey Lazarev
  * @version 0.1

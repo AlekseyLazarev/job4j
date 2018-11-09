@@ -1,9 +1,9 @@
 /**Class package-info created for description content package ru.alazarev.
- * Class CalculateTest made for test Echo method.
+ * Package for point task.
  * @author Aleksey Lazarev
  * @version 0.1
- * @since 07.11.2018
+ * @since 09.11.2018
  */
-package ru.alazarev.calculate;
+package ru.alazarev.сondition;
 
 
