@@ -11,13 +11,13 @@ public class Max {
      * @param second Second value.
      * @return max value.
      */
-    public int max(int first, int second){
-        return first>second ? first : second;
+    public int max(int first, int second) {
+        return first > second ? first : second;
     }
 
-    public int max(int first, int second, int third){
-        int temp = max(first,second);
-        temp = max(temp,third);
+    public int max(int first, int second, int third) {
+        int temp = max(first, second);
+        temp = max(temp, third);
         return temp;
     }
 }

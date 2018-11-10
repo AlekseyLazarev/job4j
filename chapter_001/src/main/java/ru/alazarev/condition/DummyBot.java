@@ -1,4 +1,4 @@
-package ru.alazarev.сondition;
+package ru.alazarev.condition;
 
 /**
  * Class DummyBot решение задачи части 001. Урок 4.1. Глупый бот. [#31323].

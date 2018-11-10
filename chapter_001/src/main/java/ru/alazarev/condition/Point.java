@@ -1,4 +1,4 @@
-package ru.alazarev.сondition;
+package ru.alazarev.condition;
 
 /**
  * Class Point решение задачи части 001. Урок 3.4. Расстояние между точками в системе координат [#188].

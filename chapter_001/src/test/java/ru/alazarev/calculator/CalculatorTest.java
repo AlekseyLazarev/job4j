@@ -14,44 +14,44 @@ public class CalculatorTest {
      * Test add method.
      */
     @Test
-    public void whenAddOnePlusOneThenTwo(){
+    public void whenAddOnePlusOneThenTwo() {
         Calculator calc = new Calculator();
-        calc.add(1D,1D);
+        calc.add(1D, 1D);
         double result = calc.getResult();
         double expected = 2D;
-        assertThat(result,is(expected));
+        assertThat(result, is(expected));
     }
     /**
      * Test sub method.
      */
     @Test
-    public void whenAddTwoSubOneThenOne(){
+    public void whenAddTwoSubOneThenOne() {
         Calculator calc = new Calculator();
-        calc.substract(2D,1D);
+        calc.substract(2D, 1D);
         double result = calc.getResult();
         double expected = 1D;
-        assertThat(result,is(expected));
+        assertThat(result, is(expected));
     }
     /**
      * Test divide method.
      */
     @Test
-    public void whenAddTenDivTwoThenFive(){
+    public void whenAddTenDivTwoThenFive() {
         Calculator calc = new Calculator();
-        calc.divide(10D,2D);
+        calc.divide(10D, 2D);
         double result = calc.getResult();
         double expected = 5D;
-        assertThat(result,is(expected));
+        assertThat(result, is(expected));
     }
     /**
      * Test multiple method.
      */
     @Test
-    public void whenAddTwoMulThreeThenSix(){
+    public void whenAddTwoMulThreeThenSix() {
         Calculator calc = new Calculator();
-        calc.multiple(2D,3D);
+        calc.multiple(2D, 3D);
         double result = calc.getResult();
         double expected = 6D;
-        assertThat(result,is(expected));
+        assertThat(result, is(expected));
     }
 }

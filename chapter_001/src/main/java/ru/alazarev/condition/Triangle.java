@@ -1,4 +1,4 @@
-package ru.alazarev.сondition;
+package ru.alazarev.condition;
 /**
  * Class Triangle решение задачи части 001. Урок 4.3. Вычисление площади треугольника [#9461].
  * @author Aleksey Lazarev
@@ -35,7 +35,7 @@ public class Triangle {
         double bc = this.b.distanceTo(this.c);
         double p = this.period(ab, ac, bc);
         if (this.exist(ab, ac, bc)) {
-            rsl = Math.sqrt(p*(p-ab)*(p-ac)*(p-bc));
+            rsl = Math.sqrt(p * (p - ab) * (p - ac) * (p - bc));
         }
         return rsl;
     }
@@ -48,6 +48,6 @@ public class Triangle {
      * @return можно ли построить такой треугольник.
      */
     private boolean exist(double ab, double ac, double bc) {
-        return (ab<ac+bc)&&(ac<ab+bc)&&(bc<ac+ab);
+        return (ab < ac + bc) && (ac < ab + bc) && (bc < ac + ab);
     }
 }

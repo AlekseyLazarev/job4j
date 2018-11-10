@@ -34,7 +34,7 @@ public class MaxTest {
     @Test
     public void whenFirstMax() {
         Max maxim = new Max();
-        int result = maxim.max(5, 4,3);
+        int result = maxim.max(5, 4, 3);
         assertThat(result, is(5));
     }
     /**
@@ -43,7 +43,7 @@ public class MaxTest {
     @Test
     public void whenSecondMax() {
         Max maxim = new Max();
-        int result = maxim.max(5, 6,3);
+        int result = maxim.max(5, 6, 3);
         assertThat(result, is(6));
     }
     /**
@@ -52,7 +52,17 @@ public class MaxTest {
     @Test
     public void whenThirdMax() {
         Max maxim = new Max();
-        int result = maxim.max(5, 4,8);
+        int result = maxim.max(5, 4, 8);
         assertThat(result, is(8));
     }
+    /**
+     * Test max method where third is max.
+     */
+    @Test
+    public void whenMethodInMethodAndThirdMax() {
+        Max maxim = new Max();
+        int result = maxim.max(maxim.max(5, 3), 8);
+        assertThat(result, is(8));
+    }
+
 }

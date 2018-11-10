@@ -5,6 +5,6 @@
  * @version 0.1
  * @since 10.11.2018
  */
-package ru.alazarev.сondition;
+package ru.alazarev.condition;
 
 
