@@ -1,7 +1,7 @@
 package ru.alazarev.сondition;
 
 /**
- * Class DummyBot решение задачи части 001. Урок 34.1. Глупый бот. [#31323].
+ * Class DummyBot решение задачи части 001. Урок 4.1. Глупый бот. [#31323].
  * @author Aleksey Lazarev
  * @since 10.11.2018
  */

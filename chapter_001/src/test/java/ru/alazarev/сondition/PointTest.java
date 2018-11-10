@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
  */
 public class PointTest {
     /**
-     * Test ruble to dollar method.
+     * Test distanceTo method.
      */
     @Test
     public void whenOneXOneYDistaneToZeroXZeroYThenOnePointFour() {

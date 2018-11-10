@@ -11,6 +11,9 @@ import static org.junit.Assert.assertThat;
  * @since 10.11.2018
  */
 public class DummyBotTest {
+    /**
+     * Test answer to the question "Привет, Бот."
+     */
     @Test
     public void whenGreetBot() {
         DummyBot bot = new DummyBot();
@@ -19,7 +22,9 @@ public class DummyBotTest {
                 is("Привет, умник.")
         );
     }
-
+    /**
+     * Test answer to the question "Пока."
+     */
     @Test
     public void whenByuBot() {
         DummyBot bot = new DummyBot();
@@ -28,7 +33,9 @@ public class DummyBotTest {
                 is("До скорой встречи.")
         );
     }
-
+    /**
+     * Test answer to the other question.
+     */
     @Test
     public void whenUnknownBot() {
         DummyBot bot = new DummyBot();
