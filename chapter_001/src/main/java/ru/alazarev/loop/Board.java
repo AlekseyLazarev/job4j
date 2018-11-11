@@ -1,13 +1,13 @@
 package ru.alazarev.loop;
 /**
- * Class Board решение задачи части 001. Урок 55.3. Построить шахматную доску в псевдографике. [#13559].
+ * Class Board решение задачи части 001. Урок 5.3. Построить шахматную доску в псевдографике. [#13559].
  *
  * @author Aleksey Lazarev
  * @since 11.11.2018
  */
 public class Board {
     /**
-     * Return pseudographic board.
+     * Paint pseudographic board.
      *
      * @param width Board width.
      * @param height Board height.
