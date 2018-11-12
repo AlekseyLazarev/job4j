@@ -3,6 +3,7 @@
  * Class SquareTest made for test calculate method.
  * Class FindLoopTest made for test indexOf method.
  * Class TurnTest made for test reverse array with even and odd numbers.
+ * Class CheckTest made for test check array method.
  *
  * @author Aleksey Lazarev
  * @version 0.1

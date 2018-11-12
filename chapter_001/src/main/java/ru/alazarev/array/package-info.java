@@ -3,6 +3,7 @@
  * Class Square made for generate array of squares of numbers.
  * Class FindLoop made for find number in array.
  * Class Turn made for reverse array.
+ * Class Check made for check boolean values in array.
  *
  * @author Aleksey Lazarev
  * @version 0.1
