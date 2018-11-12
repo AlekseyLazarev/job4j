@@ -1,7 +1,7 @@
 package ru.alazarev.array;
 
 /**
- * Class Square решение задачи части 001. 6.2. Перевернуть массив. [#4441].
+ * Class Turn решение задачи части 001. 6.2. Перевернуть массив. [#4441].
  *
  * @author Aleksey Lazarev
  * @since 12.11.2018

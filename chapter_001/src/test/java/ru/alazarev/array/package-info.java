@@ -4,6 +4,7 @@
  * Class FindLoopTest made for test indexOf method.
  * Class TurnTest made for test reverse array with even and odd numbers.
  * Class CheckTest made for test check array method.
+ * Class ArrayTest made for test compare method startWith.
  *
  * @author Aleksey Lazarev
  * @version 0.1

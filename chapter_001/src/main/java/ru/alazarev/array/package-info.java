@@ -4,6 +4,7 @@
  * Class FindLoop made for find number in array.
  * Class Turn made for reverse array.
  * Class Check made for check boolean values in array.
+ * Class ArrayChar made for compare prefix and string.
  *
  * @author Aleksey Lazarev
  * @version 0.1

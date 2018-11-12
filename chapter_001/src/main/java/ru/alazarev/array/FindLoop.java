@@ -1,7 +1,7 @@
 package ru.alazarev.array;
 
 /**
- * Class Square решение задачи части 001. 6.1. Классический поиск перебором. [#33489].
+ * Class FindLoop решение задачи части 001. 6.1. Классический поиск перебором. [#33489].
  *
  * @author Aleksey Lazarev
  * @since 12.11.2018
