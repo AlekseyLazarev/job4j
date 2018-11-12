@@ -1,7 +1,7 @@
 /**
  * Class package-info created for description content package ru.alazarev.
- * Class Square made for generate array of squares of numbers.
- * Class FindLoop made for find number in array.
+ * Class SquareTest made for test calculate method.
+ * Class FindLoopTest made for test indexOf method.
  *
  * @author Aleksey Lazarev
  * @version 0.1
