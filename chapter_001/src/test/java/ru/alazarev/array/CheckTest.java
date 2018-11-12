@@ -52,7 +52,7 @@ public class CheckTest {
     @Test
     public void whenDataNotMonoByFalseThenFalse() {
         Check check = new Check();
-        boolean[] input = new boolean[]{false, true, false, true};
+        boolean[] input = new boolean[]{false, true, false, false};
         boolean result = check.mono(input);
         assertThat(result, is(false));
     }
