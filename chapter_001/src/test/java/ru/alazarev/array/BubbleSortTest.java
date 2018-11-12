@@ -5,7 +5,17 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+/**
+ * Test.
+ *
+ * @author Aleksey Lazarev
+ * @version 0.1
+ * @since 12.11.2018
+ */
 public class BubbleSortTest {
+    /**
+     * Test sort method.
+     */
     @Test
     public void whenStartWithPrefixThenTrue() {
         BubbleSort bs = new BubbleSort();

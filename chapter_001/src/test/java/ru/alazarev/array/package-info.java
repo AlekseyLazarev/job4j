@@ -5,6 +5,7 @@
  * Class TurnTest made for test reverse array with even and odd numbers.
  * Class CheckTest made for test check array method.
  * Class ArrayTest made for test compare method startWith.
+ * Class BubbleSortTest made for test sort method.
  *
  * @author Aleksey Lazarev
  * @version 0.1

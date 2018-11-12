@@ -5,6 +5,7 @@
  * Class Turn made for reverse array.
  * Class Check made for check boolean values in array.
  * Class ArrayChar made for compare prefix and string.
+ * Class BubbleSort made for sort array ascending.
  *
  * @author Aleksey Lazarev
  * @version 0.1
