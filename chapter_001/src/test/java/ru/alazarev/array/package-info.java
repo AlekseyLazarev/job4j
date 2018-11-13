@@ -8,6 +8,7 @@
  * Class BubbleSortTest made for test sort method.
  * Class MatrixTest made for test multiple method.
  * Class MatrixCheckTest made for test mono method.
+ * Class ArrayDuplicateTest made for test remove method.
  *
  * @author Aleksey Lazarev
  * @version 0.1
