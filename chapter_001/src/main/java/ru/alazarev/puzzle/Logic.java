@@ -37,12 +37,12 @@ public class Logic {
         return rst;
     }
 
-    public boolean isFree(Cell ... cells) {
+    public boolean isFree(Cell... cells) {
         boolean result = cells.length > 0;
         for (Cell cell : cells) {
             if (this.findBy(cell) != -1) {
-               result = false;
-               break;
+                result = false;
+                break;
             }
         }
         return result;
@@ -69,10 +69,26 @@ public class Logic {
     public boolean isWin() {
         int[][] table = this.convert();
         boolean result = false;
+        int rowCount = 1;
+        int columnCount = 1;
+        int countOfBubbles = 5;
+        for (int row = 1; row < table.length; row++) {
+            for (int column = 1; column < table.length; column++) {
+                if (table[row][column] == 1 && table[row][column] == table[row][column - 1]) {
+                    columnCount++;
+                } else if (table[row][column] == 1 && table[row][column] == table[row - 1][column]) {
+                    rowCount++;
+                }
+            }
+            if (columnCount == countOfBubbles || rowCount == countOfBubbles) {
+                result = true;
+                break;
+            }
+        }
         return result;
     }
 
-    private int[][] convert() {
+    public int[][] convert() {
         int[][] table = new int[this.size][this.size];
         for (int row = 0; row != table.length; row++) {
             for (int cell = 0; cell != table.length; cell++) {

@@ -18,7 +18,8 @@ public class MatrixCheck {
         int lastIndex = data.length - 1;
         for (int row = 0; row < lastIndex; row++) {
             for (int column = 0; column < lastIndex; column++) {
-                if ((data[row][column] != data[row + 1][column + 1]) || (data[row][lastIndex - row] != data[row + 1][lastIndex - (row + 1)])) {
+                if ((data[row][column] != data[row + 1][column + 1])
+                        || (data[row][lastIndex - row] != data[row + 1][lastIndex - (row + 1)])) {
                     result = false;
                     break;
                 }
