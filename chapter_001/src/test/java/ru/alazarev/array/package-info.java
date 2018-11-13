@@ -6,9 +6,10 @@
  * Class CheckTest made for test check array method.
  * Class ArrayTest made for test compare method startWith.
  * Class BubbleSortTest made for test sort method.
+ * Class MatrixTest made for test multiple method.
  *
  * @author Aleksey Lazarev
  * @version 0.1
- * @since 12.11.2018
+ * @since 13.11.2018
  */
 package ru.alazarev.array;
