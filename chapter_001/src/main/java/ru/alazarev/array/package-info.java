@@ -7,6 +7,7 @@
  * Class ArrayChar made for compare prefix and string.
  * Class BubbleSort made for sort array ascending.
  * Class Matrix made for create matrix with multiple rows and columns.
+ * Class MatrixCheck made for check matrix with boolean values.
  *
  * @author Aleksey Lazarev
  * @version 0.1

@@ -7,6 +7,7 @@
  * Class ArrayTest made for test compare method startWith.
  * Class BubbleSortTest made for test sort method.
  * Class MatrixTest made for test multiple method.
+ * Class MatrixCheckTest made for test mono method.
  *
  * @author Aleksey Lazarev
  * @version 0.1
