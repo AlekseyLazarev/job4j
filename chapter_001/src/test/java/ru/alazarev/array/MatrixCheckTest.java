@@ -1,7 +1,10 @@
 package ru.alazarev.array;
+
 import org.junit.Test;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+
 /**
  * Test.
  *
@@ -16,7 +19,7 @@ public class MatrixCheckTest {
     @Test
     public void whenDataMonoByTrueThenTrue() {
         MatrixCheck check = new MatrixCheck();
-        boolean[][] input = new boolean[][] {
+        boolean[][] input = new boolean[][]{
                 {true, true, true},
                 {false, true, true},
                 {true, false, true}
@@ -24,13 +27,14 @@ public class MatrixCheckTest {
         boolean result = check.mono(input);
         assertThat(result, is(true));
     }
+
     /**
      * Test mono method with odd size.
      */
     @Test
     public void whenDataNotMonoByTrueThenFalse() {
         MatrixCheck check = new MatrixCheck();
-        boolean[][] input = new boolean[][] {
+        boolean[][] input = new boolean[][]{
                 {true, true, false},
                 {false, false, true},
                 {true, false, true}
@@ -38,30 +42,32 @@ public class MatrixCheckTest {
         boolean result = check.mono(input);
         assertThat(result, is(false));
     }
+
     /**
      * Test mono method with even size.
      */
     @Test
     public void whenDataMonoByTrueFalseFalseTrueThenTrue() {
         MatrixCheck check = new MatrixCheck();
-        boolean[][] input = new boolean[][] {
+        boolean[][] input = new boolean[][]{
                 {true, false},
                 {false, true}
         };
         boolean result = check.mono(input);
         assertThat(result, is(true));
     }
+
     /**
      * Test mono method with even size.
      */
     @Test
     public void whenDataMonoByTrueFalseTrueTrueThenFalse() {
         MatrixCheck check = new MatrixCheck();
-        boolean[][] input = new boolean[][] {
+        boolean[][] input = new boolean[][]{
                 {false, true},
                 {false, false}
         };
         boolean result = check.mono(input);
-        assertThat(result, is(true));
+        assertThat(result, is(false));
     }
 }
