@@ -22,9 +22,7 @@ public class ArrayDuplicateTest {
         ArrayDuplicate ad = new ArrayDuplicate();
         String[] beforeRemoveArray = {"Привет", "Мир", "Привет", "Привет", "Привет", "Супер", "Мир", "Соль", "Пароль", "Контора", "Соль"};
         String[] result = ad.remove(beforeRemoveArray);
-        String[] expect = {"Привет", "Мир",  "Супер", "Соль", "Пароль", "Контора" };
+        String[] expect = {"Привет", "Мир", "Супер", "Соль", "Пароль", "Контора"};
         assertThat(result, arrayContainingInAnyOrder(expect));
     }
-
-
 }

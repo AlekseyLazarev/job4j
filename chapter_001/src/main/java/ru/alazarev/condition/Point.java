@@ -2,6 +2,7 @@ package ru.alazarev.condition;
 
 /**
  * Class Point решение задачи части 001. Урок 3.4. Расстояние между точками в системе координат [#188].
+ *
  * @author Aleksey Lazarev
  * @since 09.11.2018
  */

@@ -14,13 +14,13 @@ public class BubbleSort {
      * @return array ascending.
      */
     public int[] sort(int[] array) {
-        for (int outindex = 0; outindex < array.length - 1; outindex++) {
-            for (int index = 0; index < array.length - outindex - 1; index++) {
+        for (int out = 0; out < array.length - 1; out++) {
+            for (int in = 0; in < array.length - out - 1; in++) {
                 int temp;
-                if (array[index + 1] < array[index]) {
-                    temp = array[index + 1];
-                    array[index + 1] = array[index];
-                    array[index] = temp;
+                if (array[in + 1] < array[in]) {
+                    temp = array[in + 1];
+                    array[in + 1] = array[in];
+                    array[in] = temp;
                 }
             }
         }

@@ -1,14 +1,15 @@
 package ru.alazarev.calculator;
 
 /**
- *Class Fit решение задачи части 001. Урок 3.3. Идеальный вес. [#41584].
- *@author Aleksey Lazarev
- *@since 09.11.2018
+ * Class Fit решение задачи части 001. Урок 3.3. Идеальный вес. [#41584].
+ *
+ * @author Aleksey Lazarev
+ * @since 09.11.2018
  */
 public class Fit {
-
     /**
      * Ideal weight for man.
+     *
      * @param height Male height .
      * @return ideal weight for man.
      */
@@ -18,6 +19,7 @@ public class Fit {
 
     /**
      * Ideal weight for woman.
+     *
      * @param height Female height.
      * @return ideal weight for woman.
      */

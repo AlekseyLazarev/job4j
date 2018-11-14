@@ -1,10 +1,13 @@
 package ru.alazarev.condition;
 
 import org.junit.Test;
+
 import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.*;
+
 /**
  * Test.
+ *
  * @author Aleksey Lazarev
  * @version 0.1
  * @since 10.11.2018

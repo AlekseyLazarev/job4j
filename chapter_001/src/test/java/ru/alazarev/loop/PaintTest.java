@@ -33,6 +33,7 @@ public class PaintTest {
                 )
         );
     }
+
     /**
      * Test leftTriangle method with 4 height.
      */
@@ -51,6 +52,7 @@ public class PaintTest {
                 )
         );
     }
+
     /**
      * Test pyramid method with 4 height.
      */

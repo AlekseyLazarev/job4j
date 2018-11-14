@@ -8,7 +8,6 @@ package ru.alazarev.array;
  */
 
 public class Turn {
-
     /**
      * Reverse array.
      *

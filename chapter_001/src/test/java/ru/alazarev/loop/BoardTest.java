@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+
 /**
  * Board test.
  *
@@ -25,6 +26,7 @@ public class BoardTest {
                 )
         );
     }
+
     /**
      * Test paint method 5 * 4.
      */

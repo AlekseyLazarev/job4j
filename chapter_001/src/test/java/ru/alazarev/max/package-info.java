@@ -1,4 +1,5 @@
-/**Class package-info created for description content package ru.alazarev.
+/**
+ * Class package-info created for description content package ru.alazarev.
  * Package for test max class.
  *
  * @author Aleksey Lazarev

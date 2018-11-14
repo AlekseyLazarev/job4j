@@ -1,6 +1,8 @@
 package ru.alazarev.condition;
+
 /**
  * Class Triangle решение задачи части 001. Урок 4.3. Вычисление площади треугольника [#9461].
+ *
  * @author Aleksey Lazarev
  * @since 10.11.2018
  */
@@ -14,8 +16,10 @@ public class Triangle {
         this.b = b;
         this.c = c;
     }
+
     /**
      * Метод вычисления полупериметра по длинам сторон.
+     *
      * @param ab расстояние между точками a b
      * @param ac расстояние между точками a c
      * @param bc расстояние между точками b c
@@ -24,8 +28,10 @@ public class Triangle {
     public double period(double ab, double ac, double bc) {
         return (ab + ac + bc) / 2;
     }
+
     /**
      * Метод должен вычислить площадь треугольника.
+     *
      * @return Вернуть прощадь, если треугольник существует или -1, если треугольника нет.
      */
     public double area() {
@@ -42,6 +48,7 @@ public class Triangle {
 
     /**
      * Метод проверяет можно ли построить треугольник с такими длинами сторон.
+     *
      * @param ab Длина от точки a b.
      * @param ac Длина от точки a c.
      * @param bc Длина от точки b c.
