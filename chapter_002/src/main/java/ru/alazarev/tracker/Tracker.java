@@ -35,7 +35,8 @@ public class Tracker {
     public void replace(String id, Item item) {
         for (int index = 0; index != position; index++) {
             if (items[index] != null && items[index].getId().equals(id)) {
-                items[index] = item;
+                items[index].setName(item.getName());
+                items[index].setDesc(item.getDesc());
                 break;
             }
         }
@@ -65,7 +66,7 @@ public class Tracker {
      * @return items array.
      */
     public Item[] findAll() {
-        return Arrays.copyOf(items,position);
+        return Arrays.copyOf(items, position);
     }
 
     /**
@@ -103,7 +104,7 @@ public class Tracker {
         return result;
     }
 
-    public String generateId() {
+    private String generateId() {
         return String.valueOf(System.currentTimeMillis() + RN.nextInt());
     }
 }

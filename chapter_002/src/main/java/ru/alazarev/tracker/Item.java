@@ -1,6 +1,5 @@
 package ru.alazarev.tracker;
 
-import java.util.UUID;
 
 /**
  * Class Item решение задачи части 002. Урок 2. Реализовать класс Tracker [#396].
@@ -71,5 +70,14 @@ public class Item {
      */
     public void setId(String id) {
         this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+    public void setCreated(Long created) {
+        this.created = created;
     }
 }
