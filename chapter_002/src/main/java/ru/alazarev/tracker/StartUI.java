@@ -122,8 +122,8 @@ public class StartUI {
         Long creation = System.currentTimeMillis();
         Item item = new Item(name, desc, creation);
         String replaceId = this.input.ask("Input ID old item");
-        tracker.replace(replaceId, item);
-        System.out.println("___ ITEM EDITED ___");
+        String result = tracker.replace(replaceId, item);
+        System.out.printf("___ ITEM %s ___%n", result);
     }
 
     /**
@@ -132,8 +132,8 @@ public class StartUI {
     public void deleteItem() {
         System.out.println("___ DELETE ITEM ___");
         String delId = this.input.ask("Input ID item for delete");
-        tracker.delete(delId);
-        System.out.println("___ ITEM DELETED ___");
+        String result = tracker.delete(delId);
+        System.out.printf("___ ITEM %s ___%n",result);
     }
 
     /**
