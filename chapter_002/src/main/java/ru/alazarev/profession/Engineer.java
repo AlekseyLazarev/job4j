@@ -8,6 +8,16 @@ package ru.alazarev.profession;
  */
 public class Engineer extends Profession {
     /**
+     * Constructor class Engineer.
+     *
+     * @param name       Name of engineer.
+     * @param profession Profession of specialist.
+     */
+    public Engineer(String name, String profession) {
+        super(name, profession);
+    }
+
+    /**
      * Method for build house.
      *
      * @param house Object for building.

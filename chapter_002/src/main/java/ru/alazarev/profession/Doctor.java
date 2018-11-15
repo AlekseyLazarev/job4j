@@ -8,6 +8,16 @@ package ru.alazarev.profession;
  */
 public class Doctor extends Profession {
     /**
+     * Constructor class Doctor.
+     *
+     * @param name       Name of doctor.
+     * @param profession Profession of specialist.
+     */
+    public Doctor(String name, String profession) {
+        super(name, profession);
+    }
+
+    /**
      * Healing patient.
      *
      * @param patient Person who need help.

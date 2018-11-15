@@ -12,6 +12,17 @@ public class Profession {
     private String profession;
 
     /**
+     * Base constructor class Profession.
+     *
+     * @param name       Name of professional.
+     * @param profession Profession of specialist.
+     */
+    public Profession(String name, String profession) {
+        this.name = name;
+        this.profession = profession;
+    }
+
+    /**
      * Method get name.
      *
      * @return name.
@@ -28,6 +39,7 @@ public class Profession {
     public String getProfession() {
         return profession;
     }
+
     /**
      * Method set name.
      *
