@@ -1,6 +1,7 @@
 package ru.alazarev.tracker;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Class Tracker решение задачи части 002. Урок 2. Реализовать класс Tracker [#396].
@@ -11,6 +12,7 @@ import java.util.Arrays;
 public class Tracker {
     private final Item[] items = new Item[100];
     private int position = 0;
+    private static final Random RN = new Random();
 
     /**
      * Add item in items array.
@@ -19,6 +21,7 @@ public class Tracker {
      * @return added item.
      */
     public Item add(Item item) {
+        item.setId(this.generateId());
         this.items[position++] = item;
         return item;
     }
@@ -62,13 +65,7 @@ public class Tracker {
      * @return items array.
      */
     public Item[] findAll() {
-        Item[] result = new Item[this.position];
-        for (int index = 0; index != this.position; index++) {
-            if (this.items[index] != null) {
-                result[index] = this.items[index];
-            }
-        }
-        return result;
+        return Arrays.copyOf(items,position);
     }
 
     /**
@@ -104,5 +101,9 @@ public class Tracker {
             }
         }
         return result;
+    }
+
+    public String generateId() {
+        return String.valueOf(System.currentTimeMillis() + RN.nextInt());
     }
 }

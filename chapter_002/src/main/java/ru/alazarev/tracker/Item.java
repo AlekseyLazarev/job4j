@@ -9,7 +9,7 @@ import java.util.UUID;
  * @since 15.11.2018
  */
 public class Item {
-    private String id = UUID.randomUUID().toString();
+    private String id;
     private String name;
     private String desc;
     private long created;
