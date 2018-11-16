@@ -52,11 +52,11 @@ public class Tracker {
      * @param id Item unique id.
      */
     public String delete(String id) {
-        String result = String.format("WITH ID: %s NOT FOUND",id);
+        String result = String.format("WITH ID: %s NOT FOUND", id);
         for (int index = 0; index != position; index++) {
             if (items[index] != null && items[index].getId().equals(id)) {
                 System.arraycopy(items, index + 1, items, index, items.length - index - 1);
-                result = String.format("WITH ID: %s DELETED",id);
+                result = String.format("WITH ID: %s DELETED", id);
                 position--;
                 break;
             }
