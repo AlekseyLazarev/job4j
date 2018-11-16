@@ -108,6 +108,11 @@ public class Tracker {
         return result;
     }
 
+    /**
+     * Generate id method.
+     *
+     * @return New unique id.
+     */
     private String generateId() {
         return String.valueOf(System.currentTimeMillis() + RN.nextInt());
     }
