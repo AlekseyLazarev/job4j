@@ -17,11 +17,10 @@ public class Item {
     /**
      * Constructor for item.
      *
-     * @param name    Item name.
-     * @param desc    Item description.
-     * @param created Item date and time creation.
+     * @param name Item name.
+     * @param desc Item description.
      */
-    public Item(String name, String desc, long created) {
+    public Item(String name, String desc) {
         this.name = name;
         this.desc = desc;
         this.created = created;
@@ -71,12 +70,30 @@ public class Item {
     public void setId(String id) {
         this.id = id;
     }
+
+    /**
+     * Setup this item name.
+     *
+     * @param name It for setup.
+     */
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * Setup this item desc.
+     *
+     * @param desc It for setup.
+     */
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+    /**
+     * Setup this item created.
+     *
+     * @param created It for setup.
+     */
     public void setCreated(Long created) {
         this.created = created;
     }

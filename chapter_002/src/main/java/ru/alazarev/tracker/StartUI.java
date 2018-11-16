@@ -38,7 +38,6 @@ public class StartUI {
         while (!exit) {
             this.showMenu();
             String answer = this.input.ask("Select menu item: ");
-
             switch (answer) {
                 case "0":
                     createItem();
@@ -85,8 +84,7 @@ public class StartUI {
         System.out.println("___ ADD NEW ITEM ___");
         String name = this.input.ask("Input name: ");
         String desc = this.input.ask("Input description");
-        Long creation = System.currentTimeMillis();
-        Item item = new Item(name, desc, creation);
+        Item item = new Item(name, desc);
         tracker.add(item);
         System.out.printf("___ NEW ITEM WITH ID: %s ___%n", item.getId());
     }
@@ -98,7 +96,7 @@ public class StartUI {
      */
     public void printItems(Item[] items) {
         for (Item item : items) {
-            System.out.printf("ID: %15s Name: %10s Desc: %20s Created %d %n", item.getId(), item.getName(), item.getDesc(), item.getCreated());
+            System.out.printf("ID: %15s Name: %10s Desc: %20s %n", item.getId(), item.getName(), item.getDesc());
         }
     }
 
@@ -117,11 +115,10 @@ public class StartUI {
      */
     public void editItem() {
         System.out.println("___ EDIT ITEM ___");
+        String replaceId = this.input.ask("Input ID old item");
         String name = this.input.ask("Input new name: ");
         String desc = this.input.ask("Input new description");
-        Long creation = System.currentTimeMillis();
-        Item item = new Item(name, desc, creation);
-        String replaceId = this.input.ask("Input ID old item");
+        Item item = new Item(name, desc);
         String result = tracker.replace(replaceId, item);
         System.out.printf("___ ITEM %s ___%n", result);
     }
@@ -133,7 +130,7 @@ public class StartUI {
         System.out.println("___ DELETE ITEM ___");
         String delId = this.input.ask("Input ID item for delete");
         String result = tracker.delete(delId);
-        System.out.printf("___ ITEM %s ___%n",result);
+        System.out.printf("___ ITEM %s ___%n", result);
     }
 
     /**
@@ -142,8 +139,7 @@ public class StartUI {
     public void findItemById() {
         System.out.println("___ FIND ITEM BY ID___");
         String findId = this.input.ask("Input ID item for found");
-        Item[] items = {tracker.findById(findId)};
-        printItems(items);
+        printItems(new Item[]{tracker.findById(findId)});
         System.out.println("___ FOUND ITEM BY ID ___");
     }
 

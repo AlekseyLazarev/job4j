@@ -18,7 +18,7 @@ public class TrackerTest {
     @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
         Tracker tracker = new Tracker();
-        Item item = new Item("test1", "testDescription", 123L);
+        Item item = new Item("test1", "testDescription");
         tracker.add(item);
         assertThat(tracker.findAll()[0], is(item));
     }
@@ -29,11 +29,11 @@ public class TrackerTest {
     @Test
     public void whenReplaceNameThenReturnNewName() {
         Tracker tracker = new Tracker();
-        Item previous = new Item("test1", "testDescription", 123L);
+        Item previous = new Item("test1", "testDescription");
         // Добавляем заявку в трекер. Теперь в объект проинициализирован id.
         tracker.add(previous);
         // Создаем новую заявку.
-        Item next = new Item("test2", "testDescription2", 1234L);
+        Item next = new Item("test2", "testDescription2");
         // Проставляем старый id из previous, который был сгенерирован выше.
         next.setId(previous.getId());
         // Обновляем заявку в трекере.
@@ -48,10 +48,10 @@ public class TrackerTest {
     @Test
     public void whenDeleteIdThenReturnRewriteArray() {
         Tracker tracker = new Tracker();
-        tracker.add(new Item("Name1", "desc1", 1234L));
-        tracker.add(new Item("Name2", "desc2", 1235L));
-        tracker.add(new Item("Name3", "desc1", 1234L));
-        tracker.add(new Item("Name4", "desc2", 1235L));
+        tracker.add(new Item("Name1", "desc1"));
+        tracker.add(new Item("Name2", "desc2"));
+        tracker.add(new Item("Name3", "desc1"));
+        tracker.add(new Item("Name4", "desc2"));
         Item[] excepted = {tracker.findAll()[0], tracker.findAll()[2], tracker.findAll()[3]};
         String idToDel = tracker.findAll()[1].getId();
         tracker.delete(idToDel);
@@ -64,9 +64,9 @@ public class TrackerTest {
     @Test
     public void whenFindAllThenReturnAllItems() {
         Tracker tracker = new Tracker();
-        Item itemFirst = new Item("Name2", "desc2", 1235L);
-        Item itemSecond = new Item("Name2", "desc2", 1235L);
-        Item itemThird = new Item("Name3", "desc1", 1234L);
+        Item itemFirst = new Item("Name2", "desc2");
+        Item itemSecond = new Item("Name2", "desc2");
+        Item itemThird = new Item("Name3", "desc1");
         tracker.add(itemFirst);
         tracker.add(itemSecond);
         tracker.add(itemThird);
@@ -80,7 +80,7 @@ public class TrackerTest {
     @Test
     public void whenFindByNameThenReturn() {
         Tracker tracker = new Tracker();
-        tracker.add(new Item("Name1", "desc1", 1234L));
+        tracker.add(new Item("Name1", "desc1"));
         Item[] excepted = {tracker.findAll()[0]};
         assertThat(tracker.findByName(tracker.findAll()[0].getName()), is(excepted));
     }
@@ -91,8 +91,8 @@ public class TrackerTest {
     @Test
     public void whenFindByIdThenReturnFoundItem() {
         Tracker tracker = new Tracker();
-        Item itemFirst = new Item("Name1", "desc1", 1234L);
-        Item itemSecond = new Item("Name2", "desc2", 1235L);
+        Item itemFirst = new Item("Name1", "desc1");
+        Item itemSecond = new Item("Name2", "desc2");
         tracker.add(itemFirst);
         tracker.add(itemSecond);
         assertThat(tracker.findById(tracker.findAll()[0].getId()), is(itemFirst));
