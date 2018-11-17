@@ -22,6 +22,7 @@ public class StartUITest {
     private final Tracker tracker = new Tracker();
     private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final String exitAnswer = "yes";
 
     /**
      * Before test method.
@@ -50,7 +51,7 @@ public class StartUITest {
      */
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
-        Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});   //создаём StubInput с последовательностью действий
+        Input input = new StubInput(new String[]{"0", "test name", "desc", exitAnswer});   //создаём StubInput с последовательностью действий
         new StartUI(input, this.tracker).init();     //   создаём StartUI и вызываем метод init()
         assertThat(this.tracker.findAll()[0].getName(), is("test name")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
     }
@@ -62,7 +63,7 @@ public class StartUITest {
     public void whenUpdateThenTrackerHasUpdatedValue() {
         this.before();
         //создаём StubInput с последовательностью действий(производим замену заявки)
-        Input input = new StubInput(new String[]{"2", this.tracker.findAll()[0].getId(), "test replace", "replaced", "6"});
+        Input input = new StubInput(new String[]{"2", this.tracker.findAll()[0].getId(), "test replace", "replaced", exitAnswer});
         // создаём StartUI и вызываем метод init()
         new StartUI(input, this.tracker).init();
         // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
@@ -75,7 +76,7 @@ public class StartUITest {
     @Test
     public void whenDeleteItemThenTrackerHasDeletedItem() {
         this.before();
-        Input input = new StubInput(new String[]{"3", this.tracker.findAll()[0].getId(), "6"});
+        Input input = new StubInput(new String[]{"3", this.tracker.findAll()[0].getId(), exitAnswer});
         new StartUI(input, this.tracker).init();
         Item[] beforeArray = Arrays.copyOfRange(this.tracker.findAll(), 0, this.tracker.findAll().length);
         assertThat(this.tracker.findAll(), is(beforeArray));
@@ -87,7 +88,7 @@ public class StartUITest {
     @Test
     public void whenFindItemByIdThenTrackerHasReturnItem() {
         this.before();
-        Input input = new StubInput(new String[]{"4", this.tracker.findAll()[3].getId(), "6"});
+        Input input = new StubInput(new String[]{"4", this.tracker.findAll()[3].getId(), exitAnswer});
         new StartUI(input, this.tracker).init();
         assertThat(this.tracker.findById(this.tracker.findAll()[3].getId()), is(this.tracker.findAll()[3]));
     }
@@ -96,9 +97,6 @@ public class StartUITest {
      * Add to string builder menu method.
      */
     public void appendMenu(StringBuilder ex) {
-        ex.append(System.lineSeparator());
-        ex.append("Menu: ");
-        ex.append(System.lineSeparator());
         ex.append("0. Add new Item");
         ex.append(System.lineSeparator());
         ex.append("1. Show all items");
@@ -121,7 +119,7 @@ public class StartUITest {
     @Test
     public void whenUserShowAllItemsThenTrackerHasReturnAllItems() {
         this.before();
-        Input input = new StubInput(new String[]{"1", "6"});   //создаём StubInput с последовательностью действий
+        Input input = new StubInput(new String[]{"1", exitAnswer});   //создаём StubInput с последовательностью действий
         StartUI startUI = new StartUI(input, this.tracker);     //   создаём StartUI и вызываем метод init()
         startUI.init();
         StringBuilder ex = new StringBuilder();
@@ -133,7 +131,6 @@ public class StartUITest {
         }
         ex.append("___ END SHOW ALL ITEM ___");
         ex.append(System.lineSeparator());
-        this.appendMenu(ex);
         String res = new String(out.toByteArray());
         assertThat(res, is(ex.toString())); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
     }
@@ -144,7 +141,7 @@ public class StartUITest {
     @Test
     public void whenFindItemsByNameThenTrackerHasReturnItems() {
         this.before();
-        Input input = new StubInput(new String[]{"5", this.tracker.findAll()[0].getName(), "6"});
+        Input input = new StubInput(new String[]{"5", this.tracker.findAll()[0].getName(), exitAnswer});
         new StartUI(input, tracker).init();
         StringBuilder ex = new StringBuilder();
         this.appendMenu(ex);
@@ -158,7 +155,6 @@ public class StartUITest {
                 this.tracker.findAll()[5].getName(), this.tracker.findAll()[5].getDesc()));
         ex.append("___ FOUNDED ITEMS BY NAME ___");
         ex.append(System.lineSeparator());
-        this.appendMenu(ex);
         assertThat(new String(out.toByteArray()), is(ex.toString()));
     }
 }
