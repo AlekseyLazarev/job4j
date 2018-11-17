@@ -15,9 +15,9 @@ public class Square implements Shape {
     @Override
     public String draw() {
         StringBuilder square = new StringBuilder();
-        square.append("*******"+System.lineSeparator());
-        square.append("*     *"+System.lineSeparator());
-        square.append("*     *"+System.lineSeparator());
+        square.append("*******" + System.lineSeparator());
+        square.append("*     *" + System.lineSeparator());
+        square.append("*     *" + System.lineSeparator());
         square.append("*******");
         return square.toString();
     }

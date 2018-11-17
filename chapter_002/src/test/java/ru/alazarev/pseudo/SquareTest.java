@@ -19,9 +19,9 @@ public class SquareTest {
     public void whenDrawSquare() {
         Square square = new Square();
         StringBuilder match = new StringBuilder();
-        match.append("*******"+System.lineSeparator());
-        match.append("*     *"+System.lineSeparator());
-        match.append("*     *"+System.lineSeparator());
+        match.append("*******" + System.lineSeparator());
+        match.append("*     *" + System.lineSeparator());
+        match.append("*     *" + System.lineSeparator());
         match.append("*******");
         assertThat(square.draw(), is(match.toString()));
     }

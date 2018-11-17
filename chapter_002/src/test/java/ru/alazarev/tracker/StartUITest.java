@@ -2,6 +2,7 @@ package ru.alazarev.tracker;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -25,7 +26,7 @@ public class StartUITest {
     /**
      * Before test method.
      */
-    @Before
+    @BeforeClass
     public void before() {
         this.tracker.add(new Item("Name 1", "Desc 1"));
         this.tracker.add(new Item("Name 2", "Desc 2"));

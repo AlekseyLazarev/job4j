@@ -19,9 +19,9 @@ public class TriangleTest {
     public void whenDrawTriangle() {
         Triangle triangle = new Triangle();
         StringBuilder match = new StringBuilder();
-        match.append("   *   "+System.lineSeparator());
-        match.append("  ***  "+System.lineSeparator());
-        match.append(" ***** "+System.lineSeparator());
+        match.append("   *   " + System.lineSeparator());
+        match.append("  ***  " + System.lineSeparator());
+        match.append(" ***** " + System.lineSeparator());
         match.append("*******");
         assertThat(triangle.draw(), is(match.toString()));
     }

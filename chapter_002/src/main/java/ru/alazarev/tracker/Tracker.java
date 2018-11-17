@@ -1,9 +1,6 @@
 package ru.alazarev.tracker;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.util.Arrays;
-import java.util.Random;
 
 /**
  * Class Tracker решение задачи части 002. Урок 2. Реализовать класс Tracker [#396].
@@ -14,7 +11,7 @@ import java.util.Random;
 public class Tracker {
     private final Item[] items = new Item[100];
     private int position = 0;
-    private static final Random RN = new Random();
+    private int uniqueId = 0;
 
     /**
      * Add item in items array.
@@ -116,6 +113,6 @@ public class Tracker {
      * @return New unique id.
      */
     private String generateId() {
-        return String.valueOf(System.currentTimeMillis() + RN.nextInt());
+        return String.valueOf(uniqueId++);
     }
 }
