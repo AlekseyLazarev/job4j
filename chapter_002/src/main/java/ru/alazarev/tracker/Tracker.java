@@ -1,5 +1,7 @@
 package ru.alazarev.tracker;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -32,13 +34,13 @@ public class Tracker {
      * @param id   Item unique id.
      * @param item Item to replace.
      */
-    public String replace(String id, Item item) {
-        String result = "NOT FOUND, TRY AGAIN";
+    public Boolean replace(String id, Item item) {
+        Boolean result = false;
         for (int index = 0; index != position; index++) {
             if (items[index] != null && items[index].getId().equals(id)) {
                 items[index].setName(item.getName());
                 items[index].setDesc(item.getDesc());
-                result = "EDIT COMPLETE";
+                result = true;
                 break;
             }
         }
@@ -51,12 +53,12 @@ public class Tracker {
      *
      * @param id Item unique id.
      */
-    public String delete(String id) {
-        String result = String.format("WITH ID: %s NOT FOUND", id);
+    public Boolean delete(String id) {
+        Boolean result = false;
         for (int index = 0; index != position; index++) {
             if (items[index] != null && items[index].getId().equals(id)) {
                 System.arraycopy(items, index + 1, items, index, items.length - index - 1);
-                result = String.format("WITH ID: %s DELETED", id);
+                result = true;
                 position--;
                 break;
             }

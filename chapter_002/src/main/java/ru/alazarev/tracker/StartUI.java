@@ -119,8 +119,8 @@ public class StartUI {
         String name = this.input.ask("Input new name: ");
         String desc = this.input.ask("Input new description");
         Item item = new Item(name, desc);
-        String result = tracker.replace(replaceId, item);
-        System.out.printf("___ ITEM %s ___%n", result);
+        Boolean result = tracker.replace(replaceId, item);
+        System.out.printf("___ RESULT ITEM EDIT IS %s ___%n", result.toString());
     }
 
     /**
@@ -129,8 +129,8 @@ public class StartUI {
     public void deleteItem() {
         System.out.println("___ DELETE ITEM ___");
         String delId = this.input.ask("Input ID item for delete");
-        String result = tracker.delete(delId);
-        System.out.printf("___ ITEM %s ___%n", result);
+        Boolean result = tracker.delete(delId);
+        System.out.printf("___ DELETE ITEM IS %s ___%n", result.toString());
     }
 
     /**
