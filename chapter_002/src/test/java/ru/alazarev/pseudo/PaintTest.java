@@ -46,10 +46,10 @@ public class PaintTest {
         new Paint().draw(new Square());
         // проверяем результат вычисления
         StringBuilder ex = new StringBuilder();
-        ex.append("*******\n");
-        ex.append("*     *\n");
-        ex.append("*     *\n");
-        ex.append("*******\n");
+        ex.append("*******"+System.lineSeparator());
+        ex.append("*     *"+System.lineSeparator());
+        ex.append("*     *"+System.lineSeparator());
+        ex.append("*******"+System.lineSeparator());
         String result = new String(out.toByteArray());
         assertThat(result, is(ex.toString()));
     }
@@ -63,10 +63,10 @@ public class PaintTest {
         new Paint().draw(new Triangle());
         // проверяем результат вычисления
         StringBuilder ex = new StringBuilder();
-        ex.append("   *   \n");
-        ex.append("  ***  \n");
-        ex.append(" ***** \n");
-        ex.append("*******\n");
+        ex.append("   *   "+System.lineSeparator());
+        ex.append("  ***  "+System.lineSeparator());
+        ex.append(" ***** "+System.lineSeparator());
+        ex.append("*******"+System.lineSeparator());
         String result = new String(out.toByteArray());
         assertThat(result, is(ex.toString()));
     }
