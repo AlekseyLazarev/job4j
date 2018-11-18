@@ -4,6 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class Edit implements UserAction interface.
+ */
+class EditItem implements UserAction {
+
+    @Override
+    public int key() {
+        return 2;
+    }
+
+    @Override
+    public void execute(Input input, Tracker tracker) {
+        System.out.println("___ EDIT ITEM ___");
+        String replaceId = input.ask("Input ID old item");
+        String name = input.ask("Input new name: ");
+        String desc = input.ask("Input new description");
+        Item item = new Item(name, desc);
+        Boolean result = tracker.replace(replaceId, item);
+        System.out.printf("___ RESULT ITEM EDIT IS %s ___%n", result.toString());
+    }
+
+}
+
+/**
  * Class MenuTracker решение задачи части 002.
  * Урок 4.6. Доработать тесты в StartUITest проверяющие вывод данных в консоль. [#33585].
  *
@@ -52,7 +75,7 @@ public class MenuTracker {
     public void fillActions() {
         this.actions.add(new AddItem());
         this.actions.add(new ShowAll());
-        this.actions.add(new MenuTracker.EditItem());
+        this.actions.add(new EditItem());
         this.actions.add(new MenuTracker.DeleteItem());
         this.actions.add(new FindItemById());
         this.actions.add(new FindItemsByName());
@@ -138,28 +161,6 @@ public class MenuTracker {
         }
     }
 
-    /**
-     * Class Edit implements UserAction interface.
-     */
-    private static class EditItem implements UserAction {
-
-        @Override
-        public int key() {
-            return 2;
-        }
-
-        @Override
-        public void execute(Input input, Tracker tracker) {
-            System.out.println("___ EDIT ITEM ___");
-            String replaceId = input.ask("Input ID old item");
-            String name = input.ask("Input new name: ");
-            String desc = input.ask("Input new description");
-            Item item = new Item(name, desc);
-            Boolean result = tracker.replace(replaceId, item);
-            System.out.printf("___ RESULT ITEM EDIT IS %s ___%n", result.toString());
-        }
-
-    }
 
     /**
      * Class Delete implements UserAction interface.
