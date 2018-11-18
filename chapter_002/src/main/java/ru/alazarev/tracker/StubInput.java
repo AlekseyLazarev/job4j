@@ -35,13 +35,23 @@ public class StubInput implements Input {
      * Для этого при каждом вызове метода ask мы увеличиваем счетчик и
      * при следующем вызове он вернет нам новое значение.
      */
-    @Override
+
     public String ask(String question) {
         return this.value[this.position++];
     }
 
-    @Override
+
     public int ask(String question, int[] range) {
-        throw new UnsupportedOperationException("Unsupported operation");
+        int key = Integer.parseInt(value[position++]);
+        boolean exist = false;
+        for (int i : range) {
+            if (i == key) {
+                exist = true;
+            }
+        }
+        if (!exist) {
+            throw new MenuOutException("Out of menu range.");
+        }
+        return key;
     }
 }
