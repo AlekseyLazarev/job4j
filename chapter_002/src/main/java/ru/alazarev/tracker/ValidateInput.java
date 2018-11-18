@@ -10,9 +10,9 @@ public class ValidateInput extends ConsoleInput {
                 value = super.ask(question, range);
                 invalid = false;
             } catch (MenuOutException moe) {
-                System.out.println("GG MOE");
+                System.out.println("Please select an item from the menu");
             } catch (NumberFormatException nfe) {
-                System.out.println("GG NFE");
+                System.out.println("Please input correct value");
             }
 
         } while (invalid);

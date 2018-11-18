@@ -11,6 +11,7 @@ import java.util.List;
  * @since 15.11.2018
  */
 public class StartUI {
+
     private final Input input;
     private final Tracker tracker;
 
@@ -30,14 +31,14 @@ public class StartUI {
      */
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
-        List<Integer> range = new ArrayList<>();
         menu.fillActions();
+        int[] range = new int[menu.getActionsLentgh()];
         for (int index = 0; index < menu.getActionsLentgh(); index++) {
-            range.add(index);
+            range[index] = index;
         }
         do {
             menu.show();
-            menu.select(Integer.parseInt(input.ask("Select menu item: ")));
+            menu.select(this.input.ask("Select menu item: ", range));
         } while (!"yes".equals(this.input.ask("Exit? (yes): ")));
     }
 
@@ -47,7 +48,8 @@ public class StartUI {
      * @param args Arguments.
      */
     public static void main(String[] args) {
-        new StartUI(new ValidateInput(), new Tracker()).init();
+        Input input = new ValidateInput();
+        new StartUI(input, new Tracker()).init();
 
     }
 }
