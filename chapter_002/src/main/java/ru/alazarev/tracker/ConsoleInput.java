@@ -12,11 +12,24 @@ import java.util.Scanner;
 public class ConsoleInput implements Input {
     private Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Method view question and return answer from console.
+     *
+     * @param question Question.
+     * @return answer from console.
+     */
     public String ask(String question) {
         System.out.println(question);
         return scanner.nextLine();
     }
 
+    /**
+     * Method extract key.
+     *
+     * @param question Program question.
+     * @param range    Range values.
+     * @return key.
+     */
     public int ask(String question, int[] range) {
         int key = Integer.valueOf(this.ask(question));
         boolean exists = false;

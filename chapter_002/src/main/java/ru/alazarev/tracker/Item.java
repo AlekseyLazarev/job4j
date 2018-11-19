@@ -8,10 +8,25 @@ package ru.alazarev.tracker;
  * @since 15.11.2018
  */
 public class Item {
+    /**
+     * Identifier of request.
+     */
     private String id;
+    /**
+     * Name of request.
+     */
     private String name;
+    /**
+     * Description of request.
+     */
     private String desc;
+    /**
+     * Date and time create of request.
+     */
     private long created;
+    /**
+     * Comments of request.
+     */
     private String[] comments;
 
     /**

@@ -1,5 +1,11 @@
 package ru.alazarev.tracker;
 
+/**
+ * Interface UserAction
+ *
+ * @author Aleksey Lazarev
+ * @since 19.11.2018
+ */
 public interface UserAction {
     /**
      * Method return key of option.

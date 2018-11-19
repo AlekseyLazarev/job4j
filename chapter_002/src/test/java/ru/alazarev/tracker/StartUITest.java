@@ -22,12 +22,12 @@ public class StartUITest {
     private final Tracker tracker = new Tracker();
     private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    private final String exitAnswer = "yes";
+    private final String exitAnswer = "6";
 
     /**
      * Before test method.
      */
-    @BeforeClass
+    @Before
     public void before() {
         this.tracker.add(new Item("Name 1", "Desc 1"));
         this.tracker.add(new Item("Name 2", "Desc 2"));
@@ -95,6 +95,8 @@ public class StartUITest {
 
     /**
      * Add to string builder menu method.
+     *
+     * @param ex String builder instance.
      */
     public void appendMenu(StringBuilder ex) {
         ex.append("0. Add new Item");
@@ -110,6 +112,18 @@ public class StartUITest {
         ex.append("5. Find items by name");
         ex.append(System.lineSeparator());
         ex.append("6. Exit Program");
+        ex.append(System.lineSeparator());
+    }
+
+    /**
+     * Add to string builder menu and exit program string.
+     *
+     * @param ex String builder instance.
+     */
+    public void exitMenu(StringBuilder ex) {
+        ex.append(System.lineSeparator());
+        this.appendMenu(ex);
+        ex.append("___ EXIT PROGRAM ___");
         ex.append(System.lineSeparator());
     }
 
@@ -130,7 +144,7 @@ public class StartUITest {
             ex.append(String.format("ID: %15s Name: %10s Desc: %20s %n", item.getId(), item.getName(), item.getDesc()));
         }
         ex.append("___ END SHOW ALL ITEM ___");
-        ex.append(System.lineSeparator());
+        exitMenu(ex);
         String res = new String(out.toByteArray());
         assertThat(res, is(ex.toString())); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
     }
@@ -154,7 +168,7 @@ public class StartUITest {
         ex.append(String.format("ID: %15s Name: %10s Desc: %20s %n", this.tracker.findAll()[5].getId(),
                 this.tracker.findAll()[5].getName(), this.tracker.findAll()[5].getDesc()));
         ex.append("___ FOUNDED ITEMS BY NAME ___");
-        ex.append(System.lineSeparator());
+        exitMenu(ex);
         assertThat(new String(out.toByteArray()), is(ex.toString()));
     }
 }

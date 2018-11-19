@@ -4,15 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class Edit implements UserAction interface.
+ * Class Edit implements UserAction interface using for edit request tracker.
+ *
+ * @author Aleksey Lazarev
+ * @since 19.11.2018
  */
 class EditItem implements UserAction {
 
+    /**
+     * Method return key of this operation.
+     *
+     * @return key value.
+     */
     @Override
     public int key() {
         return 2;
     }
 
+    /**
+     * Method starts edit item.
+     *
+     * @param input   Object type Input
+     * @param tracker Object type Tracker
+     */
     @Override
     public void execute(Input input, Tracker tracker) {
         System.out.println("___ EDIT ITEM ___");
@@ -33,12 +47,26 @@ class EditItem implements UserAction {
  * @author Aleksey Lazarev
  * @since 17.11.2018
  */
-
 public class MenuTracker {
-
+    /**
+     * Storage menu tracker status.
+     */
+    private boolean exit = false;
+    /**
+     * Storage class Input object.
+     */
     private Input input;
+    /**
+     * Storage class Tracker object.
+     */
     private Tracker tracker;
+    /**
+     * Storage list of user actions.
+     */
     private List<UserAction> actions = new ArrayList<>();
+    /**
+     * Storage Menu points.
+     */
     private static final String[] MENU = {"0. Add new Item",
             "1. Show all items",
             "2. Edit item",
@@ -83,11 +111,11 @@ public class MenuTracker {
     }
 
     /**
-     * Метод для получения массива меню.
+     * Method get actions length.
      *
-     * @return длину массива
+     * @return length action list.
      */
-    public int getActionsLentgh() {
+    public int getActionsLength() {
         return this.actions.size();
     }
 
@@ -121,15 +149,28 @@ public class MenuTracker {
     }
 
     /**
-     * Class AddItem implements UserAction interface.
+     * Class AddItem implements UserAction interface using for add request to tracker.
+     *
+     * @author Aleksey Lazarev
+     * @since 19.11.2018
      */
     private class AddItem implements UserAction {
-
+        /**
+         * Method return key of this operation.
+         *
+         * @return key value.
+         */
         @Override
         public int key() {
             return 0;
         }
 
+        /**
+         * Method add item.
+         *
+         * @param input   Object type Input
+         * @param tracker Object type Tracker
+         */
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("___ ADD NEW ITEM ___");
@@ -143,15 +184,28 @@ public class MenuTracker {
     }
 
     /**
-     * Class ShowAll implements UserAction interface.
+     * Class ShowAll implements UserAction interface using for show all requests in console.
+     *
+     * @author Aleksey Lazarev
+     * @since 19.11.2018
      */
     private class ShowAll implements UserAction {
-
+        /**
+         * Method return key of this operation.
+         *
+         * @return key value.
+         */
         @Override
         public int key() {
             return 1;
         }
 
+        /**
+         * Method show all items.
+         *
+         * @param input   Object type Input
+         * @param tracker Object type Tracker
+         */
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("___ START SHOW ALL ITEM ___");
@@ -163,15 +217,28 @@ public class MenuTracker {
 
 
     /**
-     * Class Delete implements UserAction interface.
+     * Class DeleteItem implements UserAction interface using for delete request requests from tracker.
+     *
+     * @author Aleksey Lazarev
+     * @since 19.11.2018
      */
     private static class DeleteItem implements UserAction {
-
+        /**
+         * Method return key of this operation.
+         *
+         * @return key value.
+         */
         @Override
         public int key() {
             return 3;
         }
 
+        /**
+         * Method delete item.
+         *
+         * @param input   Object type Input
+         * @param tracker Object type Tracker
+         */
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("___ DELETE ITEM ___");
@@ -184,15 +251,28 @@ public class MenuTracker {
     }
 
     /**
-     * Class FindItemById implements UserAction interface.
+     * Class FindItemById implements UserAction interface using for find request by id in tracker.
+     *
+     * @author Aleksey Lazarev
+     * @since 19.11.2018
      */
     private class FindItemById implements UserAction {
-
+        /**
+         * Method return key of this operation.
+         *
+         * @return key value.
+         */
         @Override
         public int key() {
             return 4;
         }
 
+        /**
+         * Method find item by id.
+         *
+         * @param input   Object type Input
+         * @param tracker Object type Tracker
+         */
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("___ FIND ITEM BY ID___");
@@ -204,15 +284,28 @@ public class MenuTracker {
     }
 
     /**
-     * Class FindItemsByName implements UserAction interface.
+     * Class FindItemsByName implements UserAction interface using for find request by name in tracker.
+     *
+     * @author Aleksey Lazarev
+     * @since 19.11.2018
      */
     private class FindItemsByName implements UserAction {
-
+        /**
+         * Method return key of this operation.
+         *
+         * @return key value.
+         */
         @Override
         public int key() {
             return 5;
         }
 
+        /**
+         * Method find item by name.
+         *
+         * @param input   Object type Input
+         * @param tracker Object type Tracker
+         */
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("___ FIND ITEMS BY NAME ___");
@@ -226,21 +319,43 @@ public class MenuTracker {
     }
 
     /**
-     * Class Exit implements UserAction interface.
+     * Class Exit implements UserAction interface using for exit from menu.
+     *
+     * @author Aleksey Lazarev
+     * @since 19.11.2018
      */
     private class Exit implements UserAction {
-
+        /**
+         * Method return key of this operation.
+         *
+         * @return key value.
+         */
         @Override
         public int key() {
             return 6;
         }
 
+        /**
+         * Method exit menu.
+         *
+         * @param input   Object type Input
+         * @param tracker Object type Tracker
+         */
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("___ EXIT PROGRAM ___");
+            exit = true;
         }
 
 
     }
 
+    /**
+     * Method check program status.
+     *
+     * @return program status.
+     */
+    public boolean isExit() {
+        return exit;
+    }
 }

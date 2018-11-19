@@ -1,8 +1,5 @@
 package ru.alazarev.tracker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Class StartUI решение задачи части 002. Урок 4.1. Используя класс ConsoleInput в классе StartUI
  * обеспечить полноценную работу всего приложения [#784].
@@ -11,8 +8,13 @@ import java.util.List;
  * @since 15.11.2018
  */
 public class StartUI {
-
+    /**
+     * Storage link to object class Input.
+     */
     private final Input input;
+    /**
+     * Storage link to object class Tracker.
+     */
     private final Tracker tracker;
 
     /**
@@ -32,14 +34,14 @@ public class StartUI {
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         menu.fillActions();
-        int[] range = new int[menu.getActionsLentgh()];
-        for (int index = 0; index < menu.getActionsLentgh(); index++) {
+        int[] range = new int[menu.getActionsLength()];
+        for (int index = 0; index < menu.getActionsLength(); index++) {
             range[index] = index;
         }
         do {
             menu.show();
             menu.select(this.input.ask("Select menu item: ", range));
-        } while (!"yes".equals(this.input.ask("Exit? (yes): ")));
+        } while (!menu.isExit());
     }
 
     /**
