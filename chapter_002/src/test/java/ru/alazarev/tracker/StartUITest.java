@@ -2,8 +2,7 @@ package ru.alazarev.tracker;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -19,9 +18,21 @@ import static org.junit.Assert.assertThat;
  * @since 16.11.2018
  */
 public class StartUITest {
+    /**
+     * Storage class Tracker object.
+     */
     private final Tracker tracker = new Tracker();
+    /**
+     * Storage system out.
+     */
     private final PrintStream stdout = System.out;
+    /**
+     * Storage console output byte array.
+     */
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    /**
+     * Storage answer for exit.
+     */
     private final String exitAnswer = "6";
 
     /**
@@ -51,9 +62,9 @@ public class StartUITest {
      */
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
-        Input input = new StubInput(new String[]{"0", "test name", "desc", exitAnswer});   //создаём StubInput с последовательностью действий
-        new StartUI(input, this.tracker).init();     //   создаём StartUI и вызываем метод init()
-        assertThat(this.tracker.findAll()[0].getName(), is("test name")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
+        Input input = new StubInput(new String[]{"0", "test name", "desc", exitAnswer});
+        new StartUI(input, this.tracker).init();
+        assertThat(this.tracker.findAll()[6].getName(), is("test name"));
     }
 
     /**
@@ -61,12 +72,8 @@ public class StartUITest {
      */
     @Test
     public void whenUpdateThenTrackerHasUpdatedValue() {
-        this.before();
-        //создаём StubInput с последовательностью действий(производим замену заявки)
         Input input = new StubInput(new String[]{"2", this.tracker.findAll()[0].getId(), "test replace", "replaced", exitAnswer});
-        // создаём StartUI и вызываем метод init()
         new StartUI(input, this.tracker).init();
-        // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
         assertThat(this.tracker.findAll()[0].getName(), is("test replace"));
     }
 
@@ -75,7 +82,6 @@ public class StartUITest {
      */
     @Test
     public void whenDeleteItemThenTrackerHasDeletedItem() {
-        this.before();
         Input input = new StubInput(new String[]{"3", this.tracker.findAll()[0].getId(), exitAnswer});
         new StartUI(input, this.tracker).init();
         Item[] beforeArray = Arrays.copyOfRange(this.tracker.findAll(), 0, this.tracker.findAll().length);
@@ -87,7 +93,6 @@ public class StartUITest {
      */
     @Test
     public void whenFindItemByIdThenTrackerHasReturnItem() {
-        this.before();
         Input input = new StubInput(new String[]{"4", this.tracker.findAll()[3].getId(), exitAnswer});
         new StartUI(input, this.tracker).init();
         assertThat(this.tracker.findById(this.tracker.findAll()[3].getId()), is(this.tracker.findAll()[3]));
@@ -132,7 +137,6 @@ public class StartUITest {
      */
     @Test
     public void whenUserShowAllItemsThenTrackerHasReturnAllItems() {
-        this.before();
         Input input = new StubInput(new String[]{"1", exitAnswer});   //создаём StubInput с последовательностью действий
         StartUI startUI = new StartUI(input, this.tracker);     //   создаём StartUI и вызываем метод init()
         startUI.init();
@@ -154,7 +158,6 @@ public class StartUITest {
      */
     @Test
     public void whenFindItemsByNameThenTrackerHasReturnItems() {
-        this.before();
         Input input = new StubInput(new String[]{"5", this.tracker.findAll()[0].getName(), exitAnswer});
         new StartUI(input, tracker).init();
         StringBuilder ex = new StringBuilder();
