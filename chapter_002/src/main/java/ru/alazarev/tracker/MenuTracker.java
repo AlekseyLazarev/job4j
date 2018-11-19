@@ -1,7 +1,7 @@
 package ru.alazarev.tracker;
 
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.List;
 
 /**
  * Class Edit implements UserAction interface using for edit request tracker.
@@ -9,16 +9,15 @@ import java.util.List;
  * @author Aleksey Lazarev
  * @since 19.11.2018
  */
-class EditItem implements UserAction {
-
+class EditItem extends BaseAction {
     /**
-     * Method return key of this operation.
+     * Constructor.
      *
-     * @return key value.
+     * @param key  Key of this action.
+     * @param name Name of this action.
      */
-    @Override
-    public int key() {
-        return 2;
+    public EditItem(int key, String name) {
+        super(key, name);
     }
 
     /**
@@ -64,16 +63,6 @@ public class MenuTracker {
      * Storage list of user actions.
      */
     private List<UserAction> actions = new ArrayList<>();
-    /**
-     * Storage Menu points.
-     */
-    private static final String[] MENU = {"0. Add new Item",
-            "1. Show all items",
-            "2. Edit item",
-            "3. Delete item",
-            "4. Find item by Id",
-            "5. Find items by name",
-            "6. Exit Program"};
 
     /**
      * Constructor.
@@ -101,13 +90,13 @@ public class MenuTracker {
      * Method fill List actions.
      */
     public void fillActions() {
-        this.actions.add(new AddItem());
-        this.actions.add(new ShowAll());
-        this.actions.add(new EditItem());
-        this.actions.add(new MenuTracker.DeleteItem());
-        this.actions.add(new FindItemById());
-        this.actions.add(new FindItemsByName());
-        this.actions.add(new Exit());
+        this.actions.add(new AddItem(0, "Add new Item"));
+        this.actions.add(new ShowAll(1, "Show all items"));
+        this.actions.add(new EditItem(2, "Edit item"));
+        this.actions.add(new MenuTracker.DeleteItem(3, "Delete item"));
+        this.actions.add(new FindItemById(4, "Find item by Id"));
+        this.actions.add(new FindItemsByName(5, "Find items by name"));
+        this.actions.add(new Exit(6, "Exit Program"));
     }
 
     /**
@@ -134,18 +123,9 @@ public class MenuTracker {
     public void show() {
         for (UserAction action : this.actions) {
             if (action != null) {
-                System.out.println(info(action));
+                System.out.println(action.info());
             }
         }
-    }
-
-    /**
-     * Method return information about this menu action.
-     *
-     * @return String menu.
-     */
-    public String info(UserAction action) {
-        return MENU[action.key()];
     }
 
     /**
@@ -154,15 +134,15 @@ public class MenuTracker {
      * @author Aleksey Lazarev
      * @since 19.11.2018
      */
-    private class AddItem implements UserAction {
+    private class AddItem extends BaseAction {
         /**
-         * Method return key of this operation.
+         * Constructor.
          *
-         * @return key value.
+         * @param key  Key of this action.
+         * @param name Name of this action.
          */
-        @Override
-        public int key() {
-            return 0;
+        public AddItem(int key, String name) {
+            super(key, name);
         }
 
         /**
@@ -189,15 +169,15 @@ public class MenuTracker {
      * @author Aleksey Lazarev
      * @since 19.11.2018
      */
-    private class ShowAll implements UserAction {
+    private class ShowAll extends BaseAction {
         /**
-         * Method return key of this operation.
+         * Constructor.
          *
-         * @return key value.
+         * @param key  Key of this action.
+         * @param name Name of this action.
          */
-        @Override
-        public int key() {
-            return 1;
+        public ShowAll(int key, String name) {
+            super(key, name);
         }
 
         /**
@@ -215,22 +195,21 @@ public class MenuTracker {
         }
     }
 
-
     /**
      * Class DeleteItem implements UserAction interface using for delete request requests from tracker.
      *
      * @author Aleksey Lazarev
      * @since 19.11.2018
      */
-    private static class DeleteItem implements UserAction {
+    private static class DeleteItem extends BaseAction {
         /**
-         * Method return key of this operation.
+         * Constructor.
          *
-         * @return key value.
+         * @param key  Key of this action.
+         * @param name Name of this action.
          */
-        @Override
-        public int key() {
-            return 3;
+        public DeleteItem(int key, String name) {
+            super(key, name);
         }
 
         /**
@@ -256,15 +235,15 @@ public class MenuTracker {
      * @author Aleksey Lazarev
      * @since 19.11.2018
      */
-    private class FindItemById implements UserAction {
+    private class FindItemById extends BaseAction {
         /**
-         * Method return key of this operation.
+         * Constructor.
          *
-         * @return key value.
+         * @param key  Key of this action.
+         * @param name Name of this action.
          */
-        @Override
-        public int key() {
-            return 4;
+        public FindItemById(int key, String name) {
+            super(key, name);
         }
 
         /**
@@ -289,15 +268,15 @@ public class MenuTracker {
      * @author Aleksey Lazarev
      * @since 19.11.2018
      */
-    private class FindItemsByName implements UserAction {
+    private class FindItemsByName extends BaseAction {
         /**
-         * Method return key of this operation.
+         * Constructor.
          *
-         * @return key value.
+         * @param key  Key of this action.
+         * @param name Name of this action.
          */
-        @Override
-        public int key() {
-            return 5;
+        public FindItemsByName(int key, String name) {
+            super(key, name);
         }
 
         /**
@@ -324,15 +303,15 @@ public class MenuTracker {
      * @author Aleksey Lazarev
      * @since 19.11.2018
      */
-    private class Exit implements UserAction {
+    private class Exit extends BaseAction {
         /**
-         * Method return key of this operation.
+         * Constructor.
          *
-         * @return key value.
+         * @param key  Key of this action.
+         * @param name Name of this action.
          */
-        @Override
-        public int key() {
-            return 6;
+        public Exit(int key, String name) {
+            super(key, name);
         }
 
         /**
