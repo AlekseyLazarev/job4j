@@ -1,6 +1,8 @@
 package ru.alazarev.chess.figures.white;
 
+import ru.alazarev.chess.exception.FigureNotFoundException;
 import ru.alazarev.chess.figures.Cell;
+import ru.alazarev.chess.figures.Figure;
 import ru.alazarev.chess.figures.FigureInterface;
 
 /**
@@ -9,16 +11,10 @@ import ru.alazarev.chess.figures.FigureInterface;
  * @version $Id$
  * @since 0.1
  */
-public class RookWhite implements FigureInterface {
-    private final Cell position;
+public class RookWhite extends Figure {
 
     public RookWhite(final Cell position) {
-        this.position = position;
-    }
-
-    @Override
-    public Cell position() {
-        return this.position;
+        super(position);
     }
 
     @Override
@@ -27,7 +23,7 @@ public class RookWhite implements FigureInterface {
     }
 
     @Override
-    public FigureInterface copy(Cell dest) {
+    public Figure copy(Cell dest) {
         return new RookWhite(dest);
     }
 }

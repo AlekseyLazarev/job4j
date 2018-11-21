@@ -1,6 +1,7 @@
 package ru.alazarev.chess.figures.white;
 
 import ru.alazarev.chess.figures.Cell;
+import ru.alazarev.chess.figures.Figure;
 import ru.alazarev.chess.figures.FigureInterface;
 
 /**
@@ -9,17 +10,12 @@ import ru.alazarev.chess.figures.FigureInterface;
  * @version $Id$
  * @since 0.1
  */
-public class BishopWhite implements FigureInterface {
-    private final Cell position;
+public class BishopWhite extends Figure {
 
     public BishopWhite(final Cell position) {
-        this.position = position;
+        super( position);
     }
 
-    @Override
-    public Cell position() {
-        return this.position;
-    }
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
@@ -27,7 +23,7 @@ public class BishopWhite implements FigureInterface {
     }
 
     @Override
-    public FigureInterface copy(Cell dest) {
+    public Figure copy(Cell dest) {
         return new BishopWhite(dest);
     }
 }

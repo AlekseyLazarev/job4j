@@ -1,4 +1,4 @@
-package ru.alazarev;
+package ru.alazarev.chess;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

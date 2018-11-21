@@ -12,15 +12,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import ru.alazarev.chess.figures.Board;
 import ru.alazarev.chess.figures.Cell;
 import ru.alazarev.chess.figures.Figure;
 import ru.alazarev.chess.figures.black.*;
+import ru.alazarev.chess.figures.white.*;
 
 public class Chess extends Application {
     private static final String JOB4J = "Шахматы на www.alazarev.ru";
     private final int size = 8;
-    private final Logic logic = new Logic();
     private final Board board = new Board();
 
     private Rectangle buildRectangle(int x, int y, int size, boolean white) {
@@ -108,10 +107,10 @@ public class Chess extends Application {
 
     private void refresh(final BorderPane border) {
         Group grid = this.buildGrid();
-        this.logic.clean();
+        this.board.clean();
         border.setCenter(grid);
-     //   this.buildWhiteTeam(grid);
         this.buildBlackTeam(grid);
+        this.buildWhiteTeam(grid);
     }
 
     private void buildBlackTeam(Group grid) {
@@ -126,31 +125,31 @@ public class Chess extends Application {
         this.add(new RookBlack(Cell.A8), grid);
         this.add(new KnightBlack(Cell.B8), grid);
         this.add(new BishopBlack(Cell.C8), grid);
-        this.add(new QeenBlack(Cell.D8), grid);
+        this.add(new QueenBlack(Cell.D8), grid);
         this.add(new KingBlack(Cell.E8), grid);
         this.add(new BishopBlack(Cell.F8), grid);
         this.add(new KnightBlack(Cell.G8), grid);
         this.add(new RookBlack(Cell.H8), grid);
     }
 
-//    public void buildWhiteTeam(Group grid) {
-//        this.add(new PawnWhite(Cell.A2), grid);
-//        this.add(new PawnWhite(Cell.B2), grid);
-//        this.add(new PawnWhite(Cell.C2), grid);
-//        this.add(new PawnWhite(Cell.D2), grid);
-//        this.add(new PawnWhite(Cell.E2), grid);
-//        this.add(new PawnWhite(Cell.F2), grid);
-//        this.add(new PawnWhite(Cell.G2), grid);
-//        this.add(new PawnWhite(Cell.H2), grid);
-//        this.add(new RookWhite(Cell.A1), grid);
-//        this.add(new KnightWhite(Cell.B1), grid);
-//        this.add(new BishopWhite(Cell.C1), grid);
-//        this.add(new QeenWhite(Cell.D1), grid);
-//        this.add(new KingWhite(Cell.E1), grid);
-//        this.add(new BishopWhite(Cell.F1), grid);
-//        this.add(new KnightWhite(Cell.G1), grid);
-//        this.add(new RookWhite(Cell.H1), grid);
-//    }
+    public void buildWhiteTeam(Group grid) {
+        this.add(new PawnWhite(Cell.A2), grid);
+        this.add(new PawnWhite(Cell.B2), grid);
+        this.add(new PawnWhite(Cell.C2), grid);
+        this.add(new PawnWhite(Cell.D2), grid);
+        this.add(new PawnWhite(Cell.E2), grid);
+        this.add(new PawnWhite(Cell.F2), grid);
+        this.add(new PawnWhite(Cell.G2), grid);
+        this.add(new PawnWhite(Cell.H2), grid);
+        this.add(new RookWhite(Cell.A1), grid);
+        this.add(new KnightWhite(Cell.B1), grid);
+        this.add(new BishopWhite(Cell.C1), grid);
+        this.add(new QueenWhite(Cell.D1), grid);
+        this.add(new KingWhite(Cell.E1), grid);
+        this.add(new BishopWhite(Cell.F1), grid);
+        this.add(new KnightWhite(Cell.G1), grid);
+        this.add(new RookWhite(Cell.H1), grid);
+    }
 
     public void add(Figure figure, Group grid) {
         this.board.add(figure);

@@ -2,7 +2,6 @@ package ru.alazarev.chess.figures.white;
 
 import ru.alazarev.chess.figures.Cell;
 import ru.alazarev.chess.figures.Figure;
-import ru.alazarev.chess.figures.FigureInterface;
 
 /**
  *
@@ -10,13 +9,11 @@ import ru.alazarev.chess.figures.FigureInterface;
  * @version $Id$
  * @since 0.1
  */
-public class KnightWhite extends Figure {
+public class QueenWhite extends Figure {
 
-
-    public KnightWhite(final Cell position) {
+    public QueenWhite(final Cell position) {
         super(position);
     }
-
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
@@ -25,6 +22,6 @@ public class KnightWhite extends Figure {
 
     @Override
     public Figure copy(Cell dest) {
-        return new KnightWhite(dest);
+        return new QueenWhite(dest);
     }
 }

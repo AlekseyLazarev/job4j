@@ -1,8 +1,10 @@
-package ru.alazarev.chess.figures;
+package ru.alazarev.chess;
 
 import ru.alazarev.chess.exception.FigureNotFoundException;
 import ru.alazarev.chess.exception.ImposibleMoveException;
 import ru.alazarev.chess.exception.OccupiedWayException;
+import ru.alazarev.chess.figures.Cell;
+import ru.alazarev.chess.figures.Figure;
 
 public class Board {
     private Figure[] figures = new Figure[32];
@@ -19,8 +21,8 @@ public class Board {
             throw new FigureNotFoundException("Figure not found");
         }
         Cell[] steps = this.figures[index].way(source, dest);
-        if (!(steps.length > 0) && !(steps[steps.length - 1].equals(dest))) {
-            throw new ImposibleMoveException("Impossible");
+        if (steps.length == 0 || !(steps[steps.length - 1].equals(dest))) {
+            throw new ImposibleMoveException("Impossible move");
         }
         for (Cell cell : steps) {
             if (findBy(cell) != -1) {
@@ -41,5 +43,12 @@ public class Board {
             }
         }
         return rst;
+    }
+
+    public void clean() {
+        for (int position = 0; position != this.figures.length; position++) {
+            this.figures[position] = null;
+        }
+        this.index = 0;
     }
 }

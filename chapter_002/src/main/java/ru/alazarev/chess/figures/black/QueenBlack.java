@@ -9,10 +9,10 @@ import ru.alazarev.chess.figures.Cell;
  * @version $Id$
  * @since 0.1
  */
-public class QeenBlack extends Figure {
+public class QueenBlack extends Figure {
 
 
-    public QeenBlack(final Cell position) {
+    public QueenBlack(final Cell position) {
         super(position);
     }
 
@@ -27,7 +27,7 @@ public class QeenBlack extends Figure {
 
     @Override
     public Figure copy(Cell dest) {
-        return new QeenBlack(dest);
+        return new QueenBlack(dest);
     }
 
 
