@@ -29,6 +29,7 @@ public class BoardTest {
         board.add(new KnightBlack(Cell.G8));
         board.add(new RookBlack(Cell.H8));
     }
+
     @Test(expected = ImposibleMoveException.class)
     public void whenBishopBlackMoveImpossible() {
         board.move(Cell.C8,Cell.C6);
@@ -43,5 +44,18 @@ public class BoardTest {
     @Test(expected = FigureNotFoundException.class)
     public void whenFigureNotFound() {
         board.move(Cell.C2,Cell.C2);
+    }
+
+    @Test(expected = ImposibleMoveException.class)
+    public void whenKingBlackMoveImpossible() {
+        board.move(Cell.E7,Cell.E6);
+        board.move(Cell.E6,Cell.E5);
+        board.move(Cell.E8,Cell.E7);
+        board.move(Cell.E7,Cell.A7);
+    }
+
+    @Test(expected = OccupiedWayException.class)
+    public void whenKingHasFigureOnWay() {
+        board.move(Cell.E8,Cell.E7);
     }
 }
