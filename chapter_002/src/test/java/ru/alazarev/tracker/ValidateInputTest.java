@@ -11,10 +11,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 /**
- * Class ConsoleInput решение задачи части 002. Урок 6.2. Рефакторинг - Шаблон Декоратор для валидатора. [#34117]
+ * Class ValidateInputTest решение задачи части 002. Урок 6.2. Рефакторинг - Шаблон Декоратор для валидатора. [#34117]
  *
  * @author Aleksey Lazarev
- * @since 15.11.2018
+ * @since 18.11.2018
  */
 public class ValidateInputTest {
     /**
