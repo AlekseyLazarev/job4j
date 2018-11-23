@@ -24,10 +24,14 @@ public class Board {
         if (steps.length == 0 || !(steps[steps.length - 1].equals(dest))) {
             throw new ImposibleMoveException("Impossible move");
         }
-        for (Cell cell : steps) {
-            if (findBy(cell) != -1) {
-                throw new OccupiedWayException("Figure on way " + cell);
+        if (!this.figures[index].getClass().toString().contains("Knight")) {
+            for (Cell cell : steps) {
+                if (findBy(cell) != -1) {
+                    throw new OccupiedWayException("Figure on way " + cell);
+                }
             }
+        } else if (findBy(dest) != -1) {
+            throw new OccupiedWayException("Figure on way " + dest);
         }
         this.figures[index] = this.figures[index].copy(dest);
         result = true;

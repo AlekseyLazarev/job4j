@@ -1,5 +1,6 @@
 package ru.alazarev.chess.figures.black;
 
+import ru.alazarev.chess.exception.ImposibleMoveException;
 import ru.alazarev.chess.figures.Figure;
 import ru.alazarev.chess.figures.Cell;
 
@@ -17,7 +18,35 @@ public class RookBlack extends Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[]{dest};
+        int deltaX = source.x - dest.x;
+        int deltaY = source.y - dest.y;
+        int stepX;
+        int stepY;
+        if (deltaX == 0) {
+            stepX = 0;
+        } else if (deltaX > 0) {
+            stepX = 1;
+        } else {
+            stepX = -1;
+        }
+        if (deltaY == 0) {
+            stepY = 0;
+        } else if (deltaY > 0) {
+            stepY = 1;
+        } else {
+            stepY = -1;
+        }
+        Cell[] steps = new Cell[Math.abs(deltaX) + Math.abs(deltaY)];
+        if (!isLine(source, dest)) {
+            throw new ImposibleMoveException("Impossible move for this rook");
+        }
+        for (int index = 0; index < steps.length; index++) {
+            int x = source.x - stepX * (index + 1);
+            int y = source.y - stepY * (index + 1);
+            steps[index] = Cell.values()[x * 8 + y];
+        }
+
+        return steps;
     }
 
     @Override
@@ -25,5 +54,7 @@ public class RookBlack extends Figure {
         return new RookBlack(dest);
     }
 
-
+    public boolean isLine(Cell source, Cell dest) {
+        return source.x == dest.x || source.y == dest.y;
+    }
 }

@@ -114,22 +114,22 @@ public class Chess extends Application {
     }
 
     private void buildBlackTeam(Group grid) {
-//        this.add(new PawnBlack(Cell.A7), grid);
-//        this.add(new PawnBlack(Cell.B7), grid);
-//        this.add(new PawnBlack(Cell.C7), grid);
-//        this.add(new PawnBlack(Cell.D7), grid);
-//        this.add(new PawnBlack(Cell.E7), grid);
-//        this.add(new PawnBlack(Cell.F7), grid);
-//        this.add(new PawnBlack(Cell.G7), grid);
-//        this.add(new PawnBlack(Cell.H7), grid);
-//        this.add(new RookBlack(Cell.A8), grid);
-//        this.add(new KnightBlack(Cell.B8), grid);
-//        this.add(new BishopBlack(Cell.C8), grid);
+        this.add(new PawnBlack(Cell.A7), grid);
+        this.add(new PawnBlack(Cell.B7), grid);
+        this.add(new PawnBlack(Cell.C7), grid);
+        this.add(new PawnBlack(Cell.D7), grid);
+        this.add(new PawnBlack(Cell.E7), grid);
+        this.add(new PawnBlack(Cell.F7), grid);
+        this.add(new PawnBlack(Cell.G7), grid);
+        this.add(new PawnBlack(Cell.H7), grid);
+        this.add(new RookBlack(Cell.A8), grid);
+        this.add(new KnightBlack(Cell.B8), grid);
+        this.add(new BishopBlack(Cell.C8), grid);
         this.add(new QueenBlack(Cell.D8), grid);
-//        this.add(new KingBlack(Cell.E8), grid);
-//        this.add(new BishopBlack(Cell.F8), grid);
-//        this.add(new KnightBlack(Cell.G8), grid);
-//        this.add(new RookBlack(Cell.H8), grid);
+        this.add(new KingBlack(Cell.E8), grid);
+        this.add(new BishopBlack(Cell.F8), grid);
+        this.add(new KnightBlack(Cell.G8), grid);
+        this.add(new RookBlack(Cell.H8), grid);
     }
 
     public void buildWhiteTeam(Group grid) {

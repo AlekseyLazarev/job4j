@@ -56,7 +56,41 @@ public class BoardTest {
     }
 
     @Test(expected = OccupiedWayException.class)
-    public void whenKingHasFigureOnWay() {
+    public void whenKingBlackHasFigureOnWay() {
         board.move(Cell.E8, Cell.E7);
     }
+
+    @Test(expected = ImposibleMoveException.class)
+    public void whenKnightBlackMoveImpossible() {
+        board.move(Cell.B8, Cell.D8);
+    }
+
+    @Test(expected = OccupiedWayException.class)
+    public void whenKnightBlackHasFigureOnWay() {
+        board.move(Cell.B8, Cell.D7);
+    }
+
+    @Test(expected = ImposibleMoveException.class)
+    public void whenPawnBlackMoveImpossible() {
+        board.move(Cell.B7, Cell.D6);
+    }
+
+    @Test(expected = OccupiedWayException.class)
+    public void whenPawnBlackHasFigureOnWay() {
+        board.move(Cell.B8, Cell.C6);
+        board.move(Cell.C7, Cell.C6);
+    }
+
+    @Test(expected = ImposibleMoveException.class)
+    public void whenQueenBlackMoveImpossible() {
+        board.move(Cell.B7, Cell.D6);
+    }
+
+    @Test(expected = OccupiedWayException.class)
+    public void whenQueenBlackHasFigureOnWay() {
+        board.move(Cell.B8, Cell.C6);
+        board.move(Cell.C7, Cell.C6);
+    }
+
+
 }
