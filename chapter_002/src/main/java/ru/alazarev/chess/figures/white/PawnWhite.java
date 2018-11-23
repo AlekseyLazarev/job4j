@@ -17,10 +17,9 @@ public class PawnWhite extends Figure {
         super(position);
     }
 
-
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        return new Cell[]{dest};
     }
 
     @Override

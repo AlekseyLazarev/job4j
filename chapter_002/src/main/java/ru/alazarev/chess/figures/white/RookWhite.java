@@ -6,7 +6,6 @@ import ru.alazarev.chess.figures.Figure;
 import ru.alazarev.chess.figures.FigureInterface;
 
 /**
- *
  * @author Petr Arsentev (parsentev@yandex.ru)
  * @version $Id$
  * @since 0.1
@@ -19,7 +18,7 @@ public class RookWhite extends Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        return new Cell[]{dest};
     }
 
     @Override

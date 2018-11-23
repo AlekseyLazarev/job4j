@@ -5,7 +5,6 @@ import ru.alazarev.chess.figures.Figure;
 import ru.alazarev.chess.figures.FigureInterface;
 
 /**
- *
  * @author Petr Arsentev (parsentev@yandex.ru)
  * @version $Id$
  * @since 0.1
@@ -13,13 +12,12 @@ import ru.alazarev.chess.figures.FigureInterface;
 public class BishopWhite extends Figure {
 
     public BishopWhite(final Cell position) {
-        super( position);
+        super(position);
     }
-
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        return new Cell[]{dest};
     }
 
     @Override

@@ -4,7 +4,6 @@ import ru.alazarev.chess.figures.Cell;
 import ru.alazarev.chess.figures.Figure;
 
 /**
- *
  * @author Petr Arsentev (parsentev@yandex.ru)
  * @version $Id$
  * @since 0.1
@@ -17,7 +16,7 @@ public class QueenWhite extends Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        return new Cell[]{dest};
     }
 
     @Override

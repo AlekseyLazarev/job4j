@@ -18,7 +18,7 @@ public class KingBlack extends Figure {
     public Cell[] way(Cell source, Cell dest) {
         Cell[] steps = new Cell[0];
         if (Math.abs(dest.x - source.x) == 1 || Math.abs(dest.y - source.y) == 1) {
-            steps = new Cell[] { dest };
+            steps = new Cell[]{dest};
         }
         return steps;
     }

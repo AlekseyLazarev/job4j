@@ -7,7 +7,6 @@ import ru.alazarev.chess.figures.FigureInterface;
 import java.lang.reflect.Field;
 
 /**
- *
  * @author Petr Arsentev (parsentev@yandex.ru)
  * @version $Id$
  * @since 0.1
@@ -18,10 +17,9 @@ public class KingWhite extends Figure {
         super(position);
     }
 
-
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        return new Cell[]{dest};
     }
 
     @Override

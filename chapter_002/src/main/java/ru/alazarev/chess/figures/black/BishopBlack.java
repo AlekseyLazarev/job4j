@@ -22,7 +22,7 @@ public class BishopBlack extends Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        if(!isDiagonal(source,dest)){
+        if (!isDiagonal(source, dest)) {
             throw new ImposibleMoveException("Impossible move, bishop can move only diagonal");
         }
         int deltaX = source.x - dest.x;
@@ -44,6 +44,6 @@ public class BishopBlack extends Figure {
     }
 
     public boolean isDiagonal(Cell source, Cell dest) {
-        return Math.abs(dest.x - source.x) == Math.abs(dest.y - source.y) ? true: false;
+        return Math.abs(dest.x - source.x) == Math.abs(dest.y - source.y);
     }
 }

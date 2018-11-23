@@ -17,9 +17,9 @@ public class Board {
     public boolean move(Cell source, Cell dest) {
         boolean result = false;
         int index = this.findBy(source);
-//        if (this.findBy(source) == -1) {
-//            throw new FigureNotFoundException("Figure not found");
-//        }
+        if (this.findBy(source) == -1) {
+            throw new FigureNotFoundException("Figure not found");
+        }
         Cell[] steps = this.figures[index].way(source, dest);
         if (steps.length == 0 || !(steps[steps.length - 1].equals(dest))) {
             throw new ImposibleMoveException("Impossible move");

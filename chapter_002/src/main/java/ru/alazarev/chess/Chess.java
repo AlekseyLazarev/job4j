@@ -123,12 +123,12 @@ public class Chess extends Application {
 //        this.add(new PawnBlack(Cell.G7), grid);
 //        this.add(new PawnBlack(Cell.H7), grid);
 //        this.add(new RookBlack(Cell.A8), grid);
-        this.add(new KnightBlack(Cell.B8), grid);
+//        this.add(new KnightBlack(Cell.B8), grid);
 //        this.add(new BishopBlack(Cell.C8), grid);
-//        this.add(new QueenBlack(Cell.D8), grid);
+        this.add(new QueenBlack(Cell.D8), grid);
 //        this.add(new KingBlack(Cell.E8), grid);
 //        this.add(new BishopBlack(Cell.F8), grid);
-        this.add(new KnightBlack(Cell.G8), grid);
+//        this.add(new KnightBlack(Cell.G8), grid);
 //        this.add(new RookBlack(Cell.H8), grid);
     }
 

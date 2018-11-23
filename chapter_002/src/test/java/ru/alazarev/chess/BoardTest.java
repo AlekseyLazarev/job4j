@@ -10,8 +10,9 @@ import ru.alazarev.chess.figures.black.*;
 
 public class BoardTest {
     private final Board board = new Board();
+
     @Before
-    public void buildBlackTeam(){
+    public void buildBlackTeam() {
         board.add(new PawnBlack(Cell.A7));
         board.add(new PawnBlack(Cell.B7));
         board.add(new PawnBlack(Cell.C7));
@@ -32,30 +33,30 @@ public class BoardTest {
 
     @Test(expected = ImposibleMoveException.class)
     public void whenBishopBlackMoveImpossible() {
-        board.move(Cell.C8,Cell.C6);
-        board.move(Cell.F8,Cell.A6);
+        board.move(Cell.C8, Cell.C6);
+        board.move(Cell.F8, Cell.A6);
     }
 
     @Test(expected = OccupiedWayException.class)
     public void whenBishopHasFigureOnWay() {
-        board.move(Cell.C8,Cell.A6);
+        board.move(Cell.C8, Cell.A6);
     }
 
     @Test(expected = FigureNotFoundException.class)
     public void whenFigureNotFound() {
-        board.move(Cell.C2,Cell.C2);
+        board.move(Cell.C2, Cell.C2);
     }
 
     @Test(expected = ImposibleMoveException.class)
     public void whenKingBlackMoveImpossible() {
-        board.move(Cell.E7,Cell.E6);
-        board.move(Cell.E6,Cell.E5);
-        board.move(Cell.E8,Cell.E7);
-        board.move(Cell.E7,Cell.A7);
+        board.move(Cell.E7, Cell.E6);
+        board.move(Cell.E6, Cell.E5);
+        board.move(Cell.E8, Cell.E7);
+        board.move(Cell.E7, Cell.A7);
     }
 
     @Test(expected = OccupiedWayException.class)
     public void whenKingHasFigureOnWay() {
-        board.move(Cell.E8,Cell.E7);
+        board.move(Cell.E8, Cell.E7);
     }
 }
