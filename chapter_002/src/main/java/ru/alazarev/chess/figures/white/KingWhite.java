@@ -2,9 +2,6 @@ package ru.alazarev.chess.figures.white;
 
 import ru.alazarev.chess.figures.Cell;
 import ru.alazarev.chess.figures.Figure;
-import ru.alazarev.chess.figures.FigureInterface;
-
-import java.lang.reflect.Field;
 
 /**
  * @author Petr Arsentev (parsentev@yandex.ru)
@@ -19,7 +16,11 @@ public class KingWhite extends Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[]{dest};
+        Cell[] steps = new Cell[0];
+        if (Math.abs(dest.x - source.x) == 1 || Math.abs(dest.y - source.y) == 1) {
+            steps = new Cell[]{dest};
+        }
+        return steps;
     }
 
     @Override
