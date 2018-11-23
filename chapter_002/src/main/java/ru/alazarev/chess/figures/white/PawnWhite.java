@@ -2,7 +2,6 @@ package ru.alazarev.chess.figures.white;
 
 import ru.alazarev.chess.figures.Cell;
 import ru.alazarev.chess.figures.Figure;
-import ru.alazarev.chess.figures.FigureInterface;
 
 /**
  * //TODO add comments.

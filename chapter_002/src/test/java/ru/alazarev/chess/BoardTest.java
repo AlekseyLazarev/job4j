@@ -83,13 +83,27 @@ public class BoardTest {
 
     @Test(expected = ImposibleMoveException.class)
     public void whenQueenBlackMoveImpossible() {
-        board.move(Cell.B7, Cell.D6);
+        board.move(Cell.C7, Cell.C6);
+        board.move(Cell.D8, Cell.A5);
+        board.move(Cell.A5, Cell.C4);
     }
 
     @Test(expected = OccupiedWayException.class)
     public void whenQueenBlackHasFigureOnWay() {
-        board.move(Cell.B8, Cell.C6);
-        board.move(Cell.C7, Cell.C6);
+        board.move(Cell.D8, Cell.B6);
+    }
+
+    @Test(expected = ImposibleMoveException.class)
+    public void whenRookBlackMoveImpossible() {
+        board.move(Cell.A7, Cell.A6);
+        board.move(Cell.A6, Cell.A5);
+        board.move(Cell.A8, Cell.A6);
+        board.move(Cell.A6, Cell.B5);
+    }
+
+    @Test(expected = OccupiedWayException.class)
+    public void whenRookBlackHasFigureOnWay() {
+        board.move(Cell.A8, Cell.A6);
     }
 
 

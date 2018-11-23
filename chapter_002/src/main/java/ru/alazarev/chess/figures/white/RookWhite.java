@@ -1,10 +1,9 @@
 package ru.alazarev.chess.figures.white;
 
-import ru.alazarev.chess.exception.FigureNotFoundException;
 import ru.alazarev.chess.exception.ImposibleMoveException;
 import ru.alazarev.chess.figures.Cell;
 import ru.alazarev.chess.figures.Figure;
-import ru.alazarev.chess.figures.FigureInterface;
+
 
 /**
  * @author Petr Arsentev (parsentev@yandex.ru)

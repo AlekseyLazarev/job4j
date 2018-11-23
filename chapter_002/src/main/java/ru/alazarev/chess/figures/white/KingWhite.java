@@ -2,9 +2,6 @@ package ru.alazarev.chess.figures.white;
 
 import ru.alazarev.chess.figures.Cell;
 import ru.alazarev.chess.figures.Figure;
-import ru.alazarev.chess.figures.FigureInterface;
-
-import java.lang.reflect.Field;
 
 /**
  * @author Petr Arsentev (parsentev@yandex.ru)
