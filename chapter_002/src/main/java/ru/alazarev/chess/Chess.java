@@ -12,7 +12,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import ru.alazarev.chess.exception.FigureNotFoundException;
 import ru.alazarev.chess.exception.ImposibleMoveException;
+import ru.alazarev.chess.exception.OccupiedWayException;
 import ru.alazarev.chess.figures.Cell;
 import ru.alazarev.chess.figures.Figure;
 import ru.alazarev.chess.figures.black.*;
@@ -61,12 +63,20 @@ public class Chess extends Application {
         );
         rect.setOnMouseReleased(
                 event -> {
+                    try{
                     if (board.move(this.findBy(momento.getX(), momento.getY()), this.findBy(event.getX(), event.getY()))) {
                         rect.setX(((int) event.getX() / 40) * 40 + 5);
                         rect.setY(((int) event.getY() / 40) * 40 + 5);
                     } else {
                         rect.setX(((int) momento.getX() / 40) * 40 + 5);
                         rect.setY(((int) momento.getY() / 40) * 40 + 5);
+                    }
+                    }  catch (ImposibleMoveException ime) {
+                        System.out.println("Impossible move");
+                    } catch (OccupiedWayException owe) {
+                        System.out.println("Figure on way!");
+                    } catch (FigureNotFoundException fnfe) {
+                        System.out.println("Figure not found!");
                     }
                 }
         );

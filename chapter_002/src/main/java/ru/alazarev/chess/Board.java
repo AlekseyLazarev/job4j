@@ -17,32 +17,24 @@ public class Board {
     public boolean move(Cell source, Cell dest) {
         boolean result = false;
         int index = this.findBy(source);
-        try {
-            if (this.findBy(source) == -1) {
-                throw new FigureNotFoundException("Figure not found");
-            }
-            Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length == 0 || !(steps[steps.length - 1].equals(dest))) {
-                throw new ImposibleMoveException("Impossible move");
-            }
-            if (!this.figures[index].getClass().toString().contains("Knight")) {
-                for (Cell cell : steps) {
-                    if (findBy(cell) != -1) {
-                        throw new OccupiedWayException("Figure on way " + cell);
-                    }
-                }
-            } else if (findBy(dest) != -1) {
-                throw new OccupiedWayException("Figure on way " + dest);
-            }
-            this.figures[index] = this.figures[index].copy(dest);
-            result = true;
-        } catch (ImposibleMoveException ime) {
-            System.out.println("Impossible move");
-        } catch (OccupiedWayException owe) {
-            System.out.println("Figure on way!");
-        } catch (FigureNotFoundException fnfe) {
-            System.out.println("Figure not found!");
+        if (this.findBy(source) == -1) {
+            throw new FigureNotFoundException("Figure not found");
         }
+        Cell[] steps = this.figures[index].way(source, dest);
+        if (steps.length == 0 || !(steps[steps.length - 1].equals(dest))) {
+            throw new ImposibleMoveException("Impossible move");
+        }
+        if (!this.figures[index].getClass().toString().contains("Knight")) {
+            for (Cell cell : steps) {
+                if (findBy(cell) != -1) {
+                    throw new OccupiedWayException("Figure on way " + cell);
+                }
+            }
+        } else if (findBy(dest) != -1) {
+            throw new OccupiedWayException("Figure on way " + dest);
+        }
+        this.figures[index] = this.figures[index].copy(dest);
+        result = true;
         return result;
     }
 
