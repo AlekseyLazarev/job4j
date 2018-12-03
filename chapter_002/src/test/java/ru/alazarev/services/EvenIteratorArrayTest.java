@@ -10,6 +10,12 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+/**
+ * Class EvenIteratorArrayTest test EvenIteratorArray.
+ *
+ * @author Aleksey Lazarev
+ * @since 29.11.2018
+ */
 public class EvenIteratorArrayTest {
     private Iterator<Integer> it;
 

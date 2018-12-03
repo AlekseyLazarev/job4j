@@ -10,6 +10,7 @@ import static org.hamcrest.core.Is.is;
 public class SimpleArrayTest {
     private final int size = 10;
     private SimpleArray<Integer> simpleArray = new SimpleArray<>(size);
+
     @Before
     /**
      * Before test method.
@@ -21,10 +22,10 @@ public class SimpleArrayTest {
     }
 
     /**
-     * Test method next.
+     * Test method hasNext.
      */
     @Test
-    public void testsThatNextMethodDoesntDependsOnPriorHasNextInvocation() {
+    public void whenHasNextAfterFiveNextThenReturnTrue() {
         assertThat(simpleArray.next(), Matchers.is(0));
         assertThat(simpleArray.next(), Matchers.is(1));
         assertThat(simpleArray.next(), Matchers.is(2));
@@ -35,18 +36,27 @@ public class SimpleArrayTest {
         assertThat(simpleArray.hasNext(), Matchers.is(true));
     }
 
+    /**
+     * Test method add.
+     */
     @Test
     public void whenAddFiveIndexElementBySixValueThenReturnSix() {
         simpleArray.add(6);
         assertThat(simpleArray.get(5), is(6));
     }
 
+    /**
+     * Test method delete.
+     */
     @Test
     public void whenDeleteThreeIndexThenThreeIndexElementIsEmpty() {
         simpleArray.delete(3);
         assertThat(simpleArray.get(3), is(""));
     }
 
+    /**
+     * Test method checkOverflow.
+     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void whenOverflowAdd() {
         SimpleArray<Integer> simpleArray = new SimpleArray<Integer>(10);
@@ -55,9 +65,20 @@ public class SimpleArrayTest {
         }
     }
 
+    /**
+     * Test method set.
+     */
     @Test
-    public void whenSetTwoElementBySixValueThenTwoElementWasSixValue(){
+    public void whenSetTwoElementBySixValueThenTwoElementWasSixValue() {
         simpleArray.set(2, 16);
         assertThat(simpleArray.get(2), is(16));
+    }
+
+    /**
+     * Test method Next.
+     */
+    @Test
+    public void whenNextReturnFirstElement() {
+        assertThat(simpleArray.next(), is(0));
     }
 }
