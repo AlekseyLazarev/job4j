@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * @author Aleksey Lazarev
  * @since 29.11.2018
  */
-public class EvenIteratorArray implements Iterator {
+public class EvenIteratorArray implements Iterator<Integer> {
 
     private final int[] numbers;
 
@@ -25,16 +25,6 @@ public class EvenIteratorArray implements Iterator {
     }
 
     /**
-     * Method check parity of number.
-     *
-     * @param number Number for check.
-     * @return result of check.
-     */
-    public boolean checkEven(int number) {
-        return number % 2 == 0;
-    }
-
-    /**
      * Check for the next even item.
      *
      * @return result check.
@@ -42,7 +32,7 @@ public class EvenIteratorArray implements Iterator {
     public boolean hasNext() {
         boolean result = false;
         while (index < numbers.length) {
-            if (checkEven(numbers[index])) {
+            if (numbers[index] % 2 == 0) {
                 result = true;
                 break;
             }
@@ -57,12 +47,10 @@ public class EvenIteratorArray implements Iterator {
      * @return element array.
      * @throws NoSuchElementException
      */
-    public Object next() throws NoSuchElementException {
-        if (numbers.length == 0 || index == numbers.length) {
-            throw new NoSuchElementException("Null array");
+    public Integer next() throws NoSuchElementException {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
         }
-        Object result = checkEven(numbers[index]) ? numbers[index] : "odd";
-        index ++;
-        return result;
+        return numbers[index++];
     }
 }

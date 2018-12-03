@@ -24,12 +24,10 @@ public class EvenIteratorArrayTest {
     /**
      * Test method next.
      */
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void testsThatNextMethodDoesntDependsOnPriorHasNextInvocation() {
-        assertThat(it.next(), is("odd"));
-        assertThat(it.next(), is("odd"));
         assertThat(it.next(), is(4));
-        assertThat(it.next(), is("odd"));
+        assertThat(it.next(), is(new NoSuchElementException()));
     }
 
     /**
