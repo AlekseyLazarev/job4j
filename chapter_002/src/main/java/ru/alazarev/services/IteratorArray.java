@@ -41,7 +41,7 @@ public class IteratorArray implements Iterator {
      */
     public Object next() throws NoSuchElementException {
         Object result = null;
-        if (values.length == 0) {
+        if (!hasNext()) {
             throw new NoSuchElementException("Null array");
         }
         if (values[row].length == col) {

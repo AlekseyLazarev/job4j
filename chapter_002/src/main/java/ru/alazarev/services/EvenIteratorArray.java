@@ -40,7 +40,15 @@ public class EvenIteratorArray implements Iterator {
      * @return result check.
      */
     public boolean hasNext() {
-        return checkEven(numbers[index + 1]);
+        boolean result = false;
+        while (index < numbers.length) {
+            if (checkEven(numbers[index])) {
+                result = true;
+                break;
+            }
+            index++;
+        }
+        return result;
     }
 
     /**
@@ -50,9 +58,11 @@ public class EvenIteratorArray implements Iterator {
      * @throws NoSuchElementException
      */
     public Object next() throws NoSuchElementException {
-        if (numbers.length == 0) {
+        if (numbers.length == 0 || index == numbers.length) {
             throw new NoSuchElementException("Null array");
         }
-        return checkEven(numbers[index]) ? numbers[index++] : "odd";
+        Object result = checkEven(numbers[index]) ? numbers[index] : "odd";
+        index ++;
+        return result;
     }
 }
