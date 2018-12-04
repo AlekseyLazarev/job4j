@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * @since 03.12.2018
  */
 public class SimpleArray<T> implements Iterator<T> {
-    Object[] models;
+    private Object[] models;
     private int index = 0;
     private int position = 0;
 
@@ -62,14 +62,14 @@ public class SimpleArray<T> implements Iterator<T> {
      */
     public void delete(int index) {
         checkOverflow(index);
-        this.models[index] = "";
+        this.models[index] = null;
     }
 
     /**
      * Get element by index.
      *
      * @param index Element index.
-     * @return
+     * @return element by index.
      */
     public T get(int index) {
         checkOverflow(index);
