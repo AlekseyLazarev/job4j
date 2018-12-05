@@ -12,6 +12,7 @@ public class AbstractStore<T extends Base> implements Store<T> {
 
     private SimpleArray<T> models;
     private int size;
+    private int countElements = 0;
 
     /**
      * Constructor.
@@ -23,6 +24,10 @@ public class AbstractStore<T extends Base> implements Store<T> {
         models = new SimpleArray(this.size);
     }
 
+    public int getCountElements() {
+        return countElements;
+    }
+
     /**
      * Add new element method.
      *
@@ -30,6 +35,7 @@ public class AbstractStore<T extends Base> implements Store<T> {
      */
     public void add(T model) {
         models.add(model);
+        countElements++;
     }
 
     /**
@@ -61,6 +67,7 @@ public class AbstractStore<T extends Base> implements Store<T> {
         if (index != -1) {
             models.delete(index);
             result = true;
+            countElements--;
         }
         return result;
     }
@@ -73,11 +80,13 @@ public class AbstractStore<T extends Base> implements Store<T> {
      */
     public T findById(String id) {
         T result = null;
-        for (int index = 0; index < size; index++) {
+        int index = 0;
+        while (index < countElements) {
             if (models.get(index) != null && models.get(index).getId().equals(id)) {
                 result = models.get(index);
                 break;
             }
+            index++;
         }
         return result;
     }
@@ -90,11 +99,13 @@ public class AbstractStore<T extends Base> implements Store<T> {
      */
     public int findIndexById(String id) {
         int result = -1;
-        for (int index = 0; index < size; index++) {
+        int index = 0;
+        while (index < countElements) {
             if (models.get(index) != null && models.get(index).getId().equals(id)) {
                 result = index;
                 break;
             }
+            index++;
         }
         return result;
     }
