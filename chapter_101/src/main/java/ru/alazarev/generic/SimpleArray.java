@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * @author Aleksey Lazarev
  * @since 03.12.2018
  */
-public class SimpleArray<T> implements Iterator<T> {
+public class SimpleArray<T> implements Iterable<T> {
     private Object[] models;
     private int index = 0;
     private int position = 0;
@@ -62,7 +62,7 @@ public class SimpleArray<T> implements Iterator<T> {
      */
     public void delete(int index) {
         checkOverflow(index);
-        this.models[index] = null;
+        System.arraycopy(models, index + 1, models, index, models.length - index - 1);
     }
 
     /**
@@ -76,33 +76,37 @@ public class SimpleArray<T> implements Iterator<T> {
         return (T) this.models[index];
     }
 
-    /**
-     * Check has next element in array or not.
-     *
-     * @return
-     */
-    public boolean hasNext() {
-        boolean result = false;
-        while (position < models.length) {
-            if (models[position] != null) {
-                result = true;
-                break;
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            /**
+             * Check has next element in array or not.
+             *
+             * @return
+             */
+            public boolean hasNext() {
+                boolean result = false;
+                while (position < models.length) {
+                    if (models[position] != null) {
+                        result = true;
+                        break;
+                    }
+                    position++;
+                }
+                return result;
             }
-            position++;
-        }
-        return result;
-    }
 
-    /**
-     * Return next element in array.
-     *
-     * @return next element.
-     * @throws NoSuchElementException
-     */
-    public T next() throws NoSuchElementException {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        return (T) models[position++];
+            /**
+             * Return next element in array.
+             *
+             * @return next element.
+             * @throws NoSuchElementException
+             */
+            public T next() throws NoSuchElementException {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return (T) models[position++];
+            }
+        };
     }
 }

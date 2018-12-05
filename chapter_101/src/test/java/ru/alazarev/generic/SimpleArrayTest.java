@@ -4,6 +4,8 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Iterator;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
@@ -11,6 +13,7 @@ import static org.hamcrest.core.IsNull.nullValue;
 public class SimpleArrayTest {
     private final int size = 10;
     private SimpleArray<Integer> simpleArray = new SimpleArray<>(size);
+    private Iterator simpleIterator;
 
     @Before
     /**
@@ -20,6 +23,7 @@ public class SimpleArrayTest {
         for (int index = 0; index < size / 2; index++) {
             simpleArray.add(index);
         }
+        simpleIterator = simpleArray.iterator();
     }
 
     /**
@@ -27,14 +31,15 @@ public class SimpleArrayTest {
      */
     @Test
     public void whenHasNextAfterFiveNextThenReturnTrue() {
-        assertThat(simpleArray.next(), Matchers.is(0));
-        assertThat(simpleArray.next(), Matchers.is(1));
-        assertThat(simpleArray.next(), Matchers.is(2));
-        assertThat(simpleArray.next(), Matchers.is(3));
-        assertThat(simpleArray.next(), Matchers.is(4));
-        simpleArray.add(null);
-        simpleArray.add(6);
-        assertThat(simpleArray.hasNext(), Matchers.is(true));
+
+        assertThat(this.simpleIterator.next(), Matchers.is(0));
+        assertThat(this.simpleIterator.next(), Matchers.is(1));
+        assertThat(this.simpleIterator.next(), Matchers.is(2));
+        assertThat(this.simpleIterator.next(), Matchers.is(3));
+        assertThat(this.simpleIterator.next(), Matchers.is(4));
+        this.simpleArray.add(null);
+        this.simpleArray.add(6);
+        assertThat(this.simpleArray.iterator().hasNext(), Matchers.is(true));
     }
 
     /**
@@ -42,8 +47,8 @@ public class SimpleArrayTest {
      */
     @Test
     public void whenAddFiveIndexElementBySixValueThenReturnSix() {
-        simpleArray.add(6);
-        assertThat(simpleArray.get(5), is(6));
+        this.simpleArray.add(6);
+        assertThat(this.simpleArray.get(5), is(6));
     }
 
     /**
@@ -51,8 +56,8 @@ public class SimpleArrayTest {
      */
     @Test
     public void whenDeleteThreeIndexThenThreeIndexElementIsEmpty() {
-        simpleArray.delete(3);
-        assertThat(simpleArray.get(3), nullValue());
+        this.simpleArray.delete(3);
+        assertThat(this.simpleArray.get(3), is(4));
     }
 
     /**
@@ -80,6 +85,6 @@ public class SimpleArrayTest {
      */
     @Test
     public void whenNextReturnFirstElement() {
-        assertThat(simpleArray.next(), is(0));
+        assertThat(simpleArray.iterator().next(), is(0));
     }
 }
