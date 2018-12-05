@@ -41,8 +41,9 @@ public class AbstractStore<T extends Base> implements Store<T> {
      */
     public boolean replace(String id, T model) {
         boolean result = false;
-        if (findById(id) != null) {
-            models.set(findIndexById(id), model);
+        int findItem = findIndexById(id);
+        if (findItem != -1) {
+            models.set(findItem, model);
             result = true;
         }
         return result;
@@ -72,16 +73,13 @@ public class AbstractStore<T extends Base> implements Store<T> {
      */
     public T findById(String id) {
         T result = null;
-        try {
-            for (int index = 0; index < size; index++) {
-
-                if (models.get(index).getId().equals(id)) {
-                    result = models.get(index);
-                    break;
-                }
+        int index = 0;
+        while (models.get(index) != null) {
+            if (models.get(index).getId().equals(id)) {
+                result = models.get(index);
+                break;
             }
-        } catch (NullPointerException npe) {
-            System.out.println("ITEM NOT FOUND");
+            index++;
         }
         return result;
     }
@@ -94,11 +92,13 @@ public class AbstractStore<T extends Base> implements Store<T> {
      */
     public int findIndexById(String id) {
         int result = -1;
-        for (int index = 0; index < size; index++) {
+        int index = 0;
+        while (models.get(index) != null) {
             if (models.get(index).getId().equals(id)) {
                 result = index;
                 break;
             }
+            index++;
         }
         return result;
     }
