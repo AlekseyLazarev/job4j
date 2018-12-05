@@ -73,13 +73,11 @@ public class AbstractStore<T extends Base> implements Store<T> {
      */
     public T findById(String id) {
         T result = null;
-        int index = 0;
-        while (models.get(index) != null) {
-            if (models.get(index).getId().equals(id)) {
+        for (int index = 0; index < size; index++) {
+            if (models.get(index) != null && models.get(index).getId().equals(id)) {
                 result = models.get(index);
                 break;
             }
-            index++;
         }
         return result;
     }
@@ -92,13 +90,11 @@ public class AbstractStore<T extends Base> implements Store<T> {
      */
     public int findIndexById(String id) {
         int result = -1;
-        int index = 0;
-        while (models.get(index) != null) {
-            if (models.get(index).getId().equals(id)) {
+        for (int index = 0; index < size; index++) {
+            if (models.get(index) != null && models.get(index).getId().equals(id)) {
                 result = index;
                 break;
             }
-            index++;
         }
         return result;
     }
