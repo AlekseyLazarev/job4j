@@ -79,16 +79,8 @@ public class AbstractStore<T extends Base> implements Store<T> {
      * @return Find element.
      */
     public T findById(String id) {
-        T result = null;
-        int index = 0;
-        while (index < countElements) {
-            if (models.get(index) != null && models.get(index).getId().equals(id)) {
-                result = models.get(index);
-                break;
-            }
-            index++;
-        }
-        return result;
+        int index = findIndexById(id);
+        return index != -1 ? models.get(index) : null;
     }
 
     /**
