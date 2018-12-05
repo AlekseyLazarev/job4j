@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 public class SimpleArray<T> implements Iterable<T> {
     private Object[] models;
     private int index = 0;
-    private int position = 0;
+
 
     /**
      * Constructor.
@@ -78,6 +78,8 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public Iterator<T> iterator() {
         return new Iterator<T>() {
+            private int position = 0;
+
             /**
              * Check has next element in array or not.
              *
@@ -85,12 +87,8 @@ public class SimpleArray<T> implements Iterable<T> {
              */
             public boolean hasNext() {
                 boolean result = false;
-                while (position < models.length) {
-                    if (models[position] != null) {
-                        result = true;
-                        break;
-                    }
-                    position++;
+                if (position < index) {
+                    result = true;
                 }
                 return result;
             }
