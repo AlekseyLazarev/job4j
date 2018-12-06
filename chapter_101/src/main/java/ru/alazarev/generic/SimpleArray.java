@@ -13,7 +13,6 @@ public class SimpleArray<T> implements Iterable<T> {
     private Object[] models;
     private int index = 0;
 
-
     /**
      * Constructor.
      *
@@ -76,6 +75,11 @@ public class SimpleArray<T> implements Iterable<T> {
         return (T) this.models[index];
     }
 
+    /**
+     * Method create iterator.
+     *
+     * @return Iterator of T.
+     */
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private int position = 0;
@@ -83,14 +87,10 @@ public class SimpleArray<T> implements Iterable<T> {
             /**
              * Check has next element in array or not.
              *
-             * @return
+             * @return true if has next element in array.
              */
             public boolean hasNext() {
-                boolean result = false;
-                if (position < index) {
-                    result = true;
-                }
-                return result;
+                return position < index;
             }
 
             /**
