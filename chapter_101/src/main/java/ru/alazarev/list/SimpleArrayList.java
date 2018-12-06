@@ -11,6 +11,10 @@ public class SimpleArrayList<E> {
     private int size;
     private Node<E> first;
 
+    public boolean checkEmpty() {
+        return this.first == null;
+    }
+
     /**
      * Method add element in list.
      *
@@ -29,13 +33,17 @@ public class SimpleArrayList<E> {
      * @return First date item.
      */
     public E delete() {
-        Node<E> result = this.first;
-        for (int index = 1; index < this.size - 1; index++) {
-            result = result.next;
+        E resultDate = null;
+        if (!checkEmpty()) {
+            Node<E> result = this.first;
+            for (int index = 1; index < this.size - 1; index++) {
+                result = result.next;
+            }
+            result.next = null;
+            this.size--;
+            resultDate = this.first.date;
         }
-        result.next = null;
-        this.size--;
-        return this.first.date;
+        return resultDate;
     }
 
     /**
@@ -45,15 +53,19 @@ public class SimpleArrayList<E> {
      * @return Date element.
      */
     public E get(int index) {
-        Node<E> result = this.first;
-        for (int i = 0; i < index; i++) {
-            if (result.next != null) {
-                result = result.next;
-            } else {
-                result.date = null;
+        E resultDate = null;
+        if (!checkEmpty()) {
+            Node<E> result = this.first;
+            for (int i = 0; i < index; i++) {
+                if (result.next != null) {
+                    result = result.next;
+                } else {
+                    result.date = null;
+                }
             }
+            resultDate = result.date;
         }
-        return result.date;
+        return resultDate;
     }
 
     /**

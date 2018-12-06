@@ -54,4 +54,13 @@ public class SimpleArrayListTest {
         assertThat(list.get(1), is(2));
         assertThat(list.get(2), nullValue());
     }
+    /**
+     * Test delete method with empty list.
+     */
+    @Test
+    public void whenDeleteThen() {
+        list = new SimpleArrayList<>();
+        list.delete();
+        assertThat(list.get(0), is(nullValue()));
+    }
 }
