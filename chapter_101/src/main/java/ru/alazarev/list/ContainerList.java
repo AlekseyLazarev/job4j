@@ -90,7 +90,7 @@ public class ContainerList<E> implements Iterable<E> {
              * @return true if has next element in list.
              * @throws ConcurrentModificationException
              */
-            public boolean hasNext() throws ConcurrentModificationException {
+            public boolean hasNext() {
                 boolean result = false;
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
@@ -112,7 +112,7 @@ public class ContainerList<E> implements Iterable<E> {
              * @return next element.
              * @throws NoSuchElementException
              */
-            public E next() throws NoSuchElementException {
+            public E next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }

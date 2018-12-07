@@ -80,7 +80,7 @@ public class SimpleArrayList<E> {
     /**
      * Storage date class.
      *
-     * @param <E> Element for storage.
+     * @param <E> Type element for storage.
      */
     private static class Node<E> {
 

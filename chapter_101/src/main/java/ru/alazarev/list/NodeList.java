@@ -82,7 +82,7 @@ public class NodeList<E> implements Iterable<E> {
             public E next() {
                 E result = null;
                 if (!checkEmpty()) {
-                    if(!hasNext()) {
+                    if (!hasNext()) {
                         throw new NoSuchElementException();
                     } else {
                         result = first.next.data;
