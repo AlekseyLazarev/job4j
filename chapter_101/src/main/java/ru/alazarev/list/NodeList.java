@@ -13,6 +13,9 @@ public class NodeList<E> implements Iterable<E> {
         return this.first == null;
     }
 
+    public int getSize() {
+        return this.size;
+    }
     /**
      * Check array overflow.
      *
@@ -25,6 +28,10 @@ public class NodeList<E> implements Iterable<E> {
         }
     }
 
+    /**
+     * Method add value in list.
+     * @param value Value for add.
+     */
     public void add(E value) {
         Node<E> newLink = new Node<>(value);
         newLink.next = this.first;
@@ -33,18 +40,20 @@ public class NodeList<E> implements Iterable<E> {
         this.modCount++;
     }
 
-    public E get(int index) {
+    /**
+     * Get element from list.
+     * @param position Element position.
+     * @return Element by this position.
+     */
+    public E get(int position) {
         E resultData = null;
-        checkOverflow(index);
+        checkOverflow(position);
         if (!checkEmpty()) {
             Node<E> result = this.first;
-            while (index > 0) {
+            for (int index = 0; index < position; index++) {
                 if (result.next != null) {
                     result = result.next;
-                } else {
-                    result.data = null;
                 }
-                index--;
             }
             resultData = result.data;
         }
@@ -59,6 +68,8 @@ public class NodeList<E> implements Iterable<E> {
     public Iterator iterator() {
         return new Iterator() {
             private int expectedModCount = modCount;
+            private int size = getSize();
+            private int position = 0;
 
             /**
              * Check has next element in list or not.
@@ -70,7 +81,7 @@ public class NodeList<E> implements Iterable<E> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return first.next != null;
+                return this.position < this.size && first.next != null;
             }
 
             /**
@@ -80,16 +91,20 @@ public class NodeList<E> implements Iterable<E> {
              * @throws NoSuchElementException
              */
             public E next() {
-                E result = null;
+                Node<E> result = null;
+                E resultData = null;
                 if (!checkEmpty()) {
                     if (!hasNext()) {
                         throw new NoSuchElementException();
-                    } else {
-                        result = first.next.data;
-                        first = first.next;
                     }
+                    result = first;
+                    for (int index = 0; index < position; index++) {
+                        result = result.next;
+                    }
+                    this.position++;
+                resultData = result.data;
                 }
-                return result;
+                return resultData;
             }
         };
     }

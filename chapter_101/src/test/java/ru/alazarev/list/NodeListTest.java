@@ -62,13 +62,31 @@ public class NodeListTest {
     }
 
     /**
+     * Test get method with position > size.
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void whenGetWithPositionOverSizeThen() {
+        nodeList.get(1000);
+    }
+
+    /**
      * Test next iterator method.
      */
     @Test(expected = NoSuchElementException.class)
     public void whenNextTenThenNoSuchElementException() {
-        for (int index = 1; index < size; index++) {
+        for (int index = 0; index < size; index++) {
             assertThat(iterator.next(), is(size - index));
         }
+        assertThat(iterator.next(), is(nullValue()));
+    }
+
+    /**
+     * Test next iterator method when list is empty.
+     */
+    @Test
+    public void whenNextWithEmptyList() {
+        nodeList = new NodeList<>();
+        iterator = nodeList.iterator();
         assertThat(iterator.next(), is(nullValue()));
     }
 
@@ -77,7 +95,7 @@ public class NodeListTest {
      */
     @Test
     public void whenHasNext() {
-        for (int index = 1; index < size; index++) {
+        for (int index = 0; index < size; index++) {
             assertThat(iterator.hasNext(), is(true));
             iterator.next();
         }
