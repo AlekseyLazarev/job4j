@@ -74,12 +74,13 @@ public class NodeList<E> implements Iterable<E> {
      * @return Deleted element.
      */
     public E delete(int position) {
-        Node<E> result = findNode(position);
-        E resultData = result.data;
-        result = result.next;
+        Node<E> previous = findNode(position - 1);
+        E resultData = previous.data;
+        Node<E> next = previous.next;
+        previous.next = next.next;
         this.size--;
         this.modCount++;
-        this.first = result;
+       // this.first = previous;
         return resultData;
     }
 
@@ -103,11 +104,12 @@ public class NodeList<E> implements Iterable<E> {
      *
      * @return Iterator of E.
      */
-    public Iterator iterator() {
-        return new Iterator() {
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
             private int expectedModCount = modCount;
             private int size = getSize();
             private int position = 0;
+            private Node<E> current = first;
 
             /**
              * Check has next element in list or not.
@@ -119,7 +121,7 @@ public class NodeList<E> implements Iterable<E> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return this.position < this.size && first.next != null;
+                return this.position < this.size;
             }
 
             /**
@@ -129,20 +131,13 @@ public class NodeList<E> implements Iterable<E> {
              * @throws NoSuchElementException
              */
             public E next() {
-                Node<E> result = null;
-                E resultData = null;
-                if (!checkEmpty()) {
-                    if (!hasNext()) {
-                        throw new NoSuchElementException();
-                    }
-                    result = first;
-                    for (int index = 0; index < position; index++) {
-                        result = result.next;
-                    }
-                    this.position++;
-                    resultData = result.data;
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
                 }
-                return resultData;
+                E result = current.data;
+                current = current.next;
+                position++;
+                return result;
             }
         };
     }

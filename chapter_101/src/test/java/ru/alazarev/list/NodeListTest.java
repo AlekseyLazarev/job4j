@@ -1,5 +1,6 @@
 package ru.alazarev.list;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -83,11 +84,11 @@ public class NodeListTest {
     /**
      * Test next iterator method when list is empty.
      */
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void whenNextWithEmptyList() {
         nodeList = new NodeList<>();
         iterator = nodeList.iterator();
-        assertThat(iterator.next(), is(nullValue()));
+        iterator.next();
     }
 
     /**
@@ -114,5 +115,16 @@ public class NodeListTest {
     @Test
     public void whenDeleteThen() {
         assertThat(nodeList.delete(0), is(size));
+    }
+
+    @Test
+    public void name() {
+        NodeList<Integer> list = new NodeList<>();
+        for(int index = 1; index < 5; index++) {
+            list.add(index);
+        }
+        System.out.println(list.delete(2));
+        Iterator iterator = list.iterator();
+        Assert.assertThat(iterator.hasNext(), is(true));
     }
 }
