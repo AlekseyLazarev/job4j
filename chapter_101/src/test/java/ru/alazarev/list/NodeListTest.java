@@ -101,6 +101,7 @@ public class NodeListTest {
         }
         assertThat(iterator.hasNext(), is(false));
     }
+
     /**
      * Test exception after modified nodeList.
      */
@@ -112,6 +113,6 @@ public class NodeListTest {
 
     @Test
     public void whenDeleteThen() {
-        assertThat(nodeList.delete(0), is(nullValue()));
+        assertThat(nodeList.delete(0), is(size));
     }
 }

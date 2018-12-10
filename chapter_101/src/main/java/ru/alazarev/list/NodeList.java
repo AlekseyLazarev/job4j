@@ -58,7 +58,7 @@ public class NodeList<E> implements Iterable<E> {
         this.modCount++;
     }
 
-    public Node<E> findNode(int position){
+    public Node<E> findNode(int position) {
         Node<E> result = this.first;
         for (int index = 0; index < position; index++) {
             if (result.next != null) {
@@ -76,12 +76,10 @@ public class NodeList<E> implements Iterable<E> {
     public E delete(int position) {
         Node<E> result = findNode(position);
         E resultData = result.data;
-        //first = first.next;
         result = result.next;
-
-
-
-        size--;
+        this.size--;
+        this.modCount++;
+        this.first = result;
         return resultData;
     }
 
