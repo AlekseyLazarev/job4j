@@ -4,18 +4,35 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Class ContainerList решение задачи части 001. 5.3.2. Создать контейнер на базе связанного списка  [#159].
+ *
+ * @author Aleksey Lazarev
+ * @since 07.12.2018
+ */
 public class NodeList<E> implements Iterable<E> {
     private Node<E> first;
     private int size = 0;
     private int modCount = 0;
 
+    /**
+     * Check empty list.
+     *
+     * @return Result of check.
+     */
     public boolean checkEmpty() {
         return this.first == null;
     }
 
+    /**
+     * Get method for size.
+     *
+     * @return Size.
+     */
     public int getSize() {
         return this.size;
     }
+
     /**
      * Check array overflow.
      *
@@ -30,6 +47,7 @@ public class NodeList<E> implements Iterable<E> {
 
     /**
      * Method add value in list.
+     *
      * @param value Value for add.
      */
     public void add(E value) {
@@ -40,8 +58,36 @@ public class NodeList<E> implements Iterable<E> {
         this.modCount++;
     }
 
+    public Node<E> findNode(int position){
+        Node<E> result = this.first;
+        for (int index = 0; index < position; index++) {
+            if (result.next != null) {
+                result = result.next;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Method delete upper element and return that.
+     *
+     * @return Deleted element.
+     */
+    public E delete(int position) {
+        Node<E> result = findNode(position);
+        E resultData = result.data;
+        //first = first.next;
+        result = result.next;
+
+
+
+        size--;
+        return resultData;
+    }
+
     /**
      * Get element from list.
+     *
      * @param position Element position.
      * @return Element by this position.
      */
@@ -49,13 +95,7 @@ public class NodeList<E> implements Iterable<E> {
         E resultData = null;
         checkOverflow(position);
         if (!checkEmpty()) {
-            Node<E> result = this.first;
-            for (int index = 0; index < position; index++) {
-                if (result.next != null) {
-                    result = result.next;
-                }
-            }
-            resultData = result.data;
+            resultData = findNode(position).data;
         }
         return resultData;
     }
@@ -102,7 +142,7 @@ public class NodeList<E> implements Iterable<E> {
                         result = result.next;
                     }
                     this.position++;
-                resultData = result.data;
+                    resultData = result.data;
                 }
                 return resultData;
             }

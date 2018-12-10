@@ -12,15 +12,15 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 
 /**
- * Class SimpleArrayListTest решение задачи части 001. Урок 5.3.0 Создать метод delete для односвязного списка [#51424].
+ * Class NodeListTest решение задачи части 001. Урок 5.3.2. Создать контейнер на базе связанного списка  [#159].
  *
  * @author Aleksey Lazarev
- * @since 05.12.2018
+ * @since 07.12.2018
  */
 public class NodeListTest {
     private NodeList<Integer> nodeList;
     private int[] ex;
-    private int size = 10;
+    private int size = 4;
     private Iterator iterator;
 
     /**
@@ -108,5 +108,10 @@ public class NodeListTest {
     public void whenModifiedListThenConcurrentModificationException() {
         nodeList.add(99);
         iterator.next();
+    }
+
+    @Test
+    public void whenDeleteThen() {
+        assertThat(nodeList.delete(0), is(nullValue()));
     }
 }
