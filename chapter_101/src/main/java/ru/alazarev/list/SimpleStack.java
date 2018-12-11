@@ -6,7 +6,7 @@ package ru.alazarev.list;
  * @author Aleksey Lazarev
  * @since 09.12.2018
  */
-public class SimpleStack<T> extends NodeList<T> {
+public class SimpleStack<T> {
     private NodeList<T> stack = new NodeList<>();
 
     /**
@@ -16,6 +16,14 @@ public class SimpleStack<T> extends NodeList<T> {
      */
     public T poll() {
         return stack.delete(0);
+    }
+
+    public T poll(int position) {
+        return stack.delete(position);
+    }
+
+    public int getSize() {
+        return stack.getSize();
     }
 
     /**

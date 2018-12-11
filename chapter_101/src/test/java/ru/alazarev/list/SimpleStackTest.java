@@ -4,6 +4,10 @@ import org.junit.Before;
 
 import org.junit.Test;
 
+import javax.xml.soap.Node;
+
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.is;
 
@@ -37,5 +41,4 @@ public class SimpleStackTest {
             assertThat(simpleStack.poll(), is(size - indexPoll));
         }
     }
-
 }
