@@ -10,20 +10,31 @@ public class SimpleStack<T> {
     private NodeList<T> stack = new NodeList<>();
 
     /**
-     * Method return value and delete it.
+     * Method return value and delete it (LIFO).
      *
      * @return value.
      */
     public T poll() {
-        return stack.delete(0);
+        return this.stack.delete(0);
     }
 
+    /**
+     * Method return value and delete it by position.
+     *
+     * @param position Position for delete and return value.
+     * @return Value.
+     */
     public T poll(int position) {
-        return stack.delete(position);
+        return this.stack.delete(position);
     }
 
+    /**
+     * Method passes NodeList instance size.
+     *
+     * @return Size of list.
+     */
     public int getSize() {
-        return stack.getSize();
+        return this.stack.getSize();
     }
 
     /**
@@ -32,6 +43,6 @@ public class SimpleStack<T> {
      * @param value Value for add.
      */
     public void push(T value) {
-        stack.add(value);
+        this.stack.add(value);
     }
 }
