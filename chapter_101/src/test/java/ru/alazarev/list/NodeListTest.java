@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.net.Inet4Address;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -21,7 +22,7 @@ import static org.hamcrest.core.IsNull.nullValue;
 public class NodeListTest {
     private NodeList<Integer> nodeList;
     private int[] ex;
-    private int size = 4;
+    private int size = 5;
     private Iterator iterator;
 
     /**
@@ -29,15 +30,15 @@ public class NodeListTest {
      */
     @Before
     public void setUp() {
-        nodeList = new NodeList<>();
-        for (int index = 1; index < size + 1; index++) {
-            nodeList.add(index);
+        this.nodeList = new NodeList<>();
+        for (int index = 1; index < this.size + 1; index++) {
+            this.nodeList.add(index);
         }
-        ex = new int[size];
-        for (int exIndex = size; exIndex > 0; exIndex--) {
-            ex[size - exIndex] = exIndex;
+        this.ex = new int[size];
+        for (int exIndex = this.size; exIndex > 0; exIndex--) {
+            this.ex[this.size - exIndex] = exIndex;
         }
-        iterator = nodeList.iterator();
+        this.iterator = this.nodeList.iterator();
     }
 
     /**
@@ -45,8 +46,8 @@ public class NodeListTest {
      */
     @Test
     public void whenAddedThen() {
-        for (int index = 0; index < size; index++) {
-            assertThat(nodeList.get(index), is(ex[index]));
+        for (int index = 0; index < this.size; index++) {
+            assertThat(this.nodeList.get(index), is(this.ex[index]));
         }
     }
 
@@ -55,11 +56,11 @@ public class NodeListTest {
      */
     @Test
     public void whenGetThen() {
-        int[] a = new int[size];
-        for (int index = 0; index < size; index++) {
-            a[index] = nodeList.get(index);
+        int[] a = new int[this.size];
+        for (int index = 0; index < this.size; index++) {
+            a[index] = this.nodeList.get(index);
         }
-        assertThat(a, is(ex));
+        assertThat(a, is(this.ex));
     }
 
     /**
@@ -67,7 +68,7 @@ public class NodeListTest {
      */
     @Test(expected = IndexOutOfBoundsException.class)
     public void whenGetWithPositionOverSizeThen() {
-        nodeList.get(1000);
+        this.nodeList.get(1000);
     }
 
     /**
@@ -75,10 +76,10 @@ public class NodeListTest {
      */
     @Test(expected = NoSuchElementException.class)
     public void whenNextTenThenNoSuchElementException() {
-        for (int index = 0; index < size; index++) {
-            assertThat(iterator.next(), is(size - index));
+        for (int index = 0; index < this.size; index++) {
+            assertThat(this.iterator.next(), is(this.size - index));
         }
-        assertThat(iterator.next(), is(nullValue()));
+        assertThat(this.iterator.next(), is(nullValue()));
     }
 
     /**
@@ -86,9 +87,9 @@ public class NodeListTest {
      */
     @Test(expected = NoSuchElementException.class)
     public void whenNextWithEmptyList() {
-        nodeList = new NodeList<>();
-        iterator = nodeList.iterator();
-        iterator.next();
+        this.nodeList = new NodeList<>();
+        this.iterator = this.nodeList.iterator();
+        this.iterator.next();
     }
 
     /**
@@ -96,11 +97,11 @@ public class NodeListTest {
      */
     @Test
     public void whenHasNext() {
-        for (int index = 0; index < size; index++) {
-            assertThat(iterator.hasNext(), is(true));
-            iterator.next();
+        for (int index = 0; index < this.size; index++) {
+            assertThat(this.iterator.hasNext(), is(true));
+            this.iterator.next();
         }
-        assertThat(iterator.hasNext(), is(false));
+        assertThat(this.iterator.hasNext(), is(false));
     }
 
     /**
@@ -114,16 +115,17 @@ public class NodeListTest {
 
     @Test
     public void whenDeleteThen() {
-        assertThat(nodeList.delete(0), is(size));
+        int pos = 0;
+        assertThat(nodeList.delete(pos), is(this.size - pos));
     }
 
     @Test
-    public void name() {
+    public void whenDeleteThreePosition() {
         NodeList<Integer> list = new NodeList<>();
-        for(int index = 1; index < 5; index++) {
+        for (int index = 0; index < 5; index++) {
             list.add(index);
         }
-        System.out.println(list.delete(2));
+        list.delete(4);
         Iterator iterator = list.iterator();
         Assert.assertThat(iterator.hasNext(), is(true));
     }

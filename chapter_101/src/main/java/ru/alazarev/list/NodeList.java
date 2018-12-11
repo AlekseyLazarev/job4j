@@ -40,7 +40,7 @@ public class NodeList<E> implements Iterable<E> {
      * @throws IndexOutOfBoundsException
      */
     public void checkOverflow(int index) throws IndexOutOfBoundsException {
-        if (index > size) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
     }
@@ -59,10 +59,13 @@ public class NodeList<E> implements Iterable<E> {
     }
 
     public Node<E> findNode(int position) {
-        Node<E> result = this.first;
-        for (int index = 0; index < position; index++) {
-            if (result.next != null) {
-                result = result.next;
+        Node<E> result = null;
+        if (!checkEmpty()) {
+            result = this.first;
+            for (int index = 0; index < position; index++) {
+                if (result.next != null) {
+                    result = result.next;
+                }
             }
         }
         return result;
@@ -74,14 +77,21 @@ public class NodeList<E> implements Iterable<E> {
      * @return Deleted element.
      */
     public E delete(int position) {
-        Node<E> previous = findNode(position - 1);
-        E resultData = previous.data;
-        Node<E> next = previous.next;
-        previous.next = next.next;
+        checkOverflow(position);
+        Node<E> previous, find;
+        E result = null;
+        if (position == 0) {
+            result = first.data;
+            first = first.next;
+        } else {
+            previous = findNode(position - 1);
+            find = previous.next;
+            result = find.data;
+            previous.next = find.next;
+        }
         this.size--;
         this.modCount++;
-       // this.first = previous;
-        return resultData;
+        return result;
     }
 
     /**
