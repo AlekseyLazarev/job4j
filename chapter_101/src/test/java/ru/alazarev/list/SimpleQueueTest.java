@@ -45,7 +45,7 @@ public class SimpleQueueTest {
     }
 
     /**
-     * Method test pool with empty queue.
+     * Method test pool after push and pool again.
      */
     @Test
     public void whenPushAfterPollAndPollAgainThen() {
@@ -59,5 +59,19 @@ public class SimpleQueueTest {
         for (int indexPoll = size + 1; indexPoll < 2 * size + 1; indexPoll++) {
             assertThat(queue.poll(), is(indexPoll));
         }
+    }
+
+    /**
+     * Method check teamwork push and poll.
+     */
+    @Test
+    public void whenTwoPushOnePollOnePushTwoPollThen() {
+        queue = new SimpleQueue<>();
+        queue.push(1);
+        queue.push(2);
+        assertThat(queue.poll(), is(1));
+        queue.push(3);
+        assertThat(queue.poll(), is(2));
+        assertThat(queue.poll(), is(3));
     }
 }

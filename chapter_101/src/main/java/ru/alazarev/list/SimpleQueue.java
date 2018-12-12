@@ -16,8 +16,10 @@ public class SimpleQueue<T> {
      * @return value.
      */
     public T poll() {
-        while (!stack.empty()) {
-            queue.push(stack.poll());
+        if (queue.empty()) {
+            while (!stack.empty()) {
+                queue.push(stack.poll());
+            }
         }
         return queue.poll();
     }
