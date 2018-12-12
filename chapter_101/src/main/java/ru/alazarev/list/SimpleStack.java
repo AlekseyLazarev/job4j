@@ -27,9 +27,10 @@ public class SimpleStack<T> {
         return this.stack.getSize();
     }
 
-    public boolean empty(){
+    public boolean empty() {
         return stack.checkEmpty();
     }
+
     /**
      * Method add value in stack.
      *
