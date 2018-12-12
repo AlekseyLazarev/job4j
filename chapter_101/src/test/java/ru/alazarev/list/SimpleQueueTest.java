@@ -1,9 +1,11 @@
 package ru.alazarev.list;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
 
 
 /**
@@ -13,19 +15,49 @@ import static org.hamcrest.core.Is.is;
  * @since 11.12.2018
  */
 public class SimpleQueueTest {
-    private SimpleQueue<Integer> simpleQueue = new SimpleQueue<>();
+    private SimpleQueue<Integer> queue = new SimpleQueue<>();
     private int size = 5;
+
+    @Before
+    public void setUp() {
+        for (int indexPush = 1; indexPush < size + 1; indexPush++) {
+            queue.push(indexPush);
+        }
+    }
 
     /**
      * Method test push and pool.
      */
     @Test
     public void whenPollAfterPushThen() {
-        for (int indexPush = 1; indexPush < size; indexPush++) {
-            simpleQueue.push(indexPush);
+        for (int indexPoll = 1; indexPoll < size + 1; indexPoll++) {
+            assertThat(queue.poll(), is(indexPoll));
         }
-        for (int indexPoll = 1; indexPoll < size; indexPoll++) {
-            assertThat(simpleQueue.poll(), is(indexPoll));
+    }
+
+    /**
+     * Method test pool with empty queue.
+     */
+    @Test
+    public void whenPollWithEmptyThen() {
+        queue = new SimpleQueue<>();
+        assertThat(queue.poll(), is(nullValue()));
+    }
+
+    /**
+     * Method test pool with empty queue.
+     */
+    @Test
+    public void whenPushAfterPollAndPollAgainThen() {
+        for (int indexPoll = 1; indexPoll < size + 1; indexPoll++) {
+            assertThat(queue.poll(), is(indexPoll));
+        }
+        for (int indexPush = size + 1; indexPush < 2 * size + 1; indexPush++) {
+            queue.push(indexPush);
+        }
+
+        for (int indexPoll = size + 1; indexPoll < 2 * size + 1; indexPoll++) {
+            assertThat(queue.poll(), is(indexPoll));
         }
     }
 }

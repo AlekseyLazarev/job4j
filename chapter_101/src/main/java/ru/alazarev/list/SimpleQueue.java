@@ -8,6 +8,7 @@ package ru.alazarev.list;
  */
 public class SimpleQueue<T> {
     private SimpleStack<T> queue = new SimpleStack<>();
+    private SimpleStack<T> stack = new SimpleStack<>();
 
     /**
      * Method return value and delete it(FIFO).
@@ -15,7 +16,10 @@ public class SimpleQueue<T> {
      * @return value.
      */
     public T poll() {
-        return queue.poll(queue.getSize() - 1);
+        while (!stack.empty()) {
+            queue.push(stack.poll());
+        }
+        return queue.poll();
     }
 
     /**
@@ -24,6 +28,6 @@ public class SimpleQueue<T> {
      * @param value Value for add.
      */
     public void push(T value) {
-        queue.push(value);
+        stack.push(value);
     }
 }
