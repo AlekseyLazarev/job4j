@@ -40,7 +40,7 @@ public class NodeList<E> implements Iterable<E> {
      * @throws IndexOutOfBoundsException
      */
     public void checkOverflow(int index) throws IndexOutOfBoundsException {
-        if (index >= size || index < 0) {
+        if (index > size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
     }
@@ -80,17 +80,19 @@ public class NodeList<E> implements Iterable<E> {
         checkOverflow(position);
         Node<E> previous, find;
         E result = null;
-        if (position == 0) {
-            result = first.data;
-            first = first.next;
-        } else {
-            previous = findNode(position - 1);
-            find = previous.next;
-            result = find.data;
-            previous.next = find.next;
+        if (!checkEmpty()) {
+            if (position == 0) {
+                result = first.data;
+                first = first.next;
+            } else {
+                previous = findNode(position - 1);
+                find = previous.next;
+                result = find.data;
+                previous.next = find.next;
+            }
+            this.size--;
+            this.modCount++;
         }
-        this.size--;
-        this.modCount++;
         return result;
     }
 

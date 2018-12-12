@@ -19,16 +19,6 @@ public class SimpleStack<T> {
     }
 
     /**
-     * Method return value and delete it by position.
-     *
-     * @param position Position for delete and return value.
-     * @return Value.
-     */
-    public T poll(int position) {
-        return this.stack.delete(position);
-    }
-
-    /**
      * Method passes NodeList instance size.
      *
      * @return Size of list.
@@ -37,6 +27,9 @@ public class SimpleStack<T> {
         return this.stack.getSize();
     }
 
+    public boolean empty(){
+        return stack.checkEmpty();
+    }
     /**
      * Method add value in stack.
      *

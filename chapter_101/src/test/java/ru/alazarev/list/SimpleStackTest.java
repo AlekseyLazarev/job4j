@@ -8,6 +8,7 @@ import javax.xml.soap.Node;
 
 import java.util.Iterator;
 
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.is;
 
@@ -27,18 +28,28 @@ public class SimpleStackTest {
     @Before
     public void setUp() {
         simpleStack = new SimpleStack<>();
-    }
-
-    /**
-     * Method test push and pool.
-     */
-    @Test
-    public void whenPushAToZThenPollZToA() {
         for (int indexPush = 1; indexPush < size + 1; indexPush++) {
             simpleStack.push(indexPush);
         }
+    }
+
+    /**
+     * Method test pool.
+     */
+    @Test
+    public void whenPollAfterPushThen() {
         for (int indexPoll = 0; indexPoll < size; indexPoll++) {
             assertThat(simpleStack.poll(), is(size - indexPoll));
         }
+    }
+
+    /**
+     * Method test pool when stack is empty.
+     */
+    @Test
+    public void whenStackIsEmptyThenPoll() {
+        simpleStack = new SimpleStack<>();
+        assertThat(simpleStack.poll(), is(nullValue()));
+
     }
 }
