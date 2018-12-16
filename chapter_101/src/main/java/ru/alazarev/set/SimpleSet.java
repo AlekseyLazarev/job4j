@@ -1,29 +1,33 @@
 package ru.alazarev.set;
 
+import ru.alazarev.list.ContainerList;
+
 import java.util.Iterator;
 
 /**
- * Class SimpleSet решение задачи части 001. Урок 5.3.0 Создать метод delete для односвязного списка [#51424].
+ * Class SimpleSet решение задачи части 001. Урок 4.1. Реализовать коллекцию Set на массиве [#996]
  *
  * @author Aleksey Lazarev
- * @since 12.12.2018
+ * @since 16.12.2018
  */
 public class SimpleSet<E> implements Iterable<E> {
-    public void add(E e) {
+    private ContainerList<E> array;
 
+    public SimpleSet(int size) {
+        this.array = new ContainerList<>(size);
+    }
+
+    public void add(E e) {
+        for (E current : array) {
+            if (current.equals(e)) {
+                return;
+            }
+        }
+        array.add(e);
     }
 
 
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
-
-            public boolean hasNext() {
-                return false;
-            }
-
-            public E next() {
-                return null;
-            }
-        };
+        return array.iterator();
     }
 }
