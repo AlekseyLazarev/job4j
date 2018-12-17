@@ -26,17 +26,17 @@ public class User {
         this.birthday = birthday;
     }
 
-//    /**
-//     * Override method generate hashCode.
-//     *
-//     * @return
-//     */
-//    @Override
-//    public int hashCode() {
-//        int nameHashCode = this.name != null ? this.name.hashCode() : 0;
-//        int birthdayHashCode = this.birthday != null ? this.birthday.hashCode() : 0;
-//        return 31 * nameHashCode * this.children * birthdayHashCode;
-//    }
+    /**
+     * Override method generate hashCode.
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        int nameHashCode = this.name != null ? this.name.hashCode() : 0;
+        int birthdayHashCode = this.birthday != null ? this.birthday.hashCode() : 0;
+        return 31 * nameHashCode * this.children * birthdayHashCode;
+    }
 
     /**
      * Method override equals.

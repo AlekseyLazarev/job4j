@@ -37,8 +37,8 @@ public class UserTest {
     @Test
     public void whenTwoUsersInMapThenPrintTwoValuesInMap() {
         Map<User, Object> map = new HashMap<>();
-        map.put(this.user, new Object());
-        map.put(this.user2, new Object());
+        map.put(this.user, "First");
+        map.put(this.user2, "Second");
         System.out.println(map);
         assertThat(this.user, is(this.user2));
     }
