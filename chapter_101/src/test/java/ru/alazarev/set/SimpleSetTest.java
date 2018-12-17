@@ -8,10 +8,19 @@ import java.util.Iterator;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
 
+/**
+ * Class SimpleSetTest решение задачи части 001. Урок 4.1. Реализовать коллекцию Set на массиве [#996]
+ *
+ * @author Aleksey Lazarev
+ * @since 17.12.2018
+ */
 public class SimpleSetTest {
     private SimpleSet<Integer> simpleSet;
     private int size = 10;
 
+    /**
+     * Before all test method.
+     */
     @Before
     public void setUp() {
         this.simpleSet = new SimpleSet<>(size);
@@ -20,6 +29,9 @@ public class SimpleSetTest {
         }
     }
 
+    /**
+     * Test add method.
+     */
     @Test
     public void whenAddEqualValuesThenSaveOnlyOne() {
         for (int index = 0; index < size / 2; index++) {
