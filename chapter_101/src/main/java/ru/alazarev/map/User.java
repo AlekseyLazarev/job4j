@@ -26,15 +26,41 @@ public class User {
         this.birthday = birthday;
     }
 
+//    /**
+//     * Override method generate hashCode.
+//     *
+//     * @return
+//     */
+//    @Override
+//    public int hashCode() {
+//        int nameHashCode = this.name != null ? this.name.hashCode() : 0;
+//        int birthdayHashCode = this.birthday != null ? this.birthday.hashCode() : 0;
+//        return 31 * nameHashCode * this.children * birthdayHashCode;
+//    }
+
     /**
-     * Override method generate hashCode.
+     * Method override equals.
      *
-     * @return
+     * @param obj Object for equals.
+     * @return Result of equals.
      */
     @Override
-    public int hashCode() {
-        int nameHashCode = this.name != null ? this.name.hashCode() : 0;
-        int birthdayHashCode = this.birthday != null ? this.birthday.hashCode() : 0;
-        return 31 * nameHashCode * this.children * birthdayHashCode;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        if (this.children != user.children) {
+            return false;
+        }
+        if (this.name != null ? !this.name.equals(user.name) : user.name != null) {
+            return false;
+        }
+        if (this.birthday != null ? !this.birthday.equals(user.birthday) : user.birthday != null) {
+            return false;
+        }
+        return true;
     }
 }
