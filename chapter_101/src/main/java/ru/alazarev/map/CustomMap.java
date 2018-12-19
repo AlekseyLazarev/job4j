@@ -9,8 +9,7 @@ import java.util.*;
  * @since 19.12.2018
  */
 public class CustomMap<K, V> {
-    private Object[][] customMap;
-    private int countArgs = 2;
+    private Node<K, V>[] customMap;
 
     /**
      * Constructor.
@@ -18,7 +17,7 @@ public class CustomMap<K, V> {
      * @param size Inner array size.
      */
     public CustomMap(int size) {
-        this.customMap = new Object[size][this.countArgs];
+        this.customMap = new Node[size];
     }
 
     /**
@@ -34,9 +33,8 @@ public class CustomMap<K, V> {
         if (keyHash >= this.customMap.length - 1) {
             resize();
         }
-        if (this.customMap[keyHash][0] == null) {
-            this.customMap[keyHash][0] = key;
-            this.customMap[keyHash][1] = value;
+        if (this.customMap[keyHash] == null) {
+            this.customMap[keyHash] = new Node(key, value);
             result = true;
         }
         return result;
@@ -50,7 +48,7 @@ public class CustomMap<K, V> {
      */
     public V get(K key) {
         int keyHash = key.hashCode();
-        return this.customMap[keyHash] == null ? null : (V) this.customMap[keyHash][1];
+        return this.customMap[keyHash] == null ? null : this.customMap[keyHash].value;
     }
 
     /**
@@ -63,8 +61,7 @@ public class CustomMap<K, V> {
         boolean result = false;
         int keyHash = key.hashCode();
         if (keyHash < this.customMap.length) {
-            this.customMap[keyHash][0] = null;
-            this.customMap[keyHash][1] = null;
+            this.customMap[keyHash] = null;
             result = true;
         }
         return result;
@@ -75,14 +72,10 @@ public class CustomMap<K, V> {
      */
     private void resize() {
         int sizeTo = 1;
-        int oldLength = this.customMap.length;
         if (this.customMap.length != 0) {
             sizeTo = this.customMap.length * 2;
         }
         this.customMap = Arrays.copyOf(this.customMap, sizeTo);
-        for (int index = oldLength; index < this.customMap.length; index++) {
-            this.customMap[index] = new Object[]{null, null};
-        }
     }
 
     /**
@@ -123,5 +116,21 @@ public class CustomMap<K, V> {
                 return (K) customMap[position++];
             }
         };
+    }
+
+    /**
+     * Storage class.
+     *
+     * @param <K> Key.
+     * @param <V> Value.
+     */
+    class Node<K, V> {
+        private K key;
+        private V value;
+
+        public Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
     }
 }
