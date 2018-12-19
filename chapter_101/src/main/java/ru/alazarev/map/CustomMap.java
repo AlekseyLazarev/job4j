@@ -128,9 +128,48 @@ public class CustomMap<K, V> {
         private K key;
         private V value;
 
+        /**
+         * Constructor.
+         *
+         * @param key Key.
+         * @param value Value.
+         */
         public Node(K key, V value) {
             this.key = key;
             this.value = value;
+        }
+
+        /**
+         * Override hashCode method.
+         *
+         * @return Hash code.
+         */
+        @Override
+        public int hashCode() {
+            return 31 * this.key.hashCode() * this.value.hashCode();
+        }
+
+        /**
+         * Override equal method.
+         *
+         * @param obj Object for equal.
+         * @return Result equal.
+         */
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            } else if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+            Node<K,V> node = (Node) obj;
+            if (this.key != null ? !this.key.equals(node.key) : node.key != null) {
+                return false;
+            }
+            if (this.value != null ? !this.value.equals(node.value) : node.value != null) {
+                return false;
+            }
+            return true;
         }
     }
 }
