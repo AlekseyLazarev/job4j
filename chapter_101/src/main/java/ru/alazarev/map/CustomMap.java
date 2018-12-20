@@ -10,6 +10,7 @@ import java.util.*;
  */
 public class CustomMap<K, V> {
     private Node<K, V>[] customMap;
+    private int load = 0;
 
     /**
      * Constructor.
@@ -29,15 +30,40 @@ public class CustomMap<K, V> {
      */
     public boolean insert(K key, V value) {
         boolean result = false;
-        int keyHash = key.hashCode();
-        if (keyHash >= this.customMap.length - 1) {
+        if (this.load == this.customMap.length) {
             resize();
         }
-        if (this.customMap[keyHash] == null) {
-            this.customMap[keyHash] = new Node(key, value);
-            result = true;
+        if (key != null) {
+            int currentHash = hash(key.hashCode());
+            int indexForHash = indexFor(currentHash);
+            if (this.customMap[indexForHash] == null) {
+                this.customMap[indexForHash] = new Node(key, value);
+                result = true;
+            }
         }
+        this.load++;
         return result;
+    }
+
+    /**
+     * Method generate hash by hashCode.
+     *
+     * @param h HashCode.
+     * @return Hash.
+     */
+    private int hash(int h) {
+        h ^= (h >>> 20) ^ (h >>> 12);
+        return h ^ (h >>> 7) ^ (h >>> 4);
+    }
+
+    /**
+     * Method return index with length and hash.
+     *
+     * @param h Hash.
+     * @return Index in array.
+     */
+    private int indexFor(int h) {
+        return h % (this.customMap.length - 1);
     }
 
     /**
@@ -47,8 +73,9 @@ public class CustomMap<K, V> {
      * @return Value by key.
      */
     public V get(K key) {
-        int keyHash = key.hashCode();
-        return this.customMap[keyHash] == null ? null : this.customMap[keyHash].value;
+        int currentHash = hash(key.hashCode());
+        int indexForHash = indexFor(currentHash);
+        return this.customMap[indexForHash] == null ? null : this.customMap[indexForHash].value;
     }
 
     /**
@@ -59,11 +86,12 @@ public class CustomMap<K, V> {
      */
     public boolean delete(K key) {
         boolean result = false;
-        int keyHash = key.hashCode();
-        if (keyHash < this.customMap.length) {
-            this.customMap[keyHash] = null;
+        int indexForHash = indexFor(key.hashCode());
+        if (indexForHash < this.customMap.length) {
+            this.customMap[indexForHash] = null;
             result = true;
         }
+        this.load--;
         return result;
     }
 
@@ -131,7 +159,7 @@ public class CustomMap<K, V> {
         /**
          * Constructor.
          *
-         * @param key Key.
+         * @param key   Key.
          * @param value Value.
          */
         public Node(K key, V value) {
@@ -162,7 +190,7 @@ public class CustomMap<K, V> {
             } else if (obj == null || getClass() != obj.getClass()) {
                 return false;
             }
-            Node<K,V> node = (Node) obj;
+            Node<K, V> node = (Node) obj;
             if (this.key != null ? !this.key.equals(node.key) : node.key != null) {
                 return false;
             }
