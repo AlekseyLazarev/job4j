@@ -11,6 +11,7 @@ import java.util.*;
 public class CustomMap<K, V> {
     private Node<K, V>[] customMap;
     private int load = 0;
+    private int modCount = 0;
 
     /**
      * Constructor.
@@ -42,6 +43,7 @@ public class CustomMap<K, V> {
             }
         }
         this.load++;
+        this.modCount++;
         return result;
     }
 
@@ -92,6 +94,7 @@ public class CustomMap<K, V> {
             result = true;
         }
         this.load--;
+        this.modCount++;
         return result;
     }
 
@@ -103,7 +106,14 @@ public class CustomMap<K, V> {
         if (this.customMap.length != 0) {
             sizeTo = this.customMap.length * 2;
         }
-        this.customMap = Arrays.copyOf(this.customMap, sizeTo);
+        CustomMap temp = new CustomMap(sizeTo);
+        for (int index = 0; index < this.customMap.length; index++) {
+            if (this.customMap[index] != null) {
+                Node tempNode = this.customMap[index];
+                temp.insert(tempNode.key, tempNode.value);
+            }
+        }
+        this.customMap = temp.customMap;
     }
 
     /**
@@ -114,6 +124,7 @@ public class CustomMap<K, V> {
     public Iterator<K> iterator() {
         return new Iterator<K>() {
             private int position = 0;
+            private int extModCount = modCount;
 
             /**
              * Check has next element in list or not.
@@ -122,6 +133,9 @@ public class CustomMap<K, V> {
              */
             public boolean hasNext() {
                 boolean result = false;
+                if (extModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
                 for (int i = position; i < customMap.length; i++) {
                     if (customMap[i] != null) {
                         result = true;
