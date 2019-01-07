@@ -1,5 +1,6 @@
 package ru.alazarev.tree;
 
+import javax.swing.text.html.HTMLDocument;
 import java.util.*;
 
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
@@ -7,7 +8,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private int modCount = 0;
 
     public Tree(E root) {
-        if(root !=null) {
+        if (root != null) {
             this.root = new Node<>(root);
         }
 
@@ -45,17 +46,64 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         return rsl;
     }
 
+    private Iterator<Node<E>> nodeIterator() {
+        return new Iterator<Node<E>>() {
+            final Queue<Iterator<Node<E>>> poolIter = new LinkedList<>();
+            final long fixedModCount = modCount;
+            Iterator<Node<E>> iter = Arrays.asList(root).iterator();
+
+            @Override
+            public boolean hasNext() {
+                checkMod();
+                boolean result = true;
+                while (!iter.hasNext()) {
+                    if (poolIter.isEmpty()) {
+                        result = false;
+                        break;
+                    }
+                    iter = poolIter.poll();
+                }
+                return result;
+            }
+
+            @Override
+            public Node<E> next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                Node<E> result = iter.next();
+                if (!result.leaves().isEmpty()) {
+                    poolIter.add(result.leaves().iterator());
+                }
+                return result;
+            }
+
+            private void checkMod() {
+                if (fixedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+            }
+        };
+    }
+
+    /**
+     * Метод возвращает итератор значений дерева.
+     *
+     * @return итератор значений.
+     */
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
+            Iterator<Node<E>> iter = nodeIterator();
+
             @Override
             public boolean hasNext() {
-                return false;
+                return iter.hasNext();
             }
 
             @Override
             public E next() {
-                return null;
+                return iter.next().getValue();
             }
         };
     }
