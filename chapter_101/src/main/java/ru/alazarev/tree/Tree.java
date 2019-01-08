@@ -1,11 +1,11 @@
 package ru.alazarev.tree;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.*;
 
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> root;
     private int modCount = 0;
+    int treeSize = 0;
 
     public Tree(E root) {
         if (root != null) {
@@ -23,6 +23,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
                 result = true;
                 findParent.get().add(new Node<>(child));
                 this.modCount++;
+                this.treeSize++;
             }
         }
         return result;
@@ -46,73 +47,57 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         return rsl;
     }
 
-    private Iterator<Node<E>> nodeIterator() {
-        return new Iterator<Node<E>>() {
-            final Queue<Iterator<Node<E>>> poolIter = new LinkedList<>();
-            final long fixedModCount = modCount;
-            Iterator<Node<E>> iter = Arrays.asList(root).iterator();
-
-            @Override
-            public boolean hasNext() {
-                checkMod();
-                boolean result = true;
-                while (!iter.hasNext()) {
-                    if (poolIter.isEmpty()) {
-                        result = false;
-                        break;
-                    }
-                    iter = poolIter.poll();
-                }
-                return result;
-            }
-
-            @Override
-            public Node<E> next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                Node<E> result = iter.next();
-                if (!result.leaves().isEmpty()) {
-                    poolIter.add(result.leaves().iterator());
-                }
-                return result;
-            }
-
-            private void checkMod() {
-                if (fixedModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
-            }
-        };
-    }
-
-    /**
-     * Метод возвращает итератор значений дерева.
-     *
-     * @return итератор значений.
-     */
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            Iterator<Node<E>> iter = nodeIterator();
+            public Queue<Node<E>> queue = new LinkedList<>();
+            int position = 0;
+            Node<E> currentRoot;
+
 
             @Override
             public boolean hasNext() {
-                return iter.hasNext();
+                boolean result = false;
+                if (position <= treeSize) {
+                    result = true;
+                }
+                return result;
             }
 
             @Override
             public E next() {
-                return iter.next().getValue();
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                if (position == 0) {
+                    queue.add(root);
+                }
+                currentRoot = queue.poll();
+                position++;
+                if (!currentRoot.leaves().isEmpty()) {
+                    for (int index = 0; index < currentRoot.leaves().size(); index++) {
+                        queue.add(currentRoot.leaves().get(index));
+                    }
+                }
+
+                return currentRoot.getValue();
             }
         };
     }
 
     public boolean isBinary() {
         boolean result = true;
-        Iterator<Node<E>> iterator = nodeIterator();
-        while(iterator.hasNext()) {
-            if(iterator.next().leaves().size() > 2) {
+        Queue<Node<E>> queue = new LinkedList<>();
+        Node<E> currentRoot = root;
+        for (int indexTree = 0; indexTree < treeSize; indexTree++) {
+            queue.add(currentRoot);
+            currentRoot = queue.poll();
+            if (!currentRoot.leaves().isEmpty()) {
+                for (int index = 0; index < currentRoot.leaves().size(); index++) {
+                    queue.add(currentRoot.leaves().get(index));
+                }
+            }
+            if (currentRoot.leaves().size() > 2) {
                 result = false;
                 break;
             }
