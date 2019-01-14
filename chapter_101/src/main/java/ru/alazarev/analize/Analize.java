@@ -21,19 +21,17 @@ public class Analize {
             throw new NoSuchElementException();
         }
         int changed = 0;
-        int added = 0;
         int deleted = 0;
         HashMap<Integer, Analize.User> hashCurrent = new HashMap<>();
         for (int index = 0; index < current.size(); index++) {
             User currentUser = current.get(index);
             hashCurrent.put(currentUser.id, currentUser);
         }
-        for(User previousUser: previous) {
+        for (User previousUser : previous) {
             User currentUser = hashCurrent.remove(previousUser.id);
-            if(currentUser == null) {
+            if (currentUser == null) {
                 deleted++;
-            }
-            if (!previousUser.name.equals(currentUser.name)) {
+            } else if (!previousUser.name.equals(currentUser.name)) {
                 changed++;
             }
         }
