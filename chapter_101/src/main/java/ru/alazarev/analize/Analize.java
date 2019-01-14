@@ -21,33 +21,24 @@ public class Analize {
             throw new NoSuchElementException();
         }
         int changed = 0;
+        int added = 0;
         int deleted = 0;
-        int equaled = 0;
         HashMap<Integer, Analize.User> hashCurrent = new HashMap<>();
         for (int index = 0; index < current.size(); index++) {
-            User hashUser= current.get(index);
-            hashCurrent.put(hashUser.hashCode(), current.get(index));
+            User currentUser = current.get(index);
+            hashCurrent.put(currentUser.id, currentUser);
         }
-        Iterator<User> previousIterator = previous.iterator();
-        while (previousIterator.hasNext()) {
-            int contain = 0;
-            User previousUser = previousIterator.next();
-            for (User currentUser : hashCurrent.values()) {
-                if (previousUser.id == currentUser.id) {
-                    contain++;
-                    equaled++;
-                    if (!previousUser.name.equals(currentUser.name)) {
-                        changed++;
-                    }
-                    hashCurrent.remove(currentUser.hashCode());
-                    break;
-                }
-            }
-            if (contain == 0) {
+        for(User previousUser: previous) {
+            User currentUser = hashCurrent.remove(previousUser.id);
+            if(currentUser == null) {
                 deleted++;
             }
+            if (!previousUser.name.equals(currentUser.name)) {
+                changed++;
+            }
         }
-        return new Info(current.size() - equaled, changed, deleted);
+
+        return new Info(hashCurrent.size(), changed, deleted);
     }
 
     /**

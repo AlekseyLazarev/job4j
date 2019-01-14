@@ -27,7 +27,7 @@ public class AnalizeTest {
      */
     @Before
     public void setUp() {
-        int size = 2;
+        int size = 4;
         for (int index = 0; index < size; index++) {
             previous.add(new Analize.User(index, Integer.toString(index)));
             current.add(new Analize.User(index, Integer.toString(index)));
@@ -39,7 +39,7 @@ public class AnalizeTest {
      */
     @Test
     public void whenRemoveTwoElementsThenInfoDeletedEqualTwo() {
-        int size = 2;
+        int size = 3;
         for (int index = 0; index < size; index++) {
             current.remove(0);
         }
@@ -52,7 +52,7 @@ public class AnalizeTest {
      */
     @Test
     public void whenAddTwoElementsThenInfoAddedEqualTwo() {
-        int size = 20;
+        int size = 5;
         for (int index = 0; index < size; index++) {
             int thisIndex = current.size() + index;
             current.add(new Analize.User(thisIndex, Integer.toString(thisIndex)));
@@ -81,7 +81,7 @@ public class AnalizeTest {
     public void whenAddAndRenameAndDeleteThenInfo() {
         current.remove(current.size() - 1);
         current.add(new Analize.User(current.size() + 1, "Some string"));
-        current.set(current.size() % 2, new Analize.User(current.size() % 2, "STRING"));
+        current.set(0, new Analize.User(0, "STRING"));
         info = analize.diff(previous, current);
         assertThat(info.changed + info.deleted + info.added, is(3));
     }
