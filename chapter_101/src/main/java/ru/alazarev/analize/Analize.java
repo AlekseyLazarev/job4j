@@ -1,8 +1,6 @@
 package ru.alazarev.analize;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * Class Analize решение задачи части 001. Статистику по коллекции. [#45889]
@@ -25,19 +23,23 @@ public class Analize {
         int changed = 0;
         int deleted = 0;
         int equaled = 0;
+        HashMap<Integer, Analize.User> hashCurrent = new HashMap<>();
+        for (int index = 0; index < current.size(); index++) {
+            User hashUser= current.get(index);
+            hashCurrent.put(hashUser.hashCode(), current.get(index));
+        }
         Iterator<User> previousIterator = previous.iterator();
         while (previousIterator.hasNext()) {
             int contain = 0;
             User previousUser = previousIterator.next();
-            Iterator<User> currentIterator = current.iterator();
-            while (currentIterator.hasNext()) {
-                User currentUser = currentIterator.next();
+            for (User currentUser : hashCurrent.values()) {
                 if (previousUser.id == currentUser.id) {
                     contain++;
                     equaled++;
                     if (!previousUser.name.equals(currentUser.name)) {
                         changed++;
                     }
+                    hashCurrent.remove(currentUser.hashCode());
                     break;
                 }
             }
