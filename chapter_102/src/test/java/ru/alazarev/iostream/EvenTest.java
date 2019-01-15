@@ -1,6 +1,7 @@
-package ru.alazarev.even;
+package ru.alazarev.iostream;
 
 import org.junit.Test;
+import ru.alazarev.iostream.Even;
 
 
 import java.io.*;

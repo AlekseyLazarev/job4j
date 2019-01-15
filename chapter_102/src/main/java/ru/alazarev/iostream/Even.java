@@ -1,4 +1,4 @@
-package ru.alazarev.even;
+package ru.alazarev.iostream;
 
 import java.io.InputStream;
 import java.util.Scanner;
