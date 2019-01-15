@@ -20,8 +20,6 @@ public class Even {
         try (Scanner scanner = new Scanner(in)) {
             if (scanner.hasNextInt()) {
                 result = scanner.nextInt() % 2 == 0;
-            } else {
-                throw new RuntimeException("Not number");
             }
         }
         return result;

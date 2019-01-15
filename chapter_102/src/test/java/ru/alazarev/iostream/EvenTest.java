@@ -25,9 +25,9 @@ public class EvenTest {
         assertThat(this.even.isNumber(is), is(false));
     }
 
-    @Test(expected = RuntimeException.class)
-    public void whenNotNumberThenException() {
+    @Test()
+    public void whenNotNumberThenFalse() {
         InputStream is = new ByteArrayInputStream("Not Number".getBytes());
-        assertThat(this.even.isNumber(is), is(true));
+        assertThat(this.even.isNumber(is), is(false));
     }
 }
