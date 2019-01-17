@@ -1,31 +1,29 @@
 package ru.alazarev.iostream;
 
 import java.io.*;
-import java.util.Scanner;
+import java.util.Arrays;
 
-//Реализовать сервис
-//void dropAbuses(InputStream in, OutputStream out, String[] abuse)
-//задан символьным поток. и символьный выходной поток. надо удалить все слова abuse.
-//Важно все преобразования нужно делать в потоке. нельзя зачитать весь поток в память,
-//удалить слова и потом записать. нужно все делать в потоке.
+/**
+ * Class Abuses решение задачи части 002. 2. Удаление запрещенных слов [#859].
+ *
+ * @author Aleksey Lazarev
+ * @since 17.01.2019
+ */
 public class Abuses {
-
+    /**
+     * Method drop abuses.
+     *
+     * @param in    InputStream.
+     * @param out   OutputStream.
+     * @param abuse Abuse words.
+     */
     void dropAbuses(InputStream in, OutputStream out, String[] abuse) {
-        try (Scanner scanner = new Scanner(in);
-             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out)){
-            while (scanner.hasNext()) {
-                String value = scanner.next();
-                for(int index = 0; index < abuse.length; index++) {
-                    String abuseValue = abuse[index];
-                    if (value.equals(abuseValue)) {
-                        break;
-                    } else if(index == abuse.length - 1){
-                        outputStreamWriter.write(value+" ");
-                    }
-                }
-            }
-        } catch (IOException a) {
-            System.out.println("GG");
+        try (BufferedReader input = new BufferedReader(new InputStreamReader(in));
+             PrintStream output = new PrintStream(out)) {
+            input.lines().map(s -> Arrays.stream(abuse)
+                    .reduce(s, ((s1, s2) -> s1.replaceAll(s2 + "[^А-я]", "")
+                            .replaceAll(" {2}", " ")))).forEach(output::print);
+        } catch (Exception ex) {
         }
     }
 }

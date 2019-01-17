@@ -10,6 +10,12 @@ import java.io.*;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
+/**
+ * Class EvenTest.
+ *
+ * @author Aleksey Lazarev
+ * @since 17.01.2019
+ */
 public class EvenTest {
     private Even even = new Even();
 

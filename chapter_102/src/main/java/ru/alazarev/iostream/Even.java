@@ -2,6 +2,7 @@ package ru.alazarev.iostream;
 
 import java.io.InputStream;
 import java.util.Scanner;
+
 /**
  * Class Even решение задачи части 002. 1. Проверить байтовый поток [#858].
  *
@@ -24,9 +25,4 @@ public class Even {
         }
         return result;
     }
-
-//    Реализовать сервис
-//    boolean isNumber(InputStream in);
-//    метод должен проверить. что в байтовом потоке записано четное число.
-//    Все потоки должны быть обернуты через try-resources. Даже, если это ByteArrayInputStream
 }
