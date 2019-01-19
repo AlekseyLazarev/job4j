@@ -16,13 +16,18 @@ public class Archive {
             for (File currentFile : Arrays.asList(new File(pathToPack).listFiles())) {
                 upDate(currentFile);
                 while (!queue.isEmpty()) {
-                    /**
-                     * TODO Цикл создания каталогов
-                     */
                     File actualFile = queue.poll();
-                    String entryPath = actualFile.getPath().substring(pathToPack.length()).replace('\\', '/');
+                    String currentPath = "";
+                    String[] catalogs = actualFile.getPath().substring(pathToPack.length() + 1).replace('\\', '/').split("/");
                     try (FileInputStream fis = new FileInputStream(actualFile)) {
-                        zos.putNextEntry(new ZipEntry(entryPath));
+                        for (int index = 0; index < catalogs.length; index++) {
+                            if (index != catalogs.length - 1) {
+                                currentPath = currentPath + catalogs[index] + "/";
+                            } else {
+                                currentPath += catalogs[index];
+                            }
+                            zos.putNextEntry(new ZipEntry(currentPath));
+                        }
                         byte[] buffer = new byte[fis.available()];
                         fis.read(buffer);
                         zos.write(buffer);
