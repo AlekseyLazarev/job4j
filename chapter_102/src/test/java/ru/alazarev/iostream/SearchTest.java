@@ -11,6 +11,12 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
 
+/**
+ * Class SearchTest решение задачи части 002. 3. Сканирование файловой системы. [#106929].
+ *
+ * @author Aleksey Lazarev
+ * @since 21.01.2019
+ */
 public class SearchTest {
     private int size = 10;
     private String path = "C:\\TestDir\\";

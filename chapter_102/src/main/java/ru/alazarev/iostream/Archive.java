@@ -6,12 +6,23 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.zip.*;
 
+/**
+ * Class Search решение задачи части 002. 4. Архивировать проект.  [#861].
+ *
+ * @author Aleksey Lazarev
+ * @since 21.01.2019
+ */
 public class Archive {
     private Queue<File> queue = new LinkedList<>();
+    private String pathToPack;
+    private String pathToSaveZip;
+
+    public Archive(String path, String zip) {
+        this.pathToPack = path;
+        this.pathToSaveZip = path + "\\" + zip;
+    }
 
     public void pack() {
-        String pathToPack = "C:\\projects\\job4j";
-        String pathToSaveZip = "C:\\projects\\job4j\\job4j.zip";
         try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(pathToSaveZip))) {
             for (File currentFile : Arrays.asList(new File(pathToPack).listFiles())) {
                 upDate(currentFile);
@@ -37,7 +48,6 @@ public class Archive {
                     }
                 }
             }
-            zos.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
