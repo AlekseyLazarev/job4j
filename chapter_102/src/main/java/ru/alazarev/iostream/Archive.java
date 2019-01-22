@@ -17,16 +17,30 @@ public class Archive {
     private Search archive = new Search();
     private List<String> extensions = new ArrayList<>();
 
+    /**
+     * Constructor with 1 parameter.
+     *
+     * @param path Path for pack.
+     */
     public Archive(String path) {
         this.path = path;
         this.archivePath = path + "\\project.zip";
     }
 
+    /**
+     * Constructor with 2 parameters.
+     *
+     * @param path Path for pack.
+     * @param exts Extensions for pack.
+     */
     public Archive(String path, List<String> exts) {
         this(path);
         this.extensions = exts;
     }
 
+    /**
+     * Packing method.
+     */
     public void pack() {
         this.queue = (Queue<File>) this.archive.files(this.path, this.extensions);
         try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(this.archivePath))) {
