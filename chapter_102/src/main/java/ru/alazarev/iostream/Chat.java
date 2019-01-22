@@ -27,9 +27,9 @@ public class Chat {
     }
 
     public void chating() {
-        try(FileInputStream fis = new FileInputStream(this.pathToAnswers);
-            PrintStream output = new PrintStream(this.logFilePath)){
-
+        try (FileInputStream fis = new FileInputStream(this.pathToAnswers);
+             PrintStream output = new PrintStream(this.logFilePath)) {
+            //some action
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

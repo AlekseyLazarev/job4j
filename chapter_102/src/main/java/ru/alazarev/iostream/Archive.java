@@ -1,9 +1,7 @@
 package ru.alazarev.iostream;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 import java.util.zip.*;
 
 /**
@@ -13,39 +11,47 @@ import java.util.zip.*;
  * @since 21.01.2019
  */
 public class Archive {
-    private Queue<File> queue = new LinkedList<>();
-    private String pathToPack;
-    private String pathToSaveZip;
+    private Queue<File> queue;
+    private String path;
+    private String archivePath;
+    private Search archive = new Search();
+    private List<String> extensions = new ArrayList<>();
 
-    public Archive(String path, String zip) {
-        this.pathToPack = path;
-        this.pathToSaveZip = path + "\\" + zip;
+    public Archive(String path) {
+        this.path = path;
+        this.archivePath = path + "\\project.zip";
+    }
+
+    public Archive(String path, List<String> exts) {
+        this(path);
+        this.extensions = exts;
     }
 
     public void pack() {
-        try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(pathToSaveZip))) {
-            for (File currentFile : Arrays.asList(new File(pathToPack).listFiles())) {
-                upDate(currentFile);
-                while (!queue.isEmpty()) {
-                    File actualFile = queue.poll();
-                    String currentPath = "";
-                    String[] catalogs = actualFile.getPath().substring(pathToPack.length() + 1).replace('\\', '/').split("/");
-                    try (FileInputStream fis = new FileInputStream(actualFile)) {
-                        for (int index = 0; index < catalogs.length; index++) {
-                            if (index != catalogs.length - 1) {
-                                currentPath = currentPath + catalogs[index] + "/";
-                            } else {
-                                currentPath += catalogs[index];
-                            }
-                            zos.putNextEntry(new ZipEntry(currentPath));
+        this.queue = (Queue<File>) this.archive.files(this.path, this.extensions);
+        try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(this.archivePath))) {
+            while (!this.queue.isEmpty()) {
+                File actualFile = this.queue.poll();
+                String currentPath = "";
+                String[] catalogs = actualFile.getPath().substring(this.path.length() + 1)
+                        .replace('\\', '/').split("/");
+                try (FileInputStream fis = new FileInputStream(actualFile)) {
+                    for (int index = 0; index < catalogs.length; index++) {
+                        if (index != catalogs.length - 1) {
+                            currentPath = currentPath + catalogs[index] + "/";
+                        } else {
+                            currentPath += catalogs[index];
                         }
-                        byte[] buffer = new byte[fis.available()];
-                        fis.read(buffer);
-                        zos.write(buffer);
-                        zos.closeEntry();
-                    } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
+                        try {
+                            zos.putNextEntry(new ZipEntry(currentPath));
+                        } catch (ZipException ze) {
+                        }
                     }
+                    byte[] buffer = new byte[fis.available()];
+                    fis.read(buffer);
+                    zos.write(buffer);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
                 }
             }
         } catch (Exception ex) {
@@ -53,13 +59,4 @@ public class Archive {
         }
     }
 
-    private void upDate(File file) {
-        if (file.isDirectory()) {
-            for (File current : file.listFiles()) {
-                upDate(current);
-            }
-        } else if (file.isFile()) {
-            queue.add(file);
-        }
-    }
 }

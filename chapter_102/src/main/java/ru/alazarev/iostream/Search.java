@@ -40,10 +40,14 @@ public class Search {
             upDate(currentFile);
             while (!queue.isEmpty()) {
                 File actualFile = queue.poll();
-                for (String reg : exts) {
-                    if (actualFile.getName().toLowerCase().matches(".*" + reg)) {
-                        resultFiles.add(actualFile);
-                        break;
+                if (exts.isEmpty()) {
+                    resultFiles.add(actualFile);
+                } else {
+                    for (String reg : exts) {
+                        if (actualFile.getName().toLowerCase().matches(".*" + reg)) {
+                            resultFiles.add(actualFile);
+                            break;
+                        }
                     }
                 }
             }

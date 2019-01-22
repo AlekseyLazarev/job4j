@@ -36,8 +36,8 @@ public class SearchTest {
             for (int index = 0; index < this.size; index++) {
                 String currentPath = "C:\\TestDir\\" + index + "\\" + (this.size - index);
                 new File(currentPath).mkdirs();
-                File currentFile = new File(currentPath + "\\" + index +
-                        this.extensions.get(index % this.extensions.size()));
+                File currentFile = new File(currentPath + "\\" + index
+                        + this.extensions.get(index % this.extensions.size()));
                 expect.add(currentFile);
                 currentFile.createNewFile();
             }
