@@ -1,17 +1,6 @@
 package ru.alazarev.iostream;
 
-//        Создать программу консольный чат. Пользователь вводит слово-фразу,
-//        программа берет случайную фразу из текстового файла и выводит в ответ.
-//        Программа замолкает если пользователь вводит слово «стоп» при этом он может продолжать
-//        отправлять сообщения в чат. Если пользователь вводит слово «продолжить» ,
-//        программа снова начинает отвечать.
-//        При вводе слова «закончить» программа прекращает работу. Запись диалога включая,
-//        слова-команды стоп/продолжить/закончить записать в текстовый лог.
-//        Так делать не надо. while (true) { - консольный чат. должен явно выходить
-//        из цикла. не делайте вечный цикл.
-
 import java.io.*;
-import java.nio.file.Path;
 import java.util.Scanner;
 
 /**
@@ -23,19 +12,23 @@ import java.util.Scanner;
 public class Chat {
     private String pathToAnswers;
     private String logFilePath;
-    private int countLinesAnswears;
+    private int countLinesAnswers;
 
-
+    /**
+     * Constructor with path parameter.
+     *
+     * @param path Path to answers and log.
+     */
     public Chat(String path) {
         this.pathToAnswers = path + "answers.txt";
         this.logFilePath = path + "log.txt";
-        this.countLinesAnswears = setCountLinesAnswers();
+        this.countLinesAnswers = setCountLinesAnswers();
     }
 
     /**
-     * Получение количества строк в ответах.
+     * Get count lines answers.
      *
-     * @return Количество строк в ответах.
+     * @return Count lines.
      */
     public int setCountLinesAnswers() {
         int result = 0;
@@ -56,10 +49,8 @@ public class Chat {
                 }
                 readChars = is.read(c);
             }
-
             // count remaining characters
             while (readChars != -1) {
-                System.out.println(readChars);
                 for (int i = 0; i < readChars; ++i) {
                     if (c[i] == '\n') {
                         ++count;
@@ -67,7 +58,6 @@ public class Chat {
                 }
                 readChars = is.read(c);
             }
-
             result = count;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -75,30 +65,31 @@ public class Chat {
         return result;
     }
 
+    /**
+     * Method get random Phrase from file.
+     *
+     * @return Random phrase.
+     */
     public String getRandomPhrase() {
-        String ss = "";
-        int lineNumber = (int) (Math.random() * this.countLinesAnswears);
-        try {
-            for (int index = 0; index < lineNumber - 1; index++) {
-                Scanner answer = new Scanner(new FileInputStream(this.pathToAnswers));
-                ss = answer.next();
-            }
-        } catch (FileNotFoundException fnfe) {
-            System.out.println(fnfe.getMessage());
+        String resultPhrase = "";
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.pathToAnswers))) {
+            resultPhrase = (String) bufferedReader.lines().toArray()[(int) (Math.random() * this.countLinesAnswers)];
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
-
-        return ss;
+        return resultPhrase;
     }
 
-    //    public void checkInput(String input) {
-//
-//    }
-    public void chating() {
+    /**
+     * Chat method.
+     */
+    public void chat() {
+        System.out.println("Добро пожаловать, что-бы получить ответ просто напишите что-то: ");
         try (Scanner input = new Scanner(System.in);
              PrintStream output = new PrintStream(this.logFilePath)) {
             boolean exitAnswer = false;
             while (!exitAnswer) {
-                String enterLine = input.nextLine();
+                String enterLine = input.nextLine().toLowerCase();
                 output.println(enterLine);
                 switch (enterLine) {
                     case "закончить":
@@ -107,7 +98,7 @@ public class Chat {
                     case "стоп":
                         boolean silent = true;
                         while (silent) {
-                            enterLine = input.nextLine();
+                            enterLine = input.nextLine().toLowerCase();
                             output.println(enterLine);
                             if (enterLine.equals("продолжить")) {
                                 silent = false;
@@ -129,7 +120,7 @@ public class Chat {
     }
 
     public static void main(String[] args) {
-        Chat chat = new Chat("C:\\chat\\");
-        chat.chating();
+        Chat chat = new Chat("C:\\Chat\\");
+        chat.chat();
     }
 }
