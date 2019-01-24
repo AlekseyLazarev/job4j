@@ -1,7 +1,11 @@
 package ru.alazarev.iostream;
 
+import com.sun.nio.zipfs.ZipDirectoryStream;
+import com.sun.nio.zipfs.ZipInfo;
+
 import java.io.*;
 import java.util.*;
+import java.util.stream.Stream;
 import java.util.zip.*;
 
 /**
@@ -11,10 +15,7 @@ import java.util.zip.*;
  * @since 21.01.2019
  */
 public class Archive {
-    private Queue<File> queue;
     private String path;
-    private String archivePath;
-    private Search archive = new Search();
     private List<String> extensions = new ArrayList<>();
 
     /**
@@ -24,7 +25,6 @@ public class Archive {
      */
     public Archive(String path) {
         this.path = path;
-        this.archivePath = path + "\\project.zip";
     }
 
     /**
@@ -42,12 +42,14 @@ public class Archive {
      * Packing method.
      */
     public void pack() {
-        this.queue = (Queue<File>) this.archive.files(this.path, this.extensions);
-        try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(this.archivePath))) {
-            while (!this.queue.isEmpty()) {
-                File actualFile = this.queue.poll();
+        Queue<File> queue = (Queue<File>) new Search().files(this.path, this.extensions);
+        try {
+            ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(this.path + "\\project.zip"));
+            while (!queue.isEmpty()) {
+                File actualFile = queue.poll();
+                String[] catalogs;
                 String currentPath = "";
-                String[] catalogs = actualFile.getPath().substring(this.path.length() + 1)
+                catalogs = actualFile.getPath().replace(this.path + "\\", "")
                         .replace('\\', '/').split("/");
                 try (FileInputStream fis = new FileInputStream(actualFile)) {
                     for (int index = 0; index < catalogs.length; index++) {
@@ -59,17 +61,19 @@ public class Archive {
                         try {
                             zos.putNextEntry(new ZipEntry(currentPath));
                         } catch (ZipException ze) {
+                            ze.printStackTrace();
                         }
                     }
                     byte[] buffer = new byte[fis.available()];
                     fis.read(buffer);
                     zos.write(buffer);
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    ex.printStackTrace();
                 }
             }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (
+                Exception ex) {
+            ex.printStackTrace();
         }
     }
 

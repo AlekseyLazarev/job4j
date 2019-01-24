@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -29,12 +30,11 @@ public class ArchiveTest {
     @Before
     public void setUp() {
         this.extensions.add(".java");
-        this.extensions.add(".xml");
         this.archive = new Archive(this.path, this.extensions);
     }
 
     @Test
-    public void whenArchivedThen() {
+    public void whenArchivedThen() throws IOException {
         this.archive.pack();
         List<String> result = new ArrayList<>();
         List<String> expected = new ArrayList<>();
