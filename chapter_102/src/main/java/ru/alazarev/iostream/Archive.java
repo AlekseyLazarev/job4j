@@ -1,11 +1,7 @@
 package ru.alazarev.iostream;
 
-import com.sun.nio.zipfs.ZipDirectoryStream;
-import com.sun.nio.zipfs.ZipInfo;
-
 import java.io.*;
 import java.util.*;
-import java.util.stream.Stream;
 import java.util.zip.*;
 
 /**
@@ -39,42 +35,57 @@ public class Archive {
     }
 
     /**
-     * Packing method.
+     * Method generate tree structure for create.
+     *
+     * @param files List for generate tree.
+     * @return Sorted list.
      */
-    public void pack() {
-        Queue<File> queue = (Queue<File>) new Search().files(this.path, this.extensions);
-        try {
-            ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(this.path + "\\project.zip"));
-            while (!queue.isEmpty()) {
-                File actualFile = queue.poll();
-                String[] catalogs;
-                String currentPath = "";
-                catalogs = actualFile.getPath().replace(this.path + "\\", "")
-                        .replace('\\', '/').split("/");
-                try (FileInputStream fis = new FileInputStream(actualFile)) {
-                    for (int index = 0; index < catalogs.length; index++) {
-                        if (index != catalogs.length - 1) {
-                            currentPath = currentPath + catalogs[index] + "/";
-                        } else {
-                            currentPath += catalogs[index];
-                        }
-                        try {
-                            zos.putNextEntry(new ZipEntry(currentPath));
-                        } catch (ZipException ze) {
-                            ze.printStackTrace();
-                        }
-                    }
-                    byte[] buffer = new byte[fis.available()];
-                    fis.read(buffer);
-                    zos.write(buffer);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+    public List<String> getTree(List<File> files) {
+        String folderSplit = "/";
+        HashSet<String> hashSet = new HashSet<>();
+        for (File file : files) {
+            String[] currentFilePath = replacePath(file.getParent()).split("\\\\");
+            String lastPath = null;
+            for (int index = 0; index < currentFilePath.length; index++) {
+                if (index == 0) {
+                    lastPath = currentFilePath[index] + folderSplit;
+                } else {
+                    lastPath = lastPath + currentFilePath[index] + folderSplit;
                 }
+                hashSet.add(lastPath);
             }
-        } catch (
-                Exception ex) {
-            ex.printStackTrace();
         }
+        List<String> sortedList = new ArrayList(hashSet);
+        Collections.sort(sortedList);
+        return sortedList;
     }
 
+    /**
+     * Method remove start path.
+     *
+     * @param path Path for remove.
+     * @return Removed path.
+     */
+    public String replacePath(String path) {
+        return path.replace(this.path + "\\", "");
+    }
+
+    /**
+     * Packing method.
+     */
+    public void pack() throws IOException {
+        List<File> fileList = new Search().files(this.path, this.extensions);
+        try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(this.path + "\\project.zip"))) {
+            for (String path : getTree(fileList)) {
+                zos.putNextEntry(new ZipEntry(path));
+            }
+            for (File actualFile : fileList) {
+                FileInputStream fis = new FileInputStream(actualFile);
+                zos.putNextEntry(new ZipEntry(replacePath(actualFile.getPath()).replace("\\", "/")));
+                byte[] buffer = new byte[fis.available()];
+                fis.read(buffer);
+                zos.write(buffer);
+            }
+        }
+    }
 }

@@ -3,9 +3,7 @@ package ru.alazarev.iostream;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +43,7 @@ public class ArchiveTest {
             }
         } catch (Exception ex) {
         }
-        assertThat(result.retainAll(expected), is(true));
+        result.retainAll(expected);
+        assertThat(result.size(), is(0));
     }
 }
