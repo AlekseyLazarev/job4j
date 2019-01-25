@@ -1,6 +1,8 @@
 package ru.alazarev.iostream;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Scanner;
 public class Chat {
     private String pathToAnswers;
     private String logFilePath;
-    private int countLinesAnswers;
+    private List<String> answers = new ArrayList<>();
 
     /**
      * Constructor with path parameter.
@@ -22,62 +24,17 @@ public class Chat {
     public Chat(String path) {
         this.pathToAnswers = path + "answers.txt";
         this.logFilePath = path + "log.txt";
-        this.countLinesAnswers = setCountLinesAnswers();
+        setAnswers();
     }
 
-    /**
-     * Get count lines answers.
-     *
-     * @return Count lines.
-     */
-    public int setCountLinesAnswers() {
-        int result = 0;
-        try (InputStream is = new BufferedInputStream(new FileInputStream(this.pathToAnswers))) {
-            byte[] c = new byte[1024];
-            int readChars = is.read(c);
-            if (readChars == -1) {
-                // bail out if nothing to read
-                return 0;
-            }
-            // make it easy for the optimizer to tune this loop
-            int count = 0;
-            while (readChars == 1024) {
-                for (int i = 0; i < 1024; ) {
-                    if (c[i++] == '\n') {
-                        ++count;
-                    }
-                }
-                readChars = is.read(c);
-            }
-            // count remaining characters
-            while (readChars != -1) {
-                for (int i = 0; i < readChars; ++i) {
-                    if (c[i] == '\n') {
-                        ++count;
-                    }
-                }
-                readChars = is.read(c);
-            }
-            result = count;
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+    public void setAnswers() {
+        try (Scanner scanner = new Scanner(new FileReader(this.pathToAnswers))) {
+           while (scanner.hasNextLine()) {
+               this.answers.add(scanner.nextLine());
+           }
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
         }
-        return result;
-    }
-
-    /**
-     * Method get random Phrase from file.
-     *
-     * @return Random phrase.
-     */
-    public String getRandomPhrase() {
-        String resultPhrase = "";
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.pathToAnswers))) {
-            resultPhrase = (String) bufferedReader.lines().toArray()[(int) (Math.random() * this.countLinesAnswers)];
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return resultPhrase;
     }
 
     /**
@@ -109,7 +66,7 @@ public class Chat {
                         }
                         break;
                     default:
-                        String phrase = getRandomPhrase();
+                        String phrase = this.answers.get((int) (Math.random() * this.answers.size()));
                         System.out.println(phrase);
                         output.println(phrase);
                 }
