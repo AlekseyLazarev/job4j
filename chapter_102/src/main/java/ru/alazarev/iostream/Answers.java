@@ -1,27 +1,41 @@
 package ru.alazarev.iostream;
 
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * Class Answers решение задачи части 002. 5. Создать программу консольный чат.  [#862].
+ *
+ * @author Aleksey Lazarev
+ * @since 30.01.2019
+ */
 public class Answers {
 
     /**
      * Contains destinations.
      */
-    private final Map<String, Function<String, Boolean>> dispatch = new HashMap<>();
+    Map<String, Function<String, Boolean>> dispatch = new HashMap<>();
     PrintStream output;
     String pathToAnswers;
     List<String> answers = new ArrayList<>();
 
+    /**
+     * Constructor.
+     *
+     * @param output        Output stream.
+     * @param pathToAnswers Path to answers.
+     */
     public Answers(PrintStream output, String pathToAnswers) {
         this.output = output;
         this.pathToAnswers = pathToAnswers;
         setAnswers();
     }
 
+    /**
+     * Method load answers in list.
+     */
     public void setAnswers() {
         try {
             FileReader fr = new FileReader(this.pathToAnswers);
@@ -34,33 +48,56 @@ public class Answers {
         }
     }
 
-
+    /**
+     * Method when finish.
+     *
+     * @return Command for cycle.
+     */
     public Function<String, Boolean> isFinish() {
         return enterLine -> {
-            output.println(enterLine);
             return true;
         };
     }
 
+    /**
+     * Method when stop.
+     *
+     * @return Command for cycle.
+     */
     public Function<String, Boolean> isStop() {
         return enterLine -> {
             Answers inner = this;
-            while (inner.sent(enterLine)) {
-                output.println(enterLine);
-                System.out.println(enterLine);
-            }
+            boolean exit = true;
+            do {
+                String newLine = new Scanner(System.in).nextLine();
+                output.println(newLine);
+                exit = !"продолжить".equals(newLine) ? inner.sent("_inStop") : inner.sent(newLine);
+            } while (exit);
             return false;
         };
     }
 
+    /**
+     * Method when continue.
+     *
+     * @return Command for cycle.
+     */
     public Function<String, Boolean> isPause() {
         return enterLine -> {
-            output.println(enterLine);
-            System.out.println(enterLine);
             return false;
         };
     }
 
+    /**
+     * Method when in cycle stop.
+     *
+     * @return Command for cycle.
+     */
+    public Function<String, Boolean> isInStop() {
+        return enterLine -> {
+            return true;
+        };
+    }
 
     /**
      * Init's dispatch.
@@ -71,6 +108,7 @@ public class Answers {
         this.load("закончить", this.isFinish());
         this.load("стоп", this.isStop());
         this.load("продолжить", this.isPause());
+        this.load("_inStop", this.isInStop());
         return this;
     }
 
