@@ -40,6 +40,17 @@ public class AnswersChecker {
     }
 
     /**
+     * Handle to say how are you.
+     *
+     * @return handle.
+     */
+    public Function<String, String> sayExit() {
+        return string -> {
+            return "Bye, bye my friend =(";
+        };
+    }
+
+    /**
      * Init's dispatch.
      *
      * @return current object.
@@ -47,6 +58,7 @@ public class AnswersChecker {
     public AnswersChecker init() {
         this.load("hello", this.sayHello());
         this.load("how are you?", this.sayHowAreYou());
+        this.load("exit", this.sayExit());
         return this;
     }
 
@@ -63,8 +75,8 @@ public class AnswersChecker {
     /**
      * Sent message to dispatch.
      *
-     * @param string message.
-     * @return answer.
+     * @param string message
+     * @return result dispatch.
      */
     public String sent(final String string) {
         String result = "I don't understand ! =(";
