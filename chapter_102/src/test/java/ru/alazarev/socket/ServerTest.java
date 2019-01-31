@@ -21,7 +21,7 @@ public class ServerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         when(socket.getInputStream()).thenReturn(new ByteArrayInputStream(input.getBytes()));
         when(socket.getOutputStream()).thenReturn(out);
-        new Server(socket).start();
+        new OracleServer(socket).start();
         assertThat(out.toString(), is(extend));
     }
 

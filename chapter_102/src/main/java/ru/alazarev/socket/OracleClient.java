@@ -5,12 +5,12 @@ import java.net.*;
 import java.util.Scanner;
 
 /**
- * Class AnswersChecker решение задачи части 002. 2.1. Бот [#7921].
+ * Class OracleClient решение задачи части 002. 2.1. Бот [#7921].
  *
  * @author Aleksey Lazarev
  * @since 29.01.2019
  */
-public class Client {
+public class OracleClient {
     private int port;
     private String ip;
 
@@ -20,7 +20,7 @@ public class Client {
      * @param port Connection port.
      * @param ip   Connection ip.
      */
-    public Client(int port, String ip) {
+    public OracleClient(int port, String ip) {
         this.port = port;
         this.ip = ip;
     }
@@ -56,7 +56,7 @@ public class Client {
      */
     public static void main(String[] args) throws IOException {
 
-        Client client = new Client(5000, "127.0.0.1");
+        OracleClient client = new OracleClient(5000, "127.0.0.1");
         client.start();
     }
 }

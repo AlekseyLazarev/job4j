@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * Class AnswersChecker решение задачи части 002. 2.1. Бот [#7921].
+ * Class OracleAnswersChecker решение задачи части 002. 2.1. Бот [#7921].
  *
  * @author Aleksey Lazarev
  * @since 29.01.2019
  */
-public class AnswersChecker {
+public class OracleAnswersChecker {
 
     /**
      * Contains destinations.
@@ -55,7 +55,7 @@ public class AnswersChecker {
      *
      * @return current object.
      */
-    public AnswersChecker init() {
+    public OracleAnswersChecker init() {
         this.load("hello", this.sayHello());
         this.load("how are you?", this.sayHowAreYou());
         this.load("exit", this.sayExit());
