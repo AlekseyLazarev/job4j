@@ -32,9 +32,9 @@ public class Search {
      *
      * @param parent Root folder.
      * @param exts   Extensions for search.
-     * @return
+     * @return File list.
      */
-    List<File> files(String parent, List<String> exts) {
+    public List<File> files(String parent, List<String> exts) {
         List<File> resultFiles = new LinkedList<>();
         for (File currentFile : Arrays.asList(new File(parent).listFiles())) {
             upDate(currentFile);
@@ -53,5 +53,14 @@ public class Search {
             }
         }
         return resultFiles;
+    }
+    /**
+     * Search method.
+     *
+     * @param parent Root folder.
+     * @return File list.
+     */
+    public List<File> files(String parent) {
+        return this.files(parent, new ArrayList<>());
     }
 }

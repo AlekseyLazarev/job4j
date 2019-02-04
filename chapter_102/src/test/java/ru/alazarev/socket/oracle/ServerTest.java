@@ -1,4 +1,4 @@
-package ru.alazarev.socket;
+package ru.alazarev.socket.oracle;
 
 import com.google.common.base.Joiner;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class ServerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         when(socket.getInputStream()).thenReturn(new ByteArrayInputStream(input.getBytes()));
         when(socket.getOutputStream()).thenReturn(out);
-        new OracleServer(socket).start();
+        new Server(socket).start();
         assertThat(out.toString(), is(extend));
     }
 

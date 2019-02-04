@@ -1,4 +1,4 @@
-package ru.alazarev.socket;
+package ru.alazarev.socket.oracle;
 
 import java.io.*;
 import java.net.*;
@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @author Aleksey Lazarev
  * @since 29.01.2019
  */
-public class OracleClient {
+public class Client {
     private int port;
     private String ip;
 
@@ -20,7 +20,7 @@ public class OracleClient {
      * @param port Connection port.
      * @param ip   Connection ip.
      */
-    public OracleClient(int port, String ip) {
+    public Client(int port, String ip) {
         this.port = port;
         this.ip = ip;
     }
@@ -56,7 +56,7 @@ public class OracleClient {
      */
     public static void main(String[] args) throws IOException {
 
-        OracleClient client = new OracleClient(5000, "127.0.0.1");
+        Client client = new Client(5000, "127.0.0.1");
         client.start();
     }
 }

@@ -1,4 +1,4 @@
-package ru.alazarev.socket;
+package ru.alazarev.socket.oracle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.function.Function;
  * @author Aleksey Lazarev
  * @since 29.01.2019
  */
-public class OracleAnswersChecker {
+public class AnswersChecker {
 
     /**
      * Contains destinations.
@@ -55,7 +55,7 @@ public class OracleAnswersChecker {
      *
      * @return current object.
      */
-    public OracleAnswersChecker init() {
+    public AnswersChecker init() {
         this.load("hello", this.sayHello());
         this.load("how are you?", this.sayHowAreYou());
         this.load("exit", this.sayExit());
