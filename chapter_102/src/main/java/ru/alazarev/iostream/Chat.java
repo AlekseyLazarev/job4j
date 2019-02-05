@@ -1,15 +1,7 @@
 package ru.alazarev.iostream;
 
-//        Создать программу консольный чат. Пользователь вводит слово-фразу,
-//        программа берет случайную фразу из текстового файла и выводит в ответ.
-//        Программа замолкает если пользователь вводит слово «стоп» при этом он может продолжать
-//        отправлять сообщения в чат. Если пользователь вводит слово «продолжить» , программа снова начинает отвечать.
-//        При вводе слова «закончить» программа прекращает работу. Запись диалога включая,
-//        слова-команды стоп/продолжить/закончить записать в текстовый лог.
-//        Так делать не надо. while (true) { - консольный чат. должен явно выходить из цикла. не делайте вечный цикл.
-
-import java.io.FileInputStream;
-import java.io.PrintStream;
+import java.io.*;
+import java.util.Scanner;
 
 /**
  * Class Chat решение задачи части 002. 5. Создать программу консольный чат.  [#862].
@@ -19,20 +11,46 @@ import java.io.PrintStream;
  */
 public class Chat {
     private String pathToAnswers;
-    private String userFrase;
     private String logFilePath;
 
-    public Chat(String pathToAnswers) {
-        this.pathToAnswers = pathToAnswers;
+    /**
+     * Constructor with path parameter.
+     *
+     * @param path Path to answers and log.
+     */
+    public Chat(String path) {
+        this.pathToAnswers = path + "answers.txt";
+        this.logFilePath = path + "log.txt";
     }
 
-    public void chating() {
-        try(FileInputStream fis = new FileInputStream(this.pathToAnswers);
-            PrintStream output = new PrintStream(this.logFilePath)){
-
+    /**
+     * Chat method.
+     */
+    public void chat() {
+        System.out.println("Добро пожаловать, что-бы получить ответ просто напишите что-то: ");
+        try (Scanner input = new Scanner(System.in);
+             PrintStream output = new PrintStream(this.logFilePath)) {
+            Answers dp = new Answers(output, this.pathToAnswers).init();
+            boolean exit = false;
+            do {
+                String inputString = input.nextLine();
+                output.println(inputString);
+                exit = dp.sent(inputString);
+            } while (!exit);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
+    }
+
+    /**
+     * Main method.
+     *
+     * @param args Arguments.
+     */
+    public static void main(String[] args) {
+        Chat chat = new Chat("C:\\Chat\\");
+        chat.chat();
     }
 
 }

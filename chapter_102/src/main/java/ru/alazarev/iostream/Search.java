@@ -32,22 +32,35 @@ public class Search {
      *
      * @param parent Root folder.
      * @param exts   Extensions for search.
-     * @return
+     * @return File list.
      */
-    List<File> files(String parent, List<String> exts) {
+    public List<File> files(String parent, List<String> exts) {
         List<File> resultFiles = new LinkedList<>();
         for (File currentFile : Arrays.asList(new File(parent).listFiles())) {
             upDate(currentFile);
             while (!queue.isEmpty()) {
                 File actualFile = queue.poll();
-                for (String reg : exts) {
-                    if (actualFile.getName().toLowerCase().matches(".*" + reg)) {
-                        resultFiles.add(actualFile);
-                        break;
+                if (exts.isEmpty()) {
+                    resultFiles.add(actualFile);
+                } else {
+                    for (String reg : exts) {
+                        if (actualFile.getName().toLowerCase().matches(".*" + reg)) {
+                            resultFiles.add(actualFile);
+                            break;
+                        }
                     }
                 }
             }
         }
         return resultFiles;
+    }
+    /**
+     * Search method.
+     *
+     * @param parent Root folder.
+     * @return File list.
+     */
+    public List<File> files(String parent) {
+        return this.files(parent, new ArrayList<>());
     }
 }
