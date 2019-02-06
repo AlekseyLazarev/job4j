@@ -5,19 +5,13 @@ import java.io.IOException;
 import java.util.List;
 
 public interface FileManager {
-    /**
-     * Method start api.
-     *
-     * @return Result start.
-     */
-    boolean start();
 
     /**
      * Method get children in current directory.
      *
      * @return List of children.
      */
-    List<File> getChildren();
+    boolean getChildren();
 
     /**
      * Method go into child folder.
@@ -38,7 +32,7 @@ public interface FileManager {
      *
      * @return File.
      */
-    File getFile(String fileName);
+    boolean getFile(String fileName) throws IOException;
 
     /**
      * Method load file.
