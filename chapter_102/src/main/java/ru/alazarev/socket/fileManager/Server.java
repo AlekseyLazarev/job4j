@@ -11,25 +11,69 @@ package ru.alazarev.socket.fileManager;
 //
 //        4. настройки портов и адреса считывать с app.properties
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.*;
 
 public class Server implements FileManager {
-    final private String root;
+    private final String root;
+    private final Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
     private String currentCatalog;
 
-    public Server(String root) {
+    public Server(String root, int port) throws IOException {
         this.root = root;
+        socket = new ServerSocket(port).accept();
     }
 
-    public boolean start() {
-        boolean result = false;
+    public void chk(String inputString) throws IOException {
+        String[] splitInput = inputString.split(" ");
+        switch (splitInput[0]) {
+            case ("child"): {
+                getChildren();
+                break;
+            }
+            case ("down"): {
+                followChild(splitInput[1]);
+                break;
+            }
+            case ("root"): {
+                getRoot();
+                break;
+            }
+            case ("download"): {
+                getFile(splitInput[1]);
+                break;
+            }
+            case ("upload"): {
+                loadFile(new File(splitInput[1]));
+                break;
+            }
+            default: {
+                this.out.println("Unknown command");
+                break;
+            }
+        }
+    }
+
+    public void start() {
         getRoot();
-        System.out.println("Server started...");
-        return result;
+        try {
+            System.out.println("Server started.");
+            out = new PrintWriter(this.socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            String ask;
+            do {
+                System.out.println("Wait command ...");
+                ask = in.readLine();
+                chk(ask);
+            } while (!("exit".equals(ask)));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -37,8 +81,10 @@ public class Server implements FileManager {
      *
      * @return Список корневого каталога.
      */
-    public List<File> getChildren() {
-        return Arrays.asList(new File(this.currentCatalog).listFiles());
+    public boolean getChildren() {
+        Arrays.asList(new File(this.currentCatalog).listFiles())
+                .stream().forEach(f -> out.println(f.getPath()));
+        return true;
     }
 
     /**
@@ -48,6 +94,7 @@ public class Server implements FileManager {
         boolean result = false;
         if (new File(path).exists()) {
             this.currentCatalog = new File(path).getPath();
+            this.out.println(currentCatalog);
             result = true;
         }
         return result;
@@ -60,6 +107,9 @@ public class Server implements FileManager {
         boolean result = false;
         if (new File(this.root).exists()) {
             this.currentCatalog = this.root;
+            if (false) {
+                this.out.println(currentCatalog);
+            }
             result = true;
         }
         return result;
@@ -70,9 +120,21 @@ public class Server implements FileManager {
      *
      * @return
      */
-    public File getFile(String fileName) {
-        String currentFile = this.currentCatalog + "\\" + fileName;
-        return new File(currentFile).exists() ? new File(currentFile) : null;
+    public boolean getFile(String fileName) throws IOException {
+        boolean result = false;
+        File inFile = new File(this.currentCatalog + "\\" + fileName);
+        String currentPath = "C:\\Chat\\1\\" + fileName;
+        File outFile = new File(currentPath);
+        if (inFile.exists()) {
+            byte data[] = new byte[(int) inFile.length()];
+            FileInputStream in = new FileInputStream(inFile);
+            in.read(data);
+            FileOutputStream out = new FileOutputStream(outFile);
+            out.write(data);
+            out.close();
+            result = true;
+        }
+        return result;
     }
 
     /**
@@ -94,5 +156,10 @@ public class Server implements FileManager {
             result = true;
         }
         return result;
+    }
+
+    public static void main(String[] args) throws IOException {
+        Server server = new Server("C:\\chat", 5000);
+        server.start();
     }
 }
