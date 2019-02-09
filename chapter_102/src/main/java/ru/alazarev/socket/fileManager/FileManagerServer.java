@@ -12,40 +12,44 @@ package ru.alazarev.socket.fileManager;
 //        4. настройки портов и адреса считывать с app.properties
 
 
+import com.sun.xml.internal.ws.commons.xmlutil.Converter;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
-public class Server implements FileManager {
+public class FileManagerServer {
     private final String root;
     private final Socket socket;
     private PrintWriter out;
     private BufferedReader in;
     private String currentCatalog;
 
-    public Server(String root, int port) throws IOException {
+    public FileManagerServer(String root, int port) throws IOException {
         this.root = root;
+        this.currentCatalog = root;
         socket = new ServerSocket(port).accept();
     }
 
-    public void chk(String inputString) throws IOException {
+    public List<String> chk(String inputString) throws IOException {
         String[] splitInput = inputString.split(" ");
+        List<String> result = new ArrayList<>();
         switch (splitInput[0]) {
             case ("child"): {
-                getChildren();
+                result = getChildren();
                 break;
             }
             case ("down"): {
-                followChild(splitInput[1]);
+                result = followChild(splitInput[1]);
                 break;
             }
             case ("root"): {
-                getRoot();
+                result = getRoot();
                 break;
             }
             case ("download"): {
-                getFile(splitInput[1]);
+                result = getFile(splitInput[1]);
                 break;
             }
             case ("upload"): {
@@ -53,14 +57,15 @@ public class Server implements FileManager {
                 break;
             }
             default: {
-                this.out.println("Unknown command");
+                result = new ArrayList<>();
+                result.add("Unknown command");
                 break;
             }
         }
+        return result;
     }
 
     public void start() {
-        getRoot();
         try {
             System.out.println("Server started.");
             out = new PrintWriter(this.socket.getOutputStream(), true);
@@ -69,7 +74,10 @@ public class Server implements FileManager {
             do {
                 System.out.println("Wait command ...");
                 ask = in.readLine();
-                chk(ask);
+                for (String s : chk(ask)) {
+                    this.out.println(s);
+                }
+                this.out.println("End translation._!");
             } while (!("exit".equals(ask)));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -81,21 +89,22 @@ public class Server implements FileManager {
      *
      * @return Список корневого каталога.
      */
-    public boolean getChildren() {
+    public List<String> getChildren() {
+        List<String> result = new ArrayList<>();
         Arrays.asList(new File(this.currentCatalog).listFiles())
-                .stream().forEach(f -> out.println(f.getPath()));
-        return true;
+                .stream().forEach(f -> result.add(f.getPath()));
+        return result;
     }
 
     /**
      * Перейти в подкаталог.
      */
-    public boolean followChild(String path) {
-        boolean result = false;
+    public List<String> followChild(String catalog) {
+        List<String> result = new ArrayList<>();
+        String path = this.currentCatalog + "\\" + catalog;
         if (new File(path).exists()) {
             this.currentCatalog = new File(path).getPath();
-            this.out.println(currentCatalog);
-            result = true;
+            result.add(currentCatalog);
         }
         return result;
     }
@@ -103,14 +112,11 @@ public class Server implements FileManager {
     /**
      * Спуститься в родительский каталог
      */
-    public boolean getRoot() {
-        boolean result = false;
+    public List<String> getRoot() {
+        List<String> result = new ArrayList<>();
         if (new File(this.root).exists()) {
             this.currentCatalog = this.root;
-            if (false) {
-                this.out.println(currentCatalog);
-            }
-            result = true;
+            result.add(currentCatalog);
         }
         return result;
     }
@@ -120,19 +126,16 @@ public class Server implements FileManager {
      *
      * @return
      */
-    public boolean getFile(String fileName) throws IOException {
-        boolean result = false;
-        File inFile = new File(this.currentCatalog + "\\" + fileName);
-        String currentPath = "C:\\Chat\\1\\" + fileName;
-        File outFile = new File(currentPath);
-        if (inFile.exists()) {
-            byte data[] = new byte[(int) inFile.length()];
-            FileInputStream in = new FileInputStream(inFile);
-            in.read(data);
-            FileOutputStream out = new FileOutputStream(outFile);
-            out.write(data);
-            out.close();
-            result = true;
+    public List<String> getFile(String fileName) throws IOException {
+        //TODO только после закрытия сохраняются в файл данные
+        List<String> result = new ArrayList<>();
+        File currentFile = new File(this.currentCatalog + "\\" + fileName);
+        byte[] file = new byte[(int) currentFile.length()];
+        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        FileInputStream fis = new FileInputStream(currentFile);
+        int count;
+        while ((count = fis.read(file)) != -1) {
+            dataOutputStream.write(file, 0, count);
         }
         return result;
     }
@@ -159,7 +162,7 @@ public class Server implements FileManager {
     }
 
     public static void main(String[] args) throws IOException {
-        Server server = new Server("C:\\chat", 5000);
+        FileManagerServer server = new FileManagerServer("C:\\chat", 5000);
         server.start();
     }
 }
