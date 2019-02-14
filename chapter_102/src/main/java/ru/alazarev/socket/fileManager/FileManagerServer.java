@@ -53,7 +53,8 @@ public class FileManagerServer {
                 break;
             }
             case ("upload"): {
-                loadFile(new File(splitInput[1]));
+                String[] upload = splitInput[1].split("\\\\");
+                result = loadFile(upload[upload.length-1]);
                 break;
             }
             default: {
@@ -130,7 +131,7 @@ public class FileManagerServer {
         List<String> result = new ArrayList<>();
         File currentFile = new File(this.currentCatalog + "\\" + fileName);
         byte[] file = new byte[(int) currentFile.length()];
-        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        DataOutputStream dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
         dataOutputStream.writeUTF(String.valueOf(currentFile.length()));
         FileInputStream fis = new FileInputStream(currentFile);
         int count;
@@ -143,21 +144,19 @@ public class FileManagerServer {
 
     /**
      * Загрузить файл.
-     *
-     * @param file
      */
-    public boolean loadFile(File file) throws IOException {
-        boolean result = false;
-        String currentPath = this.currentCatalog + "\\" + file.getName();
+    public List<String> loadFile(String fileName) throws IOException {
+        List<String> result = new ArrayList<>();
+        String currentPath = this.currentCatalog + "\\" + fileName;
         if (!new File(currentPath).exists()) {
-            byte data[] = new byte[(int) file.length()];
-            FileInputStream in = new FileInputStream(file);
-            in.read(data);
-            FileOutputStream out = new FileOutputStream(currentPath);
-            out.write(data);
-            out.close();
-            new File(currentPath);
-            result = true;
+            File file = new File(currentPath);
+            DataInputStream dataInputStream = new DataInputStream(this.socket.getInputStream());
+            byte[] upload = new byte[Integer.valueOf(dataInputStream.readUTF())];
+            FileOutputStream fos = new FileOutputStream(file);
+            dataInputStream.read(upload);
+            fos.write(upload);
+            fos.close();
+            result.add("Upload file " + fileName + " complete.");
         }
         return result;
     }

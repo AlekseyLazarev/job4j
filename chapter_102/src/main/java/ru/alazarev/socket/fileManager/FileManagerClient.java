@@ -52,6 +52,18 @@ public class FileManagerClient {
                     fos.write(download);
                     fos.close();
                     System.out.println(new BufferedReader(new InputStreamReader(this.socket.getInputStream())).readLine());
+                } else if (clientString.startsWith("upload")) {
+                    String[] split = clientString.split(" ");
+                    File uploadFile = new File(split[1]);
+                    byte[] file = new byte[(int)uploadFile.length()];
+                    this.dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
+                    this.dataOutputStream.writeUTF(String.valueOf(uploadFile.length()));
+                    FileInputStream fis = new FileInputStream(uploadFile);
+                    int count;
+                    while ((count = fis.read(file)) != -1) {
+                        this.dataOutputStream.write(file, 0, count);
+                    }
+                    System.out.println(new BufferedReader(new InputStreamReader(this.socket.getInputStream())).readLine());
                 } else {
                     this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
                     String serverString;
