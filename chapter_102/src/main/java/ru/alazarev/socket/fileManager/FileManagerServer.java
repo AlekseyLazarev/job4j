@@ -127,16 +127,17 @@ public class FileManagerServer {
      * @return
      */
     public List<String> getFile(String fileName) throws IOException {
-        //TODO только после закрытия сохраняются в файл данные
         List<String> result = new ArrayList<>();
         File currentFile = new File(this.currentCatalog + "\\" + fileName);
         byte[] file = new byte[(int) currentFile.length()];
         DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        dataOutputStream.writeUTF(String.valueOf(currentFile.length()));
         FileInputStream fis = new FileInputStream(currentFile);
         int count;
         while ((count = fis.read(file)) != -1) {
             dataOutputStream.write(file, 0, count);
         }
+        result.add("Download file " + fileName + " complete.");
         return result;
     }
 
