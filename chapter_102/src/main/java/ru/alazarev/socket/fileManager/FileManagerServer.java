@@ -53,7 +53,8 @@ public class FileManagerServer {
                 break;
             }
             case ("upload"): {
-                loadFile(new File(splitInput[1]));
+                String[] upload = splitInput[1].split("\\\\");
+                result = loadFile(upload[upload.length-1]);
                 break;
             }
             default: {
@@ -127,36 +128,35 @@ public class FileManagerServer {
      * @return
      */
     public List<String> getFile(String fileName) throws IOException {
-        //TODO только после закрытия сохраняются в файл данные
         List<String> result = new ArrayList<>();
         File currentFile = new File(this.currentCatalog + "\\" + fileName);
         byte[] file = new byte[(int) currentFile.length()];
-        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        DataOutputStream dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
+        dataOutputStream.writeUTF(String.valueOf(currentFile.length()));
         FileInputStream fis = new FileInputStream(currentFile);
         int count;
         while ((count = fis.read(file)) != -1) {
             dataOutputStream.write(file, 0, count);
         }
+        result.add("Download file " + fileName + " complete.");
         return result;
     }
 
     /**
      * Загрузить файл.
-     *
-     * @param file
      */
-    public boolean loadFile(File file) throws IOException {
-        boolean result = false;
-        String currentPath = this.currentCatalog + "\\" + file.getName();
+    public List<String> loadFile(String fileName) throws IOException {
+        List<String> result = new ArrayList<>();
+        String currentPath = this.currentCatalog + "\\" + fileName;
         if (!new File(currentPath).exists()) {
-            byte data[] = new byte[(int) file.length()];
-            FileInputStream in = new FileInputStream(file);
-            in.read(data);
-            FileOutputStream out = new FileOutputStream(currentPath);
-            out.write(data);
-            out.close();
-            new File(currentPath);
-            result = true;
+            File file = new File(currentPath);
+            DataInputStream dataInputStream = new DataInputStream(this.socket.getInputStream());
+            byte[] upload = new byte[Integer.valueOf(dataInputStream.readUTF())];
+            FileOutputStream fos = new FileOutputStream(file);
+            dataInputStream.read(upload);
+            fos.write(upload);
+            fos.close();
+            result.add("Upload file " + fileName + " complete.");
         }
         return result;
     }
