@@ -3,8 +3,6 @@ package ru.alazarev.socket.fileManager;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class FileManagerClient {
@@ -28,6 +26,42 @@ public class FileManagerClient {
         this.ip = ip;
     }
 
+    public void comChecker(String clientString) throws IOException {
+        String[] split = clientString.split(" ");
+        switch (split[0]) {
+            case "get":
+                File file = new File(split[2] + "\\" + split[1]);
+                this.dataInputStream = new DataInputStream(this.socket.getInputStream());
+                byte[] download = new byte[Integer.valueOf(this.dataInputStream.readUTF())];
+                FileOutputStream fos = new FileOutputStream(file);
+                this.dataInputStream.read(download);
+                fos.write(download);
+                fos.close();
+                System.out.println(new BufferedReader(new InputStreamReader(this.socket.getInputStream())).readLine());
+                break;
+            case "upload":
+                File uploadFile = new File(split[1]);
+                byte[] upload = new byte[(int) uploadFile.length()];
+                this.dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
+                this.dataOutputStream.writeUTF(String.valueOf(uploadFile.length()));
+                FileInputStream fis = new FileInputStream(uploadFile);
+                int count;
+                while ((count = fis.read(upload)) != -1) {
+                    this.dataOutputStream.write(upload, 0, count);
+                }
+                System.out.println(new BufferedReader(new InputStreamReader(this.socket.getInputStream())).readLine());
+                break;
+            default:
+                this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+                String serverString;
+                while (!"End translation._!".equals(serverString = this.in.readLine())) {
+                    System.out.println(serverString);
+                }
+                break;
+        }
+
+    }
+
     /**
      * Method start client.
      */
@@ -42,35 +76,7 @@ public class FileManagerClient {
                 String clientString = this.console.nextLine();
                 this.out.println(clientString);
                 System.out.println("Server answer: ");
-                if (clientString.startsWith("download")) {
-                    String[] split = clientString.split(" ");
-                    File file = new File(split[2] + "\\" + split[1]);
-                    this.dataInputStream = new DataInputStream(this.socket.getInputStream());
-                    byte[] download = new byte[Integer.valueOf(dataInputStream.readUTF())];
-                    FileOutputStream fos = new FileOutputStream(file);
-                    this.dataInputStream.read(download);
-                    fos.write(download);
-                    fos.close();
-                    System.out.println(new BufferedReader(new InputStreamReader(this.socket.getInputStream())).readLine());
-                } else if (clientString.startsWith("upload")) {
-                    String[] split = clientString.split(" ");
-                    File uploadFile = new File(split[1]);
-                    byte[] file = new byte[(int)uploadFile.length()];
-                    this.dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
-                    this.dataOutputStream.writeUTF(String.valueOf(uploadFile.length()));
-                    FileInputStream fis = new FileInputStream(uploadFile);
-                    int count;
-                    while ((count = fis.read(file)) != -1) {
-                        this.dataOutputStream.write(file, 0, count);
-                    }
-                    System.out.println(new BufferedReader(new InputStreamReader(this.socket.getInputStream())).readLine());
-                } else {
-                    this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-                    String serverString;
-                    while (!"End translation._!".equals(serverString = this.in.readLine())) {
-                        System.out.println(serverString);
-                    }
-                }
+                comChecker(clientString);
             }
             while (true);
         } catch (Exception ex) {
@@ -83,8 +89,7 @@ public class FileManagerClient {
      *
      * @param args arguments.
      */
-    public static void main(String[] args) throws IOException {
-
+    public static void main(String[] args) {
         FileManagerClient client = new FileManagerClient(5000, "127.0.0.1");
         client.start();
     }

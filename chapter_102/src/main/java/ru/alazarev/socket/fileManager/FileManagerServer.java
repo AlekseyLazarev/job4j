@@ -11,9 +11,6 @@ package ru.alazarev.socket.fileManager;
 //
 //        4. настройки портов и адреса считывать с app.properties
 
-
-import com.sun.xml.internal.ws.commons.xmlutil.Converter;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -29,18 +26,18 @@ public class FileManagerServer {
     public FileManagerServer(String root, int port) throws IOException {
         this.root = root;
         this.currentCatalog = root;
-        socket = new ServerSocket(port).accept();
+        this.socket = new ServerSocket(port).accept();
     }
 
     public List<String> chk(String inputString) throws IOException {
         String[] splitInput = inputString.split(" ");
-        List<String> result = new ArrayList<>();
+        List<String> result;
         switch (splitInput[0]) {
-            case ("child"): {
+            case ("div"): {
                 result = getChildren();
                 break;
             }
-            case ("down"): {
+            case ("cd"): {
                 result = followChild(splitInput[1]);
                 break;
             }
@@ -48,7 +45,7 @@ public class FileManagerServer {
                 result = getRoot();
                 break;
             }
-            case ("download"): {
+            case ("get"): {
                 result = getFile(splitInput[1]);
                 break;
             }
@@ -69,12 +66,12 @@ public class FileManagerServer {
     public void start() {
         try {
             System.out.println("Server started.");
-            out = new PrintWriter(this.socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            this.out = new PrintWriter(this.socket.getOutputStream(), true);
+            this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             String ask;
             do {
                 System.out.println("Wait command ...");
-                ask = in.readLine();
+                ask = this.in.readLine();
                 for (String s : chk(ask)) {
                     this.out.println(s);
                 }
@@ -105,7 +102,7 @@ public class FileManagerServer {
         String path = this.currentCatalog + "\\" + catalog;
         if (new File(path).exists()) {
             this.currentCatalog = new File(path).getPath();
-            result.add(currentCatalog);
+            result.add(this.currentCatalog);
         }
         return result;
     }
@@ -117,7 +114,7 @@ public class FileManagerServer {
         List<String> result = new ArrayList<>();
         if (new File(this.root).exists()) {
             this.currentCatalog = this.root;
-            result.add(currentCatalog);
+            result.add(this.currentCatalog);
         }
         return result;
     }
