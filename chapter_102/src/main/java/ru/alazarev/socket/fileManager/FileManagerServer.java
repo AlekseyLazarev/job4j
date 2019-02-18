@@ -1,22 +1,11 @@
 package ru.alazarev.socket.fileManager;
-//        Перед реализацией в коде. Составить каркас приложения на интерфейсах. С описанием.
-//        1. Разработать клиент серверное приложение на сокетах.
-//        2. Серверная часть должна реализовывать следующее апи
-//        - получить список корневого каталога. Корневой каталог задается при запуске сервера.
-//        - перейти в подкаталог.
-//        - спуститься в родительский каталог
-//        - скачать файл
-//        - загрузить файл.
-//        3. Клиент должен это апи уметь вызывать.
-//
-//        4. настройки портов и адреса считывать с app.properties
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
-public class FileManagerServer {
+public class FileManagerServer implements FileManager {
     private final String root;
     private final Socket socket;
     private PrintWriter out;
@@ -37,6 +26,16 @@ public class FileManagerServer {
                 result = getChildren();
                 break;
             }
+            case ("help"): {
+                result = new ArrayList<>();
+                result.add("Servers command.");
+                result.add("div");
+                result.add("cd");
+                result.add("root");
+                result.add("get");
+                result.add("upload");
+                break;
+            }
             case ("cd"): {
                 result = followChild(splitInput[1]);
                 break;
@@ -51,7 +50,7 @@ public class FileManagerServer {
             }
             case ("upload"): {
                 String[] upload = splitInput[1].split("\\\\");
-                result = loadFile(upload[upload.length-1]);
+                result = loadFile(upload[upload.length - 1]);
                 break;
             }
             default: {
@@ -79,6 +78,7 @@ public class FileManagerServer {
             } while (!("exit".equals(ask)));
         } catch (Exception ex) {
             ex.printStackTrace();
+
         }
     }
 
@@ -159,7 +159,10 @@ public class FileManagerServer {
     }
 
     public static void main(String[] args) throws IOException {
-        FileManagerServer server = new FileManagerServer("C:\\chat", 5000);
+        String pathToProperties = "C:\\projects\\job4j\\chapter_102\\src\\main\\java\\ru\\alazarev\\socket\\fileManager\\" + "app.properties";
+        Properties appProps = new Properties();
+        appProps.load(new FileInputStream(pathToProperties));
+        FileManagerServer server = new FileManagerServer(appProps.getProperty("currentCatalog"), Integer.valueOf(appProps.getProperty("port")));
         server.start();
     }
 }

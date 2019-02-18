@@ -3,6 +3,7 @@ package ru.alazarev.socket.fileManager;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class FileManagerClient {
@@ -89,8 +90,11 @@ public class FileManagerClient {
      *
      * @param args arguments.
      */
-    public static void main(String[] args) {
-        FileManagerClient client = new FileManagerClient(5000, "127.0.0.1");
+    public static void main(String[] args) throws IOException {
+        String pathToProperties = "C:\\projects\\job4j\\chapter_102\\src\\main\\java\\ru\\alazarev\\socket\\fileManager\\" + "app.properties";
+        Properties appProps = new Properties();
+        appProps.load(new FileInputStream(pathToProperties));
+        FileManagerClient client = new FileManagerClient(Integer.valueOf(appProps.getProperty("port")), appProps.getProperty("ip"));
         client.start();
     }
 }
