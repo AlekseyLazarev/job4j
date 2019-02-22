@@ -1,4 +1,4 @@
-package ru.alazarev.socket.fileManager;
+package ru.alazarev.socket.filemanager;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -54,9 +54,10 @@ public class FileManagerClient {
                 break;
             default:
                 this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-                String serverString;
-                while (!"End translation._!".equals(serverString = this.in.readLine())) {
+                String serverString = this.in.readLine();
+                while (!"End translation._!".equals(serverString)) {
                     System.out.println(serverString);
+                    serverString = this.in.readLine();
                 }
                 break;
         }

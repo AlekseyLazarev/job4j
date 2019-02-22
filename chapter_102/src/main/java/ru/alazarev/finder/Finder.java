@@ -13,35 +13,81 @@ package ru.alazarev.finder;
 //        6. В программе должна быть валидация ключей и подсказка.
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Finder {
-    Queue<File> queue = new LinkedList<>();
+    private List<String> found = new ArrayList<>();
+    private final String currentPath;
+    private final String search;
+    private final String typeFind;
+    private final String resultFile;
 
-    public void add(File file) {
-        if(file.isDirectory()) {
-            for (File current: file.listFiles()) {
-                add(current);
+    public Finder(String currentPath, String searchFile, String typeFind, String resultFile) {
+        this.currentPath = currentPath;
+        this.search = searchFile;
+        this.typeFind = typeFind;
+        this.resultFile = resultFile;
+    }
+
+    public void find(File file) {
+        if (file.isDirectory()) {
+            for (File current : file.listFiles()) {
+                find(current);
             }
         } else if (file.isFile()) {
-            queue.add(file);
+            if (selectWay(file.getName())) {
+                this.found.add(file.getPath());
+            }
         }
     }
 
-    public List<File> find(String currentPath, String fileName) {
-        List<File> result = new ArrayList<>();
-        if (new File(currentPath).exists()) {
-            add(new File(currentPath));
-        }
-        while (!this.queue.isEmpty()) {
-            File actual = this.queue.poll();
-            if (actual.getName().matches(fileName)){
-                result.add(actual);
-            }
+    public boolean selectWay(String searchFile) {
+        boolean result = false;
+        switch (this.typeFind) {
+            case "m":
+                result = checkMask(searchFile);
+                break;
+            case "f":
+                result = checkFull(searchFile);
+                break;
+            case "r":
+                result = checkRegex(searchFile);
+                break;
+            default:
+                break;
         }
         return result;
     }
+
+    public boolean checkMask(String searchFile) {
+        return searchFile.contains(this.search);
+    }
+
+    public boolean checkFull(String searchFile) {
+        return searchFile.equalsIgnoreCase(this.search);
+    }
+
+    public boolean checkRegex(String searchFile) {
+        Pattern pattern = Pattern.compile(this.search);
+        Matcher matcher = pattern.matcher(searchFile);
+        return matcher.matches();
+    }
+
+
+    public void start() throws IOException {
+        File file = new File(this.resultFile);
+        find(new File(this.currentPath));
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            for (String currentFile : this.found) {
+                fileWriter.write("File: " + currentFile + System.getProperty("line.separator"));
+            }
+        }
+
+    }
+
 }

@@ -1,4 +1,4 @@
-package ru.alazarev.socket.fileManager;
+package ru.alazarev.socket.filemanager;
 
 import java.io.*;
 import java.net.ServerSocket;

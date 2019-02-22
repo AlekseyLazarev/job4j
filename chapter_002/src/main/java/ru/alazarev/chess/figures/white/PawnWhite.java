@@ -4,8 +4,6 @@ import ru.alazarev.chess.figures.Cell;
 import ru.alazarev.chess.figures.Figure;
 
 /**
- * //TODO add comments.
- *
  * @author Petr Arsentev (parsentev@yandex.ru)
  * @version $Id$
  * @since 0.1
