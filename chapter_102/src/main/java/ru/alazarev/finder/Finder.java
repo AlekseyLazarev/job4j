@@ -1,17 +1,5 @@
 package ru.alazarev.finder;
 
-//        1. Создать программу для поиска файла.
-//        2. Программа должна искать данные в заданном каталоге и подкаталогах.
-//        3. Имя файла может задаваться, целиком, по маске, по регулярному выражение(не обязательно).
-//        4. Программа должна собираться в jar и запускаться через java -jar find.jar -d c:/ -n *.txt -m -o log.txt
-//        Ключи
-//        -d - директория в которая начинать поиск.
-//        -n - имя файл, маска, либо регулярное выражение.
-//        -m - искать по макс, либо -f - полное совпадение имени. -r регулярное выражение.
-//        -o - результат записать в файл.
-//        5. Программа должна записывать результат в файл.
-//        6. В программе должна быть валидация ключей и подсказка.
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,6 +8,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class Finder решение задачи части 002. Тестовое задание. [#783].
+ *
+ * @author Aleksey Lazarev
+ * @since 22.02.2019
+ */
 public class Finder {
     private List<String> found = new ArrayList<>();
     private final String currentPath;
@@ -27,6 +21,14 @@ public class Finder {
     private final String typeFind;
     private final String resultFile;
 
+    /**
+     * Constructor.
+     *
+     * @param currentPath Start search folder.
+     * @param searchFile  Full file name, mask or regex.
+     * @param typeFind    Search type.
+     * @param resultFile  Log file path.
+     */
     public Finder(String currentPath, String searchFile, String typeFind, String resultFile) {
         this.currentPath = currentPath;
         this.search = searchFile;
@@ -34,6 +36,11 @@ public class Finder {
         this.resultFile = resultFile;
     }
 
+    /**
+     * Method search files.
+     *
+     * @param file Start folder for search.
+     */
     public void find(File file) {
         if (file.isDirectory()) {
             for (File current : file.listFiles()) {
@@ -46,6 +53,12 @@ public class Finder {
         }
     }
 
+    /**
+     * Method choice way.
+     *
+     * @param searchFile File to compare.
+     * @return Compare result.
+     */
     public boolean selectWay(String searchFile) {
         boolean result = false;
         switch (this.typeFind) {
@@ -64,30 +77,50 @@ public class Finder {
         return result;
     }
 
+    /**
+     * Method check file with mask.
+     *
+     * @param searchFile File to compare.
+     * @return
+     */
     public boolean checkMask(String searchFile) {
         return searchFile.contains(this.search);
     }
 
+    /**
+     * Method check file with full name.
+     *
+     * @param searchFile File to compare.
+     * @return
+     */
     public boolean checkFull(String searchFile) {
         return searchFile.equalsIgnoreCase(this.search);
     }
 
+    /**
+     * Method check file with regex.
+     *
+     * @param searchFile File to compare.
+     * @return
+     */
     public boolean checkRegex(String searchFile) {
         Pattern pattern = Pattern.compile(this.search);
         Matcher matcher = pattern.matcher(searchFile);
         return matcher.matches();
     }
 
-
-    public void start() throws IOException {
+    /**
+     * Start find method.
+     */
+    public void start() {
         File file = new File(this.resultFile);
         find(new File(this.currentPath));
         try (FileWriter fileWriter = new FileWriter(file)) {
             for (String currentFile : this.found) {
                 fileWriter.write("File: " + currentFile + System.getProperty("line.separator"));
             }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
-
     }
-
 }

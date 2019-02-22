@@ -1,9 +1,18 @@
 package ru.alazarev.finder;
 
-import java.io.IOException;
-
+/**
+ * Class Start решение задачи части 002. Тестовое задание. [#783].
+ *
+ * @author Aleksey Lazarev
+ * @since 22.02.2019
+ */
 public class Start {
-    public static void main(String[] args) throws IOException {
+    /**
+     * Start method.
+     *
+     * @param args Arguments.
+     */
+    public static void main(String[] args) {
         Args params = new Args(args);
         if (params.empty()) {
             params.printHelp();
