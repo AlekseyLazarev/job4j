@@ -13,12 +13,16 @@ public class Start {
      * @param args Arguments.
      */
     public static void main(String[] args) {
-        Args params = new Args(args);
-        if (params.empty()) {
-            params.printHelp();
-        } else {
-            Finder finder = new Finder(params.getDirectory(), params.getSearchFile(), params.typeFind(), params.getResult());
-            finder.start();
-        }
+//        Args params = new Args(args);
+//        if (params.empty()) {
+//            params.printHelp();
+//        } else {
+//            Finder finder = new Finder(params.getDirectory(), params.getSearchFile(),
+//                                       params.typeFind(), params.getResult());
+//            finder.start();
+//        }
+        Finder finder = new Finder("c:\\chat", "cls.bat",
+                "f", "c:\\chat\\1\\logaric.txt");
+        finder.start();
     }
 }

@@ -16,11 +16,19 @@ public class Actions {
     private FileManagerServer server;
     private FileManagerClient client;
 
-
+    /**
+     * Constructor with server param.
+     *
+     * @param server File manager server.
+     */
     public Actions(FileManagerServer server) {
         this.server = server;
     }
 
+    /**
+     * Constructor with client param.
+     * @param client File manager client.
+     */
     public Actions(FileManagerClient client) {
         this.client = client;
     }
@@ -40,7 +48,8 @@ public class Actions {
             this.load("upload", "upload \"filename\" - Upload file by name.", this.uploadServer());
         } else if (this.client != null) {
             this.load("get", "get \"filename\" \"path\"- Get file by name.", this.getClient());
-            this.load("upload", "upload \"filename\" - Upload file by name.", this.uploadClient());
+            this.load("upload", "upload \"filepath\" - Upload file by name.", this.uploadClient());
+            this.load("exit", "exit - Exit.", this.exitClient());
         }
         return this;
     }
@@ -229,9 +238,9 @@ public class Actions {
     }
 
     /**
-     * Method
+     * Method execute command.
      *
-     * @param command
+     * @param command for execute.
      * @return
      */
     List<String> sent(final String command) {
