@@ -4,8 +4,6 @@ import ru.alazarev.puzzle.firuges.Cell;
 import ru.alazarev.puzzle.firuges.Figure;
 
 /**
- * //TODO add comments.
- *
  * @author Petr Arsentev (parsentev@yandex.ru)
  * @version $Id$
  * @since 0.1

@@ -1,11 +1,16 @@
-package ru.alazarev.socket.fileManager;
+package ru.alazarev.socket.filemanager;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Properties;
 import java.util.Scanner;
 
+/**
+ * Class FinderManagerClient решение задачи части 002. 2. Сетевой менеджер файлов. [#863].
+ *
+ * @author Aleksey Lazarev
+ * @since 26.02.2019
+ */
 public class FileManagerClient {
     private int port;
     private String ip;
@@ -15,6 +20,7 @@ public class FileManagerClient {
     private Scanner console;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private Actions actions;
 
     /**
      * Constructor.
@@ -27,40 +33,67 @@ public class FileManagerClient {
         this.ip = ip;
     }
 
-    public void comChecker(String clientString) throws IOException {
-        String[] split = clientString.split(" ");
-        switch (split[0]) {
-            case "get":
-                File file = new File(split[2] + "\\" + split[1]);
-                this.dataInputStream = new DataInputStream(this.socket.getInputStream());
-                byte[] download = new byte[Integer.valueOf(this.dataInputStream.readUTF())];
-                FileOutputStream fos = new FileOutputStream(file);
-                this.dataInputStream.read(download);
-                fos.write(download);
-                fos.close();
-                System.out.println(new BufferedReader(new InputStreamReader(this.socket.getInputStream())).readLine());
-                break;
-            case "upload":
-                File uploadFile = new File(split[1]);
-                byte[] upload = new byte[(int) uploadFile.length()];
-                this.dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
-                this.dataOutputStream.writeUTF(String.valueOf(uploadFile.length()));
-                FileInputStream fis = new FileInputStream(uploadFile);
-                int count;
-                while ((count = fis.read(upload)) != -1) {
-                    this.dataOutputStream.write(upload, 0, count);
-                }
-                System.out.println(new BufferedReader(new InputStreamReader(this.socket.getInputStream())).readLine());
-                break;
-            default:
-                this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-                String serverString;
-                while (!"End translation._!".equals(serverString = this.in.readLine())) {
-                    System.out.println(serverString);
-                }
-                break;
-        }
+    /**
+     * Method get DataInputStream.
+     *
+     * @return DataInputStream.
+     */
+    public DataInputStream getDataInputStream() {
+        return this.dataInputStream;
+    }
 
+    /**
+     * Method set DataInputStream.
+     *
+     * @param dataInputStream DataInputStream value.
+     */
+    public void setDataInputStream(DataInputStream dataInputStream) {
+        this.dataInputStream = dataInputStream;
+    }
+
+    /**
+     * Method get DataOutputStream.
+     *
+     * @return DataOutputStream.
+     */
+    public DataOutputStream getDataOutputStream() {
+        return this.dataOutputStream;
+    }
+
+    /**
+     * Method set DataOutputStream.
+     *
+     * @param dataOutputStream DataOutputStream value.
+     */
+    public void setDataOutputStream(DataOutputStream dataOutputStream) {
+        this.dataOutputStream = dataOutputStream;
+    }
+
+    /**
+     * Method get Socket.
+     *
+     * @return Socket.
+     */
+    public Socket getSocket() {
+        return this.socket;
+    }
+
+    /**
+     * Method get BufferedReader.
+     *
+     * @return BufferedReader.
+     */
+    public BufferedReader getIn() {
+        return this.in;
+    }
+
+    /**
+     * Method set BufferedReader.
+     *
+     * @param in BufferedReader value.
+     */
+    public void setIn(BufferedReader in) {
+        this.in = in;
     }
 
     /**
@@ -72,14 +105,22 @@ public class FileManagerClient {
             System.out.println("Server connected to " + this.ip + ":" + this.port);
             this.out = new PrintWriter(this.socket.getOutputStream(), true);
             this.console = new Scanner(System.in);
+            this.actions = new Actions(this).init();
+            String clientString;
             do {
                 System.out.println("Enter command");
-                String clientString = this.console.nextLine();
+                clientString = this.console.nextLine();
                 this.out.println(clientString);
                 System.out.println("Server answer: ");
-                comChecker(clientString);
+                actions.sent(clientString);
+                this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+                String serverString = this.in.readLine();
+                while (!"End translation._!".equals(serverString)) {
+                    System.out.println(serverString);
+                    serverString = this.in.readLine();
+                }
             }
-            while (true);
+            while (!"exit".equals(clientString));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -90,11 +131,12 @@ public class FileManagerClient {
      *
      * @param args arguments.
      */
-    public static void main(String[] args) throws IOException {
-        String pathToProperties = "C:\\projects\\job4j\\chapter_102\\src\\main\\java\\ru\\alazarev\\socket\\fileManager\\" + "app.properties";
-        Properties appProps = new Properties();
-        appProps.load(new FileInputStream(pathToProperties));
-        FileManagerClient client = new FileManagerClient(Integer.valueOf(appProps.getProperty("port")), appProps.getProperty("ip"));
+    public static void main(String[] args) {
+        Settings settings = new Settings();
+        ClassLoader classLoader = Settings.class.getClassLoader();
+        InputStream is = classLoader.getResourceAsStream("app.properties");
+        settings.load(is);
+        FileManagerClient client = new FileManagerClient(Integer.valueOf(settings.getValue("port")), settings.getValue("ip"));
         client.start();
     }
 }
