@@ -1,6 +1,8 @@
 package ru.alazarev.tracker;
 
 
+import java.util.Date;
+
 /**
  * Class Item решение задачи части 002. Урок 2. Реализовать класс Tracker [#396].
  *
@@ -27,8 +29,7 @@ public class Item {
     /**
      * Comments of request.
      */
-    private String[] comments;
-
+    private String comments;
     /**
      * Constructor for item.
      *
@@ -38,9 +39,28 @@ public class Item {
     public Item(String name, String desc) {
         this.name = name;
         this.desc = desc;
-        this.created = created;
+        setCreated();
+    }
+    /**
+     * Constructor for item.
+     *
+     * @param name Item name.
+     * @param desc Item description.
+     */
+    public Item(String name, String desc, String comments) {
+        this.name = name;
+        this.desc = desc;
+        this.comments = comments;
+        setCreated();
     }
 
+    public Item(String id, String name, String desc, long created, String comments) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+        this.created = created;
+        this.comments = comments;
+    }
     /**
      * Get item name method.
      *
@@ -66,6 +86,15 @@ public class Item {
      */
     public long getCreated() {
         return this.created;
+    }
+
+    /**
+     * Get item comments method.
+     *
+     * @return this item comments.
+     */
+    public String getComments() {
+        return this.comments;
     }
 
     /**
@@ -106,10 +135,8 @@ public class Item {
 
     /**
      * Setup this item created.
-     *
-     * @param created It for setup.
      */
-    public void setCreated(Long created) {
-        this.created = created;
+    public void setCreated() {
+        this.created = new Date().getTime();
     }
 }

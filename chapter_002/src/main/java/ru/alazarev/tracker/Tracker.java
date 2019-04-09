@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author Aleksey Lazarev
  * @since 15.11.2018
  */
-public class Tracker {
+public class Tracker implements ITracker{
     private final Item[] items = new Item[100];
     private int position = 0;
     private int uniqueId = 0;
@@ -96,7 +96,7 @@ public class Tracker {
      * @param id Item unique id.
      * @return found item.
      */
-    protected Item findById(String id) {
+    public Item findById(String id) {
         Item result = null;
         for (Item desired : items) {
             if (desired != null && desired.getId().equals(id)) {
