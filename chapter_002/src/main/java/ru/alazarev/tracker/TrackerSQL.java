@@ -2,6 +2,8 @@ package ru.alazarev.tracker;
 
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class TrackerSQL implements ITracker {
@@ -16,8 +18,7 @@ public class TrackerSQL implements ITracker {
      */
     private boolean exSQL(String sql) {
         boolean result = false;
-        try {
-            Statement ps = this.connection.createStatement();
+        try (Statement ps = this.connection.createStatement()){
             result = ps.executeUpdate(sql) != 0 ? true : false;
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -33,25 +34,10 @@ public class TrackerSQL implements ITracker {
      */
     private ResultSet qSQL(String sql) {
         ResultSet result = null;
-        try {
-            Statement ps = this.connection.createStatement();
+        try (Statement ps = this.connection.createStatement()){
             result = ps.executeQuery(sql);
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-        }
-        return result;
-    }
-
-    /**
-     * Method resize items.
-     *
-     * @param items Items.
-     * @return Resized array.
-     */
-    private Item[] resize(Item[] items) {
-        Item[] result = new Item[items.length];
-        for (int i = 0; i < items.length; i++) {
-            result[i] = items[i];
         }
         return result;
     }
@@ -62,20 +48,15 @@ public class TrackerSQL implements ITracker {
      * @param resultSet ResultSet.
      * @return Item array.
      */
-    private Item[] qResToItems(ResultSet resultSet) {
-        Item[] result = new Item[10];
+    private List<Item> qResToItems(ResultSet resultSet) {
+        List<Item> result = new ArrayList<>();
         try {
-            int count = 0;
             while (resultSet.next()) {
-                if (count > result.length) {
-                    resize(result);
-                }
-                result[count] = new Item(String.valueOf(resultSet.getInt("id")),
+                result.add(new Item(String.valueOf(resultSet.getInt("id")),
                         resultSet.getString("name"),
                         resultSet.getString("descr"),
                         resultSet.getLong("created"),
-                        resultSet.getString("comments"));
-                count++;
+                        resultSet.getString("comments")));
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -228,7 +209,7 @@ public class TrackerSQL implements ITracker {
      * @return All records.
      */
     @Override
-    public Item[] findAll() {
+    public List<Item> findAll() {
         return qResToItems(qSQL("SELECT * FROM public.tracker"));
     }
 
@@ -239,7 +220,7 @@ public class TrackerSQL implements ITracker {
      * @return Find records.
      */
     @Override
-    public Item[] findByName(String name) {
+    public List<Item> findByName(String name) {
         return qResToItems(qSQL("SELECT * FROM public.tracker WHERE name = '" + name + "';"));
     }
 
@@ -251,6 +232,6 @@ public class TrackerSQL implements ITracker {
      */
     @Override
     public Item findById(String id) {
-        return qResToItems(qSQL("SELECT * FROM public.tracker WHERE id = '" + id + "';"))[0];
+        return qResToItems(qSQL("SELECT * FROM public.tracker WHERE id = '" + id + "';")).get(0);
     }
 }
