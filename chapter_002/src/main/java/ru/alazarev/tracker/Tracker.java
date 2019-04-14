@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author Aleksey Lazarev
  * @since 15.11.2018
  */
-public class Tracker implements ITracker{
+public class Tracker {
     private final Item[] items = new Item[100];
     private int position = 0;
     private int uniqueId = 0;

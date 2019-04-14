@@ -18,7 +18,7 @@ public class TrackerSQL implements ITracker {
      */
     private boolean exSQL(String sql) {
         boolean result = false;
-        try (Statement ps = this.connection.createStatement()){
+        try (Statement ps = this.connection.createStatement()) {
             result = ps.executeUpdate(sql) != 0 ? true : false;
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -34,7 +34,7 @@ public class TrackerSQL implements ITracker {
      */
     private ResultSet qSQL(String sql) {
         ResultSet result = null;
-        try (Statement ps = this.connection.createStatement()){
+        try (Statement ps = this.connection.createStatement()) {
             result = ps.executeQuery(sql);
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -68,13 +68,13 @@ public class TrackerSQL implements ITracker {
      * Method create tracker table.
      */
     public void createTableTracker() {
-        exSQL("CREATE TABLE IF NOT EXISTS " + "public" + ".tracker(" +
-                "id SERIAL, " +
-                "name VARCHAR(255), " +
-                "descr VARCHAR(255), " +
-                "created BIGINT, " +
-                "comments VARCHAR(1000), " +
-                "PRIMARY KEY(id))");
+        exSQL("CREATE TABLE IF NOT EXISTS " + "public" + ".tracker("
+                + "id SERIAL, "
+                + "name VARCHAR(255), "
+                + "descr VARCHAR(255), "
+                + "created BIGINT, "
+                + "comments VARCHAR(1000), "
+                + "PRIMARY KEY(id))");
     }
 
     /**
@@ -176,19 +176,19 @@ public class TrackerSQL implements ITracker {
     /**
      * Method replace item in database.
      *
-     * @param id Id replaceable item.
+     * @param id   Id replaceable item.
      * @param item Item for replace.
      * @return Result replace.
      */
     @Override
     public Boolean replace(String id, Item item) {
         String separator = "', ";
-        return exSQL("UPDATE public.tracker " +
-                "SET name ='" + item.getName() + separator +
-                "descr ='" + item.getDesc() + separator +
-                "created ='" + item.getCreated() + separator +
-                "comments ='" + item.getComments() +
-                "' WHERE id =" + id + ";"
+        return exSQL("UPDATE public.tracker "
+                + "SET name ='" + item.getName() + separator
+                + "descr ='" + item.getDesc() + separator
+                + "created ='" + item.getCreated() + separator
+                + "comments ='" + item.getComments()
+                + "' WHERE id =" + id + ";"
         );
     }
 

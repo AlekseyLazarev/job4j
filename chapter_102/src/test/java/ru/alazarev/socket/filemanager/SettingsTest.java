@@ -1,7 +1,6 @@
-package ru.alazarev.socket.fileManager;
+package ru.alazarev.socket.filemanager;
 
 import org.junit.Test;
-import ru.alazarev.socket.filemanager.Settings;
 
 import java.io.IOException;
 import java.io.InputStream;

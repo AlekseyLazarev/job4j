@@ -1,4 +1,4 @@
-package ru.alazarev.socket.fileManager;
+package ru.alazarev.socket.filemanager;
 
 import org.junit.Test;
 

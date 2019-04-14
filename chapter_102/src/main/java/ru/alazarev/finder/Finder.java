@@ -46,7 +46,7 @@ class Finder {
                 find(current);
             }
         } else if (file.isFile()) {
-            if (this.elector.sent(file.getName(), this.typeFind)){
+            if (this.elector.sent(file.getName(), this.typeFind)) {
                 this.found.add(file.getPath());
             }
         }

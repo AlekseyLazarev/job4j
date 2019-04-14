@@ -1,19 +1,15 @@
-package ru.alazarev.socket.fileManager;
+package ru.alazarev.socket.filemanager;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.alazarev.socket.oracle.Server;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
