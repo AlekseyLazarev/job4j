@@ -17,7 +17,7 @@ public class TrackerSQLTest {
     private int count = 5;
     private boolean filled = false;
 
-    public Connection init() {
+    private Connection init() {
         try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);

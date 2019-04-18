@@ -1,0 +1,15 @@
+language: java
+sudo: false # faster builds
+
+after_success:
+  - bash < (curl -s https://codecov.io/bash)
+
+notifications:
+  email:
+    recipients:
+    - aa112233445566778899@yandex.ru
+    on_success: never
+    on_failure: never
+env:
+  global:
+    - CODECOV_TOKEN="9c334fff-9caa-4459-97ea-a28454168ea1"

@@ -20,7 +20,7 @@ public class Client {
      * @param port Connection port.
      * @param ip   Connection ip.
      */
-    public Client(int port, String ip) {
+    private Client(int port, String ip) {
         this.port = port;
         this.ip = ip;
     }
@@ -55,7 +55,7 @@ public class Client {
      *
      * @param args arguments.
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         Client client = new Client(5000, "127.0.0.1");
         client.start();
