@@ -34,7 +34,6 @@ public class IteratorArray implements Iterator {
         try {
             result = values[row].length > col || (values.length - 1) > row;
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
         return result;
     }

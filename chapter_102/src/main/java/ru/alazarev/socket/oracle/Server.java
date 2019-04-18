@@ -39,7 +39,6 @@ public class Server {
                 out.println();
             } while (!("exit".equals(ask)));
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
 
     }
