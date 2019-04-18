@@ -1,10 +1,15 @@
 package ru.alazarev.tracker;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Properties;
+
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class TrackerSQLTest {
@@ -12,21 +17,37 @@ public class TrackerSQLTest {
     private int count = 5;
     private boolean filled = false;
 
+    public Connection init() {
+        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("driver-class-name"));
+            return DriverManager.getConnection(
+                    config.getProperty("url") + config.getProperty("dbname"),
+                    config.getProperty("username"),
+                    config.getProperty("password")
+
+            );
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     @Before
-    public void start() {
-        this.trackerSQL = new TrackerSQL();
-        this.trackerSQL.init();
+    public void start() throws Exception {
+        this.trackerSQL = new TrackerSQL(ConnectionRollback.create(this.init()));
         if (!this.filled) {
             for (int i = 0; i < this.count - 1; i++) {
                 this.trackerSQL.add(new Item("TEST NAME " + i, "TEST DESC " + i, "TEST comment " + i));
             }
             this.trackerSQL.add(new Item("TEST NAME 1", "TEST DESC 1", "TEST comment 1"));
+            this.filled = true;
         }
     }
 
     @Test
-    public void checkConnection() {
-        TrackerSQL sql = new TrackerSQL();
+    public void checkConnection() throws Exception {
+        TrackerSQL sql = new TrackerSQL(ConnectionRollback.create(this.init()));
         assertThat(sql.init(), is(true));
     }
 
@@ -50,14 +71,18 @@ public class TrackerSQLTest {
 
     @Test
     public void ifDeleteThen() {
-        this.trackerSQL.delete("3");
-        Item item = this.trackerSQL.findById("3");
-        assertThat(item, is(nullValue()));
+        this.trackerSQL.add(new Item("DeleteTest", "TEST DESC 1", "TEST comment 1"));
+        this.trackerSQL.delete("DeleteTest");
+        assertThat(this.trackerSQL.findByName("DeleteTest").size(), is(0));
     }
-
 
     @Test
     public void ifFindByNameThen() {
-        assertThat(this.trackerSQL.findByName("TEST NAME 0")[0].getName(), is("TEST NAME 0"));
+        assertThat(this.trackerSQL.findByName("TEST NAME 0").get(0).getName(), is("TEST NAME 0"));
+    }
+
+    @After
+    public void conClose() throws Exception {
+        this.trackerSQL.close();
     }
 }

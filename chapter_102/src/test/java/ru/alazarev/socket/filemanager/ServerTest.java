@@ -20,7 +20,7 @@ public class ServerTest {
     @Test
     public void serverTest() throws IOException {
         String input = "child";
-        String extend = null;
+        String extend = "I don't understand ! =(\r\n\r\n";
         Socket socket = mock(Socket.class);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         when(socket.getInputStream()).thenReturn(new ByteArrayInputStream(input.getBytes()));

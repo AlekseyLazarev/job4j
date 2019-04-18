@@ -30,7 +30,13 @@ public class IteratorArray implements Iterator {
      * @return result check.
      */
     public boolean hasNext() {
-        return values[row].length > col || (values.length - 1) > row;
+        boolean result = false;
+        try {
+            result = values[row].length > col || (values.length - 1) > row;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     /**

@@ -19,7 +19,7 @@ public class AbusesTest {
         Abuses abuses = new Abuses();
         InputStream is = new ByteArrayInputStream(("Сериализация представляет процесс записи состояния объекта в поток.").getBytes());
         OutputStream os = new ByteArrayOutputStream();
-        String[] abusesStrings = new String[]{"сериализация", "в"};
+        String[] abusesStrings = new String[]{"Сериализация", "в"};
         abuses.dropAbuses(is, os, abusesStrings);
         assertThat(os.toString(), is("представляет процесс записи состояния объекта поток."));
     }

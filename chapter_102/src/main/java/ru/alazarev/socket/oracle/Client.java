@@ -38,10 +38,11 @@ public class Client {
             do {
                 String clientString = console.nextLine();
                 out.println(clientString);
-                String serverString;
                 System.out.println("Server answer: ");
-                while (!(serverString = in.readLine()).isEmpty()) {
+                String serverString = in.readLine();
+                while (!(serverString.isEmpty())) {
                     System.out.println(serverString);
+                    serverString = in.readLine();
                 }
             } while (true);
         } catch (Exception ex) {

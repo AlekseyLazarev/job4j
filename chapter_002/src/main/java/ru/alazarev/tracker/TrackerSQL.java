@@ -6,9 +6,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class TrackerSQL implements ITracker {
+public class TrackerSQL implements ITracker, AutoCloseable {
     private Connection connection;
     private Properties config = new Properties();
+
+    /**
+     * Constructor.
+     */
+    public TrackerSQL() {
+
+    }
+
+    /**
+     * Constructor with Connection param.
+     *
+     * @param connection Connection to db.
+     */
+    public TrackerSQL(Connection connection) {
+        this.connection = connection;
+    }
 
     /**
      * Non-return sql method.
@@ -18,7 +34,8 @@ public class TrackerSQL implements ITracker {
      */
     private boolean exSQL(String sql) {
         boolean result = false;
-        try (Statement ps = this.connection.createStatement()) {
+        try {
+            Statement ps = this.connection.createStatement();
             result = ps.executeUpdate(sql) != 0 ? true : false;
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -34,7 +51,8 @@ public class TrackerSQL implements ITracker {
      */
     private ResultSet qSQL(String sql) {
         ResultSet result = null;
-        try (Statement ps = this.connection.createStatement()) {
+        try {
+            Statement ps = this.connection.createStatement();
             result = ps.executeQuery(sql);
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -195,12 +213,12 @@ public class TrackerSQL implements ITracker {
     /**
      * Method delete item in database.
      *
-     * @param id Id deleted item.
+     * @param name Name deleted item.
      * @return Result delete.
      */
     @Override
-    public Boolean delete(String id) {
-        return exSQL("DELETE FROM public.tracker WHERE id = '" + id + "';");
+    public Boolean delete(String name) {
+        return exSQL("DELETE FROM public.tracker WHERE name = '" + name + "';");
     }
 
     /**
@@ -233,5 +251,10 @@ public class TrackerSQL implements ITracker {
     @Override
     public Item findById(String id) {
         return qResToItems(qSQL("SELECT * FROM public.tracker WHERE id = '" + id + "';")).get(0);
+    }
+
+    @Override
+    public void close() throws Exception {
+        this.connection.close();
     }
 }

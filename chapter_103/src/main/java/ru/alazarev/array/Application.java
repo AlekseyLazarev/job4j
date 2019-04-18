@@ -10,19 +10,19 @@ import java.io.File;
  * @since 14.04.2019
  */
 public class Application {
-    final static String base = "c:/projects/db/";
-    final static long start = System.currentTimeMillis();
-    static File xml = new File(base + "file.xml");
-    static File xsl = new File(base + "schema.xsl");
-    static File newXml = new File(base + "nextxml.xml");
+    private final static String BASE = "c:/projects/db/";
+    private final static long START = System.currentTimeMillis();
+    private static File xml = new File(BASE + "file.xml");
+    private static File xsl = new File(BASE + "schema.xsl");
+    private static File newXml = new File(BASE + "nextxml.xml");
 
     /**
      * Method get time.
      *
      * @param stage Stage name.
      */
-    public static void getTime(String stage) {
-        long timeWorkCode = System.currentTimeMillis() - start;
+    private static void getTime(String stage) {
+        long timeWorkCode = System.currentTimeMillis() - START;
         int sec = (int) (timeWorkCode / 1000);
         int min = sec / 60;
         System.out.println("До " + stage + " прошло: " + min + "мин " + sec % 60 + " сек " + timeWorkCode % 1000 + " мс");
