@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.core.Is.is;
@@ -60,13 +61,15 @@ public class TrackerSQLTest {
 
     @Test
     public void ifFindByIdThen() {
-        assertThat(this.trackerSQL.findById("1").getName(), is("TEST NAME 0"));
+        assertThat(this.trackerSQL.findById(this.trackerSQL.findByName("TEST NAME 0").get(0).getId()).getName(), is("TEST NAME 0"));
     }
 
     @Test
     public void ifReplaceThen() {
-        this.trackerSQL.replace("4", new Item("Replace Test", "TEST DESC 1", "TEST comment 1"));
-        assertThat(this.trackerSQL.findById("4").getName(), is("Replace Test"));
+        List<Item> temp = this.trackerSQL.findAll();
+        this.trackerSQL.replace(temp.get(4).getId(), new Item("Replace Test", "TEST DESC 1", "TEST comment 1"));
+        temp = this.trackerSQL.findAll();
+        assertThat(temp.get(4).getName(), is("Replace Test"));
     }
 
     @Test
