@@ -86,7 +86,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * Method create tracker table.
      */
     public void createTableTracker() {
-        exSQL("CREATE TABLE IF NOT EXISTS " + "tracker("
+        exSQL("CREATE TABLE IF NOT EXISTS " + this.config.getProperty("db") + "." + "tracker("
                 + "id SERIAL, "
                 + "name VARCHAR(255), "
                 + "descr VARCHAR(255), "
@@ -118,7 +118,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public int numberOfRecords() {
         int result = 0;
         try {
-            ResultSet resultSet = qSQL("SELECT COUNT(*) FROM tracker");
+            ResultSet resultSet = qSQL("SELECT COUNT(*) FROM" + this.config.getProperty("db") + "." + "tracker");
             resultSet.next();
             result = resultSet.getInt(1);
         } catch (SQLException sqle) {
@@ -183,7 +183,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public Item add(Item item) {
         String separator = "', '";
-        exSQL("INSERT INTO tracker (name, descr, created, comments) VALUES ('"
+        exSQL("INSERT INTO " + this.config.getProperty("db") + "." + "tracker (name, descr, created, comments) VALUES ('"
                 + item.getName() + separator
                 + item.getDesc() + separator
                 + item.getCreated() + separator
@@ -201,7 +201,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public Boolean replace(String id, Item item) {
         String separator = "', ";
-        return exSQL("UPDATE tracker "
+        return exSQL("UPDATE " + this.config.getProperty("db") + "." + "tracker "
                 + "SET name ='" + item.getName() + separator
                 + "descr ='" + item.getDesc() + separator
                 + "created ='" + item.getCreated() + separator
@@ -218,7 +218,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      */
     @Override
     public Boolean delete(String name) {
-        return exSQL("DELETE FROM tracker WHERE name = '" + name + "';");
+        return exSQL("DELETE FROM " + this.config.getProperty("db") + "." + "tracker WHERE name = '" + name + "';");
     }
 
     /**
@@ -228,7 +228,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      */
     @Override
     public List<Item> findAll() {
-        return qResToItems(qSQL("SELECT * FROM tracker"));
+        return qResToItems(qSQL("SELECT * FROM " + this.config.getProperty("db") + "." + "tracker"));
     }
 
     /**
@@ -239,7 +239,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      */
     @Override
     public List<Item> findByName(String name) {
-        return qResToItems(qSQL("SELECT * FROM tracker WHERE name = '" + name + "';"));
+        return qResToItems(qSQL("SELECT * FROM " + this.config.getProperty("db") + "." + "tracker WHERE name = '" + name + "';"));
     }
 
     /**
@@ -250,7 +250,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      */
     @Override
     public Item findById(String id) {
-        return qResToItems(qSQL("SELECT * FROM tracker WHERE id = '" + id + "';")).get(0);
+        return qResToItems(qSQL("SELECT * FROM " + this.config.getProperty("db") + "." + "tracker WHERE id = '" + id + "';")).get(0);
     }
 
     @Override
