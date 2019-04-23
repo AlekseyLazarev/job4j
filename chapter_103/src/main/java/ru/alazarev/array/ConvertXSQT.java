@@ -5,9 +5,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 
 /**
  * Class ConvertXSQT решение задачи части 003. Урок 4.3. XML XSLT JDBC Оптимизация.
@@ -26,36 +23,14 @@ public class ConvertXSQT {
     public void convert(File source, File dest, File scheme) {
         try {
             TransformerFactory factory = TransformerFactory.newInstance();
-            Transformer transformer = factory.newTransformer(new StreamSource(scheme));
-            transformer.transform(new StreamSource(source), new StreamResult(dest));
+            if (scheme.exists()) {
+                Transformer transformer = factory.newTransformer(new StreamSource(scheme));
+                transformer.transform(new StreamSource(source), new StreamResult(dest));
+            } else {
+                System.out.println("Scheme file not found");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Method create scheme.
-     *
-     * @param file File for scheme.
-     */
-    public void createXsl(File file) {
-        try (Writer writer = new FileWriter(file)) {
-            writer.write("<?xml version=\"1.0\"?>\n"
-                    + "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
-                    + "<xsl:template match=\"/\">\n"
-                    + "<entries>\n"
-                    + "   <xsl:for-each select=\"entries/entry\">\n"
-                    + "       <entry>\n"
-                    + "           <xsl:attribute name=\"href\">\n"
-                    + "               <xsl:value-of select=\"field\"/>\n"
-                    + "           </xsl:attribute>\n"
-                    + "       </entry>\n"
-                    + "   </xsl:for-each>\n"
-                    + " </entries>\n"
-                    + "</xsl:template>\n"
-                    + "</xsl:stylesheet>\n");
-        } catch (IOException i) {
-            i.printStackTrace();
         }
     }
 }

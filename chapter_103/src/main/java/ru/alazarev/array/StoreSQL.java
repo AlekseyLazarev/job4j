@@ -30,7 +30,7 @@ public class StoreSQL implements AutoCloseable {
      */
     public void init() {
         try {
-            this.connect = DriverManager.getConnection(this.config.get("url"));
+            this.connect = DriverManager.getConnection(this.config.get("driver") + this.config.get("dbname"));
             createTable();
             if (selectAll().next()) {
                 clearTable();
