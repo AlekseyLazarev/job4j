@@ -8,7 +8,7 @@ import java.sql.SQLException;
  * Connection, which rollback all commits.
  * It is used for integration test.
  */
-class ConnectionRollback {
+public class ConnectionRollback {
 
     /**
      * Create connection with autocommit=false mode and rollback call, when conneciton is closed.

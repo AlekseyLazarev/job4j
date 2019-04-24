@@ -36,7 +36,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         boolean result = false;
         try {
             Statement ps = this.connection.createStatement();
-            result = ps.executeUpdate(sql) != 0 ? true : false;
+            result = ps.executeUpdate(sql) != 0;
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
