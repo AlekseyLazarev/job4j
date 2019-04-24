@@ -53,6 +53,8 @@ public class Application {
             SAXPars saxp = new SAXPars();
             parser.parse(newXml, saxp);
             getTime("парсинга");
+        } else {
+            System.out.println("Schema.xsl не найдено, продолжение не возможно.");
         }
     }
 }

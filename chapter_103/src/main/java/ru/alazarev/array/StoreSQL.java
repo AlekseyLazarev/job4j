@@ -41,38 +41,24 @@ public class StoreSQL implements AutoCloseable {
     }
 
     /**
-     * Method insert values into table.
-     *
-     * @param start Start values to insert.
-     * @param end   End values to insert.
-     */
-    public void insert(int start, int end) {
-        String array = "";
-        if (start != 1) {
-            start++;
-        }
-        for (int i = start; i < end; i++) {
-            array += "(" + i + ")" + ", ";
-        }
-        array += "(" + end + ")";
-        execute("INSERT INTO entry (field) VALUES " + array + ";");
-    }
-
-    /**
      * Method generate values.
      *
      * @param size Size values to generate.
      */
     public void generate(int size) {
-        int start = 1;
-        int factor = 1;
-        int divider = Integer.valueOf(config.get("divider"));
-        int part;
-        while (start < size) {
-            part = Math.floor(size / divider) > factor ? divider * factor : size;
-            insert(start, part);
-            start = part;
-            factor++;
+        try {
+            this.connect.setAutoCommit(false);
+            PreparedStatement ps = this.connect.prepareStatement("INSERT INTO entry (field) VALUES (?)");
+            for (int i = 1; i <= size; i++) {
+                ps.setInt(1, i);
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            ps.close();
+            this.connect.commit();
+            this.connect.setAutoCommit(true);
+        } catch (SQLException s) {
+            s.printStackTrace();
         }
     }
 
