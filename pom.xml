@@ -56,6 +56,24 @@
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.5</version>
         </dependency>
@@ -101,6 +119,21 @@
 
     <build>
         <plugins>
+            <plugin>
+                <!-- Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>ru.alazarev.parser.ParserApp</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
