@@ -48,11 +48,17 @@ public class ParserApp implements Job {
                 .build();
         Trigger trigger = newTrigger()
                 .withIdentity("trigger1")
-                .withSchedule(cronSchedule("0 */1 * ? * *"))
+                .withSchedule(cronSchedule(properties.getProperty("cron.expression")))
                 .build();
         scheduler.scheduleJob(job, trigger);
     }
 
+    /**
+     * Method run parse.
+     *
+     * @param jobExecutionContext Job context.
+     * @throws JobExecutionException
+     */
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         SqlDataBase sqlDataBase = new SqlDataBase(properties);

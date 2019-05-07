@@ -1,71 +1,100 @@
 package ru.alazarev.calculator;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
 /**
  * Class Calculator решение задачи части 001. Урок 3.1. Элементарный калькулятор. [#185].
+ * и задачи уровня 2 части 004. Урок 1.1. Использую класса Calculator. Сделать класс InteractCalc. [#850].
  *
  * @author Aleksey Lazarev
- * @since 09.11.2018
+ * @since 07.05.2019
  */
-
 public class Calculator {
-    private double result;
+    private final Map<String, Function<String[], Double>> map = new HashMap<>();
 
     /**
-     * Method add .
+     * Method initiate calculator.
      *
-     * @param first  First number for add.
-     * @param second Second number for add.
+     * @return filled calculator.
      */
-    public void add(double first, double second) {
-        this.result = first + second;
+    public Calculator init() {
+        fill();
+        return this;
     }
 
     /**
-     * Method substract .
-     *
-     * @param first  First number for substract.
-     * @param second Second number for substract.
+     * Method fill four actions.
      */
-    public void substract(double first, double second) {
-        this.result = first - second;
+    private void fill() {
+        load("+", add());
+        load("-", sub());
+        load("/", div());
+        load("*", mul());
     }
 
     /**
-     * Method divide.
+     * Method load functions with their keys.
      *
-     * @param first  First number for divide.
-     * @param second Second number for divide.
+     * @param type Type actions.
+     * @param func Function.
      */
-    public void divide(double first, double second) {
-        this.result = first / second;
+    public void load(String type, Function<String[], Double> func) {
+        map.put(type, func);
     }
 
     /**
-     * Method multiple .
+     * Method adds numbers.
      *
-     * @param first  First number for multiple.
-     * @param second Second number for multiple.
+     * @return Result adds.
      */
-    public void multiple(double first, double second) {
-        this.result = first * second;
+    private Function<String[], Double> add() {
+        return arr -> {
+            return Double.parseDouble(arr[0]) + Double.parseDouble(arr[2]);
+        };
     }
 
     /**
-     * Method get result.
+     * Method subtracts numbers.
      *
-     * @return result of previous operation
+     * @return Result subtracts.
      */
-    public double getResult() {
-        return this.result;
+    private Function<String[], Double> sub() {
+        return arr -> {
+            return Double.parseDouble(arr[0]) - Double.parseDouble(arr[2]);
+        };
     }
 
     /**
-     * Main, output string to console.
+     * Method divides numbers.
      *
-     * @param args - args.
+     * @return Result divides.
      */
-    public static void main(String[] args) {
-        System.out.println("Hello world");
+    private Function<String[], Double> div() {
+        return arr -> {
+            return Double.parseDouble(arr[0]) / Double.parseDouble(arr[2]);
+        };
     }
 
+    /**
+     * Method multiplies numbers.
+     *
+     * @return Result multiplies.
+     */
+    private Function<String[], Double> mul() {
+        return arr -> {
+            return Double.parseDouble(arr[0]) * Double.parseDouble(arr[2]);
+        };
+    }
+
+    /**
+     * Method calls the function.
+     *
+     * @param expression Expression for call.
+     * @return Result expression.
+     */
+    public double sent(String[] expression) {
+        return this.map.get(expression[1]).apply(expression);
+    }
 }
