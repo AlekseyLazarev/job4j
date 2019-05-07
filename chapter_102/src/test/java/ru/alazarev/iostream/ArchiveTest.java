@@ -3,6 +3,7 @@ package ru.alazarev.iostream;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import static org.hamcrest.Matchers.is;
  * @since 22.01.2019
  */
 public class ArchiveTest {
-    private String path = "C:\\projects\\job4j";
+    private String path = new File(".").getAbsolutePath();
     private List<String> extensions = new ArrayList<>();
     private Archive archive;
     private Search search = new Search();

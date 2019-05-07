@@ -27,6 +27,7 @@ public class Actions {
 
     /**
      * Constructor with client param.
+     *
      * @param client File manager client.
      */
     public Actions(FileManagerClient client) {

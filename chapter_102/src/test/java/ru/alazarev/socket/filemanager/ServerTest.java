@@ -7,6 +7,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -20,7 +22,7 @@ public class ServerTest {
     @Test
     public void serverTest() throws IOException {
         String input = "child";
-        String extend = "I don't understand ! =(\r\n\r\n";
+        String extend = "I don't understand ! =(" + LS + LS;
         Socket socket = mock(Socket.class);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         when(socket.getInputStream()).thenReturn(new ByteArrayInputStream(input.getBytes()));
