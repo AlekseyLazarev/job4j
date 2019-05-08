@@ -46,7 +46,7 @@ public class InteractCalc {
      * @param args
      */
     public static void main(String[] args) {
-        InteractCalc interactCalc = new InteractCalc(new Scanner(System.in), new Calculator().init());
+        InteractCalc interactCalc = new InteractCalc(new Scanner(System.in), new EngineerCalc().init());
         interactCalc.init();
     }
 }
