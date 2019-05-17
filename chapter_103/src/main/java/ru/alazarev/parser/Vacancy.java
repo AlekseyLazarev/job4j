@@ -10,6 +10,7 @@ public class Vacancy {
     private String name;
     private String text;
     private String link;
+    private long date;
 
     /**
      * Constructor.
@@ -18,10 +19,11 @@ public class Vacancy {
      * @param text Description vacancy.
      * @param link Link vacancy.
      */
-    public Vacancy(String name, String text, String link) {
+    public Vacancy(String name, String text, String link, long date) {
         this.name = name;
         this.text = text;
         this.link = link;
+        this.date = date;
     }
 
     /**
@@ -76,5 +78,23 @@ public class Vacancy {
      */
     public String getText() {
         return text;
+    }
+
+    /**
+     * Get date field vacancy.
+     *
+     * @return long value.
+     */
+    public long getDate() {
+        return date;
+    }
+
+    /**
+     * Set date field vacancy.
+     *
+     * @param date
+     */
+    public void setDate(long date) {
+        this.date = date;
     }
 }

@@ -5,6 +5,8 @@ import ru.alazarev.array.Config;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.sql.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Properties;
 
@@ -89,22 +91,65 @@ public class SqlDataBase {
      */
     public boolean load(HashSet<Vacancy> vacancies) {
         boolean result = false;
-        String sql = "INSERT INTO vacancy (name, text, link) VALUES(?,?,?)";
+
+        String sql = "INSERT INTO vacancy (name, text, link, date) VALUES(?,?,?,?) ON CONFLICT (name) DO NOTHING";
         try (PreparedStatement current = this.connect.prepareStatement(sql)) {
             for (Vacancy vacancy : vacancies) {
-                if (!findByName(vacancy.getName()).next()) {
-                    current.setString(1, vacancy.getName());
-                    current.setString(2, vacancy.getText());
-                    current.setString(3, vacancy.getLink());
-                    current.addBatch();
-                }
+                current.setString(1, vacancy.getName());
+                current.setString(2, vacancy.getText());
+                current.setString(3, vacancy.getLink());
+                current.setLong(4, vacancy.getDate());
+                current.addBatch();
             }
             result = current.executeBatch().length != 0;
+        } catch (BatchUpdateException bue) {
+            bue.printStackTrace();
+            System.out.println("next");
+            bue.getNextException().printStackTrace();
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            sqle.getNextException();
         }
         updateTime();
         return result;
+    }
+
+    private ResultSet query(String sql) {
+        ResultSet result = null;
+        try {
+            PreparedStatement ps = this.connect.prepareStatement(sql);
+            result = ps.executeQuery();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * Method get last vacancy date.
+     *
+     * @return Long format last date.
+     */
+    public long getLastDate() {
+        Calendar calendar = new GregorianCalendar();
+        calendar.set(Calendar.DAY_OF_YEAR, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        long res = 0;
+        ResultSet rs = query("SELECT MAX(date) FROM vacancy");
+        try {
+            if (rs.next()) {
+                long cur = rs.getLong(1);
+                if (cur == 0) {
+                    res = calendar.getTimeInMillis();
+                } else {
+                    res = cur;
+                }
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return res;
     }
 
     /**
@@ -136,24 +181,6 @@ public class SqlDataBase {
     }
 
     /**
-     * Method return result select by name.
-     *
-     * @param name Find name.
-     * @return result.
-     */
-    public ResultSet findByName(String name) {
-        ResultSet result = null;
-        try {
-            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM vacancy WHERE name = (?);");
-            ps.setString(1, name);
-            result = ps.executeQuery();
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        return result;
-    }
-
-    /**
      * Method create table.
      *
      * @return Result of create table.
@@ -164,7 +191,9 @@ public class SqlDataBase {
                 + "name VARCHAR(255), "
                 + "text VARCHAR(10000), "
                 + "link VARCHAR(300), "
-                + "PRIMARY KEY(id))");
+                + "date BIGINT,"
+                + "PRIMARY KEY(id),"
+                + "UNIQUE (name))");
     }
 
     /**
