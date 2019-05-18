@@ -3,10 +3,8 @@ package ru.alazarev.calculator;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.DecimalFormat;
-
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Class EngineerCalcTest.
@@ -19,7 +17,7 @@ public class EngineerCalcTest {
 
     @Before
     public void start() {
-        this.engineerCalc = new EngineerCalc().init();
+        this.engineerCalc = new Calculator().init();
     }
 
 

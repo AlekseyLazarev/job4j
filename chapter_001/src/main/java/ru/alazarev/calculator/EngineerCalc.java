@@ -1,5 +1,7 @@
 package ru.alazarev.calculator;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -9,16 +11,18 @@ import java.util.function.Function;
  * @author Aleksey Lazarev
  * @since 08.05.2019
  */
-public class EngineerCalc extends Calculator {
+public class EngineerCalc {
     /**
-     * Method init EngineerCalc.
+     * Method unites all new func in map.
      *
-     * @return this object.
+     * @return
      */
-    public EngineerCalc init() {
-        super.init();
-        fillNewMethods();
-        return this;
+    public Map<String, Function<String[], Double>> resent() {
+        Map<String, Function<String[], Double>> map = new HashMap<>();
+        map.put("cos", cos());
+        map.put("sin", sin());
+        map.put("tg", tg());
+        return map;
     }
 
     /**
@@ -52,14 +56,5 @@ public class EngineerCalc extends Calculator {
         return arr -> {
             return Math.tan(Double.parseDouble(arr[0]));
         };
-    }
-
-    /**
-     * Method add new func in calculator.
-     */
-    private void fillNewMethods() {
-        super.load("cos", cos());
-        super.load("sin", sin());
-        super.load("tg", tg());
     }
 }
