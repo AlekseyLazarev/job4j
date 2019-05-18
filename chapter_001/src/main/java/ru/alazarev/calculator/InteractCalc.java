@@ -14,6 +14,12 @@ public class InteractCalc {
     private final Scanner in;
     private final Calculator calc;
 
+    /**
+     * Constructor.
+     *
+     * @param scanner Input.
+     * @param calc    Calculator object.
+     */
     public InteractCalc(Scanner scanner, Calculator calc) {
         this.in = scanner;
         this.calc = calc;
@@ -46,7 +52,7 @@ public class InteractCalc {
      * @param args
      */
     public static void main(String[] args) {
-        InteractCalc interactCalc = new InteractCalc(new Scanner(System.in), new EngineerCalc().init());
+        InteractCalc interactCalc = new InteractCalc(new Scanner(System.in), new Calculator().init());
         interactCalc.init();
     }
 }

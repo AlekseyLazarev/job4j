@@ -20,7 +20,9 @@ public class Calculator {
      * @return filled calculator.
      */
     public Calculator init() {
+        EngineerCalc engineerCalc = new EngineerCalc();
         fill();
+        this.map.putAll(engineerCalc.resent());
         return this;
     }
 
