@@ -5,6 +5,7 @@ import org.junit.Test;
 import ru.alazarev.lsp.foods.Food;
 import ru.alazarev.lsp.foods.Milk;
 import ru.alazarev.lsp.storages.Shop;
+import ru.alazarev.lsp.storages.Storage;
 import ru.alazarev.lsp.storages.Trash;
 import ru.alazarev.lsp.storages.Warehouse;
 
@@ -27,12 +28,11 @@ public class ControlQualityTest {
     private double stdDisc = 0;
     private int date1;
     private int date2;
-    private double curDisc = 0.5;
+    private Calendar now = new GregorianCalendar(2019,5,15);
 
     @Before
     public void setUp() {
-        this.cq = new ControlQuality(this.year, this.month, 23);
-        this.cq.setDiscount(0.5D);
+        this.cq = new ControlQuality();
     }
 
     private Food createFood(String nameFood) {
@@ -43,27 +43,29 @@ public class ControlQualityTest {
 
     @Test
     public void whenMoreThanOneThenTrash() {
-        this.date1 = 21;
-        this.date2 = 11;
+        this.date1 = 14;
+        this.date2 = 1;
         Food f = createFood("Trash food");
-        assertThat(this.cq.distributor(f) instanceof Trash, is(true));
+        assertThat(this.cq.distributor(f,now.getTime()) instanceof Trash, is(true));
     }
 
     @Test
     public void whenMoreThanThreeQuartersThenShop() {
         this.date1 = 30;
-        this.date2 = 15;
+        this.date2 = 1;
         Food f = createFood("Shop food");
-        assertThat(this.cq.distributor(f) instanceof Shop, is(true));
+        assertThat(this.cq.distributor(f,now.getTime()) instanceof Shop, is(true));
     }
 
     @Test
     public void whenMoreThanOneQuartersThenShopAndFoodDiscountAdd() {
-        this.date1 = 24;
-        this.date2 = 19;
+        this.date1 = 30;
+        this.date2 = 13;
         Food f = createFood("Shop food");
-        assertThat(this.cq.distributor(f) instanceof Shop, is(true));
-        assertThat(f.getDiscount(), is(this.curDisc));
+        Storage s = this.cq.distributor(f,now.getTime());
+        double ds = f.getDiscount();
+        assertThat(this.cq.distributor(f,now.getTime()) instanceof Shop, is(true));
+        assertThat(f.getDiscount(), is(0.2));
     }
 
     @Test
@@ -71,7 +73,17 @@ public class ControlQualityTest {
         this.date1 = 30;
         this.date2 = 22;
         Food f = createFood("Warehouse food");
-        assertThat(this.cq.distributor(f) instanceof Warehouse, is(true));
+        Storage s = this.cq.distributor(f,now.getTime());
+        boolean b = s instanceof  Warehouse;
+        assertThat(this.cq.distributor(f,now.getTime()) instanceof Warehouse, is(true));
     }
+
+//    @Test
+//    public void decorate() {
+//        this.date1 = 30;
+//        this.date2 = 22;
+//        Food f = createFood("Warehouse food");
+//        assertThat(this.cq.distributor(f) instanceof Warehouse, is(true));
+//    }
 
 }

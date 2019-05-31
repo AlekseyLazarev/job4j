@@ -2,8 +2,7 @@ package ru.alazarev.lsp.storages;
 
 import ru.alazarev.lsp.foods.Food;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 /**
  * Class Trash решение задачи части 004. 3.1. Хранилище продуктов [#852]
@@ -11,19 +10,14 @@ import java.util.List;
  * @author Aleksey Lazarev
  * @since 27.05.2019
  */
-public class Trash implements Storage {
-    private static final List<Food> FOODS = new ArrayList<>();
+public class Trash extends Storage {
 
-    /**
-     * Method add food into storage.
-     *
-     * @param food Food value.
-     * @return this object.
-     */
+    public Trash() {
+        setAcceptQualityLower(100);
+    }
+
     @Override
-    public Storage addTo(Food food) {
-        System.out.println(food.getName() + " Trash added");
-        FOODS.add(food);
-        return this;
+    boolean quality(Food food, Date date) {
+        return food.freshness(date) > acceptQualityLower;
     }
 }

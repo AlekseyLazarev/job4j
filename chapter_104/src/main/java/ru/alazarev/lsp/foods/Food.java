@@ -3,17 +3,17 @@ package ru.alazarev.lsp.foods;
 import java.util.Date;
 
 /**
- * Class Food решение задачи части 004. 3.1. Хранилище продуктов [#852]
+ * Abstract class Food решение задачи части 004. 3.1. Хранилище продуктов [#852]
  *
  * @author Aleksey Lazarev
  * @since 27.05.2019
  */
-public class Food {
-    private String name;
-    private Date expireDate;
-    private Date createDate;
-    private double price;
-    private double discount;
+public abstract class Food {
+    String name;
+    Date expireDate;
+    Date createDate;
+    double price;
+    double discount;
 
     /**
      * Constructor.
@@ -122,13 +122,13 @@ public class Food {
         this.discount = discount;
     }
 
-
     /**
      * Method return shelf life.
      *
      * @return shelf life.
      */
-    public long freshDays() {
-        return this.expireDate.getTime() - this.createDate.getTime();
+    public int freshness(Date current) {
+        return Math.round((float) (current.getTime() - this.createDate.getTime())
+                / (float) (this.expireDate.getTime() - this.createDate.getTime()) * 100);
     }
 }
