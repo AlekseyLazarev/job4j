@@ -59,11 +59,9 @@ public class ControlQualityTest {
 
     @Test
     public void whenMoreThanOneQuartersThenShopAndFoodDiscountAdd() {
-        this.date1 = 30;
-        this.date2 = 13;
+        this.date1 = 17;
+        this.date2 = 1;
         Food f = createFood("Shop food");
-        Storage s = this.cq.distributor(f,now.getTime());
-        double ds = f.getDiscount();
         assertThat(this.cq.distributor(f,now.getTime()) instanceof Shop, is(true));
         assertThat(f.getDiscount(), is(0.2));
     }
@@ -71,19 +69,10 @@ public class ControlQualityTest {
     @Test
     public void whenMoreThanZeroThenWarehouse() {
         this.date1 = 30;
-        this.date2 = 22;
+        this.date2 = 14;
         Food f = createFood("Warehouse food");
         Storage s = this.cq.distributor(f,now.getTime());
         boolean b = s instanceof  Warehouse;
         assertThat(this.cq.distributor(f,now.getTime()) instanceof Warehouse, is(true));
     }
-
-//    @Test
-//    public void decorate() {
-//        this.date1 = 30;
-//        this.date2 = 22;
-//        Food f = createFood("Warehouse food");
-//        assertThat(this.cq.distributor(f) instanceof Warehouse, is(true));
-//    }
-
 }

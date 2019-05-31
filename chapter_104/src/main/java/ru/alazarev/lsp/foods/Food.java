@@ -128,6 +128,8 @@ public abstract class Food {
      * @return shelf life.
      */
     public int freshness(Date current) {
+        int test = Math.round((float) (current.getTime() - this.createDate.getTime())
+                / (float) (this.expireDate.getTime() - this.createDate.getTime()) * 100);
         return Math.round((float) (current.getTime() - this.createDate.getTime())
                 / (float) (this.expireDate.getTime() - this.createDate.getTime()) * 100);
     }
