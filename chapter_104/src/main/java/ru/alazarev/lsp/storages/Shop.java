@@ -14,21 +14,34 @@ public class Shop extends Storage {
     private int qualityForDisc = 75;
     private double discount = 0.2;
 
+    /**
+     * Constructor.
+     */
     public Shop() {
         setAcceptQualityLower(25);
         setAcceptQualityUpper(100);
     }
 
+    /**
+     * Method set discount.
+     *
+     * @param discount Discount value.
+     */
     public void setDiscount(double discount) {
         this.discount = discount;
     }
 
+    /**
+     * Method set quality for discount.
+     *
+     * @param qualityForDisc Quality value.
+     */
     public void setQualityForDisc(int qualityForDisc) {
         this.qualityForDisc = qualityForDisc;
     }
 
     /**
-     * Method add food into storage.
+     * Method override addTo.
      *
      * @param food Food value.
      * @return this object.

@@ -11,11 +11,19 @@ import java.util.Date;
  * @since 27.05.2019
  */
 public class Trash extends Storage {
-
+    /**
+     * Constructor.
+     */
     public Trash() {
         setAcceptQualityLower(100);
     }
-
+    /**
+     * Method override calculate freshness.
+     *
+     * @param food Food object for calculate.
+     * @param date Date object for calculate.
+     * @return Freshness.
+     */
     @Override
     boolean quality(Food food, Date date) {
         return food.freshness(date) > acceptQualityLower;

@@ -7,7 +7,9 @@ package ru.alazarev.lsp.storages;
  * @since 27.05.2019
  */
 public class Warehouse extends Storage {
-
+    /**
+     * Constructor.
+     */
     public Warehouse() {
         setAcceptQualityLower(0);
         setAcceptQualityUpper(25);

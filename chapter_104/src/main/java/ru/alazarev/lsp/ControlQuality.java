@@ -1,13 +1,14 @@
 package ru.alazarev.lsp;
 
 import ru.alazarev.lsp.foods.Food;
-import ru.alazarev.lsp.foods.Milk;
 import ru.alazarev.lsp.storages.Shop;
 import ru.alazarev.lsp.storages.Storage;
 import ru.alazarev.lsp.storages.Trash;
 import ru.alazarev.lsp.storages.Warehouse;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Class ControlQuality решение задачи части 004. 3.1. Хранилище продуктов [#852]
@@ -24,7 +25,6 @@ import java.util.*;
  * 3.4. Если срок годности вышел. Отправить продукт в мусорку.
  */
 public class ControlQuality {
-    Storage ct;
     private final List<Storage> storageList = new ArrayList<>();
 
     public ControlQuality() {
@@ -33,12 +33,13 @@ public class ControlQuality {
         this.storageList.add(new Warehouse());
     }
 
+    /**
+     * Method add storage into list.
+     *
+     * @param storage Storage object.
+     */
     public void addStorage(Storage storage) {
         this.storageList.add(storage);
-    }
-
-    public void setStorage(Storage storage) {
-        ct = storage;
     }
 
     /**
@@ -55,37 +56,6 @@ public class ControlQuality {
                 break;
             }
         }
-        int a = 1;
-//        if (freshProc >= 1) {
-//            ct = new Trash();
-//        } else if (freshProc > 0.75) {
-//            ct = new Shop();
-//            food.setDiscount(0.2);
-//        } else if (freshProc > 0.25) {
-//            ct = new Shop();
-//        } else if (freshProc > 0) {
-//            ct = new Warehouse();
-//        }
-//        return ct.addTo(food);
         return res;
     }
-
-    public static void main(String[] args) {
-        ControlQuality cq = new ControlQuality();
-        Warehouse w = new Warehouse();
-        Shop s = new Shop();
-        Trash t = new Trash();
-        Shop sa = new Shop();
-        Milk milk = new Milk("Milk", new Date(2019, 05, 30), new Date(2019, 05, 20), 10000, 0);
-        cq.distributor(milk, new Date(2019, 05, 25));
-        int a = 10;
-//        cq.distribValues.put(new Double[]{1D}, new Trash());
-//        cq.distribValues.put(new Double[]{0.75, 1D}, new Shop());
-//        cq.distribValues.put(new Double[]{0.25, 0.75}, new Shop());
-//        cq.distribValues.put(new Double[]{0D, 0.25}, new Warehouse());
-        for (int i = 0; i < 3; i++) {
-
-        }
-    }
-
 }

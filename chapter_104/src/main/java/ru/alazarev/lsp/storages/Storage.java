@@ -17,14 +17,23 @@ public abstract class Storage {
     protected int acceptQualityUpper;
     protected int acceptQualityLower;
 
+    /**
+     * Method set upper quality.
+     *
+     * @param acceptQualityUpper upper quality value.
+     */
     public void setAcceptQualityUpper(int acceptQualityUpper) {
         this.acceptQualityUpper = acceptQualityUpper;
     }
 
+    /**
+     * Method set lower quality.
+     *
+     * @param acceptQualityLower lower quality value.
+     */
     public void setAcceptQualityLower(int acceptQualityLower) {
         this.acceptQualityLower = acceptQualityLower;
     }
-//TODO pravilnii ras4et svezhesti
 
     /**
      * Method add food into storage.
@@ -40,6 +49,13 @@ public abstract class Storage {
         return result;
     }
 
+    /**
+     * Method calculate freshness.
+     *
+     * @param food Food object for calculate.
+     * @param date Date object for calculate.
+     * @return Freshness.
+     */
     boolean quality(Food food, Date date) {
         int freshness = food.freshness(date);
         return freshness >= acceptQualityLower && freshness < acceptQualityUpper;
