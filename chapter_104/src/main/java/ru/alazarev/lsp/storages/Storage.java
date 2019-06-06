@@ -13,7 +13,7 @@ import java.util.List;
  * @since 27.05.2019
  */
 public abstract class Storage {
-    protected final List<Food> FOODS = new ArrayList<>();
+    protected final List<Food> foods = new ArrayList<>();
     protected int acceptQualityUpper;
     protected int acceptQualityLower;
 
@@ -44,7 +44,7 @@ public abstract class Storage {
     public boolean addTo(Food food, Date date) {
         boolean result = false;
         if (quality(food, date)) {
-            result = FOODS.add(food);
+            result = foods.add(food);
         }
         return result;
     }

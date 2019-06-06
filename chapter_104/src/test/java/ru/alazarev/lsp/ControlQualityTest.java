@@ -27,7 +27,7 @@ public class ControlQualityTest {
     private double stdDisc = 0;
     private int date1;
     private int date2;
-    private Calendar now = new GregorianCalendar(2019,5,15);
+    private Calendar now = new GregorianCalendar(2019, 5, 15);
 
     @Before
     public void setUp() {
@@ -45,7 +45,7 @@ public class ControlQualityTest {
         this.date1 = 14;
         this.date2 = 1;
         Food f = createFood("Trash food");
-        assertThat(this.cq.distributor(f,now.getTime()) instanceof Trash, is(true));
+        assertThat(this.cq.distributor(f, now.getTime()) instanceof Trash, is(true));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ControlQualityTest {
         this.date1 = 30;
         this.date2 = 1;
         Food f = createFood("Shop food");
-        assertThat(this.cq.distributor(f,now.getTime()) instanceof Shop, is(true));
+        assertThat(this.cq.distributor(f, now.getTime()) instanceof Shop, is(true));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class ControlQualityTest {
         this.date1 = 18;
         this.date2 = 1;
         Food f = createFood("Shop food");
-        assertThat(this.cq.distributor(f,now.getTime()) instanceof Shop, is(true));
+        assertThat(this.cq.distributor(f, now.getTime()) instanceof Shop, is(true));
         assertThat(f.getDiscount(), is(0.2));
     }
 
@@ -70,6 +70,6 @@ public class ControlQualityTest {
         this.date1 = 30;
         this.date2 = 14;
         Food f = createFood("Warehouse food");
-        assertThat(this.cq.distributor(f,now.getTime()) instanceof Warehouse, is(true));
+        assertThat(this.cq.distributor(f, now.getTime()) instanceof Warehouse, is(true));
     }
 }

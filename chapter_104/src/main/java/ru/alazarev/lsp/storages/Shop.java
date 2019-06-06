@@ -54,7 +54,7 @@ public class Shop extends Storage {
             if (freshness >= this.qualityForDisc) {
                 food.setDiscount(this.discount);
             }
-            result = FOODS.add(food);
+            result = foods.add(food);
         }
         return result;
     }

@@ -51,7 +51,7 @@ public class ControlQuality {
     public Storage distributor(Food food, Date date) {
         Storage res = null;
         for (Storage storage : this.storageList) {
-            if(storage.addTo(food,date)) {
+            if (storage.addTo(food, date)) {
                 res = storage;
                 break;
             }

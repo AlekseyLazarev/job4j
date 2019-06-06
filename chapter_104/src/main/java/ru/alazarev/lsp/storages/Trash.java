@@ -17,6 +17,7 @@ public class Trash extends Storage {
     public Trash() {
         setAcceptQualityLower(100);
     }
+
     /**
      * Method override calculate freshness.
      *
