@@ -1,21 +1,30 @@
 package ru.alazarev.lsp.storages;
 
-import ru.alazarev.lsp.foods.Food;
+import ru.alazarev.lsp.foods.IFood;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Interface Storage решение задачи части 004. 3.1. Хранилище продуктов [#852]
+ * Abstract Class Storage решение задачи части 004. 3.1. Хранилище продуктов [#852]
  *
  * @author Aleksey Lazarev
  * @since 27.05.2019
  */
-public abstract class Storage {
-    protected final List<Food> foods = new ArrayList<>();
+public abstract class Storage implements IStorage {
+    protected final List<IFood> foods = new ArrayList<>();
     protected int acceptQualityUpper;
     protected int acceptQualityLower;
+
+    /**
+     * Method return foods.
+     *
+     * @return Food list value.
+     */
+    public List<IFood> getFoods() {
+        return foods;
+    }
 
     /**
      * Method set upper quality.
@@ -41,12 +50,9 @@ public abstract class Storage {
      * @param food Food value.
      * @return this object.
      */
-    public boolean addTo(Food food, Date date) {
-        boolean result = false;
-        if (quality(food, date)) {
-            result = foods.add(food);
-        }
-        return result;
+    @Override
+    public boolean addTo(IFood food, Date date) {
+        return quality(food, date) ? foods.add(food) : false;
     }
 
     /**
@@ -56,8 +62,10 @@ public abstract class Storage {
      * @param date Date object for calculate.
      * @return Freshness.
      */
-    boolean quality(Food food, Date date) {
+    @Override
+    public boolean quality(IFood food, Date date) {
         int freshness = food.freshness(date);
         return freshness >= acceptQualityLower && freshness < acceptQualityUpper;
     }
+
 }

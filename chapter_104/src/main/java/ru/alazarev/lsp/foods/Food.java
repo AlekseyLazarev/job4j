@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Aleksey Lazarev
  * @since 27.05.2019
  */
-public abstract class Food {
+public abstract class Food implements IFood {
     String name;
     Date expireDate;
     Date createDate;
@@ -128,9 +128,27 @@ public abstract class Food {
      * @return shelf life.
      */
     public int freshness(Date current) {
-        int test = Math.round((float) (current.getTime() - this.createDate.getTime())
-                / (float) (this.expireDate.getTime() - this.createDate.getTime()) * 100);
         return Math.round((float) (current.getTime() - this.createDate.getTime())
                 / (float) (this.expireDate.getTime() - this.createDate.getTime()) * 100);
+    }
+
+    /**
+     * Method return need for cold storage.
+     *
+     * @return need for cold storage.
+     */
+    @Override
+    public boolean coldStorageNeeded() {
+        return false;
+    }
+
+    /**
+     * Method return recycling capacity.
+     *
+     * @return recycling capacity.
+     */
+    @Override
+    public boolean canReproduce() {
+        return false;
     }
 }

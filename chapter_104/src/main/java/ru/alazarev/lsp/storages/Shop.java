@@ -1,6 +1,6 @@
 package ru.alazarev.lsp.storages;
 
-import ru.alazarev.lsp.foods.Food;
+import ru.alazarev.lsp.foods.IFood;
 
 import java.util.Date;
 
@@ -41,20 +41,21 @@ public class Shop extends Storage {
     }
 
     /**
-     * Method override addTo.
+     * Method return quality of food.
      *
-     * @param food Food value.
-     * @return this object.
+     * @param food Food object for calculate.
+     * @param date Date object for calculate.
+     * @return return quality.
      */
     @Override
-    public boolean addTo(Food food, Date date) {
+    public boolean quality(IFood food, Date date) {
         boolean result = false;
         int freshness = food.freshness(date);
         if (freshness >= this.acceptQualityLower && freshness < this.acceptQualityUpper) {
             if (freshness >= this.qualityForDisc) {
                 food.setDiscount(this.discount);
             }
-            result = foods.add(food);
+            result = true;
         }
         return result;
     }

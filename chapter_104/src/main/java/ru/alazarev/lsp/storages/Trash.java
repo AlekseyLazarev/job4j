@@ -1,6 +1,6 @@
 package ru.alazarev.lsp.storages;
 
-import ru.alazarev.lsp.foods.Food;
+import ru.alazarev.lsp.foods.IFood;
 
 import java.util.Date;
 
@@ -26,7 +26,7 @@ public class Trash extends Storage {
      * @return Freshness.
      */
     @Override
-    boolean quality(Food food, Date date) {
+    public boolean quality(IFood food, Date date) {
         return food.freshness(date) > acceptQualityLower;
     }
 }

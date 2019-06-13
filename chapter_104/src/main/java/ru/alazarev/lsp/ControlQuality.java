@@ -1,10 +1,7 @@
 package ru.alazarev.lsp;
 
-import ru.alazarev.lsp.foods.Food;
-import ru.alazarev.lsp.storages.Shop;
-import ru.alazarev.lsp.storages.Storage;
-import ru.alazarev.lsp.storages.Trash;
-import ru.alazarev.lsp.storages.Warehouse;
+import ru.alazarev.lsp.foods.IFood;
+import ru.alazarev.lsp.storages.IStorage;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,20 +22,14 @@ import java.util.List;
  * 3.4. Если срок годности вышел. Отправить продукт в мусорку.
  */
 public class ControlQuality {
-    private final List<Storage> storageList = new ArrayList<>();
-
-    public ControlQuality() {
-        this.storageList.add(new Shop());
-        this.storageList.add(new Trash());
-        this.storageList.add(new Warehouse());
-    }
+    private final List<IStorage> storageList = new ArrayList<>();
 
     /**
      * Method add storage into list.
      *
      * @param storage Storage object.
      */
-    public void addStorage(Storage storage) {
+    public void addStorage(IStorage storage) {
         this.storageList.add(storage);
     }
 
@@ -48,9 +39,9 @@ public class ControlQuality {
      * @param food Food value.
      * @return Storage value.
      */
-    public Storage distributor(Food food, Date date) {
-        Storage res = null;
-        for (Storage storage : this.storageList) {
+    public IStorage distributor(IFood food, Date date) {
+        IStorage res = null;
+        for (IStorage storage : this.storageList) {
             if (storage.addTo(food, date)) {
                 res = storage;
                 break;
