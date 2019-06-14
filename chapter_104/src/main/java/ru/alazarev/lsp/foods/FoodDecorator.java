@@ -6,7 +6,7 @@ package ru.alazarev.lsp.foods;
  * @author Aleksey Lazarev
  * @since 13.06.2019
  */
-public abstract class FoodDecorator {
+public abstract class FoodDecorator extends Food {
     Food food;
 
     /**

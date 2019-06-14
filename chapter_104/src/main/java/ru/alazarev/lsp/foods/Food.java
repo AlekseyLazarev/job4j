@@ -15,6 +15,9 @@ public abstract class Food implements IFood {
     double price;
     double discount;
 
+    public Food() {
+    }
+
     /**
      * Constructor.
      *

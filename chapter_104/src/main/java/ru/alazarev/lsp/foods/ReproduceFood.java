@@ -6,7 +6,7 @@ package ru.alazarev.lsp.foods;
  * @author Aleksey Lazarev
  * @since 13.06.2019
  */
-public class FruitsFood extends FoodDecorator {
+public class ReproduceFood extends FoodDecorator {
     protected boolean reproducible = true;
 
     /**
@@ -14,11 +14,11 @@ public class FruitsFood extends FoodDecorator {
      *
      * @param food
      */
-    public FruitsFood(Food food) {
+    public ReproduceFood(Food food) {
         super(food);
     }
 
-    public FruitsFood(Food food, boolean reproducible) {
+    public ReproduceFood(Food food, boolean reproducible) {
         super(food);
         this.reproducible = reproducible;
     }

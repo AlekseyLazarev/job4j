@@ -13,11 +13,11 @@ public abstract class StorageDecorator extends Storage {
 
     @Override
     public boolean addTo(Food food, Date date) {
-        return storageDecorator.addTo(food, date);
+        return this.storageDecorator.addTo(food, date);
     }
 
     @Override
     boolean quality(Food food, Date date) {
-        return storageDecorator.quality(food, date);
+        return this.storageDecorator.quality(food, date);
     }
 }
