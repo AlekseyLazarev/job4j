@@ -31,6 +31,7 @@ public abstract class StorageDecorator implements IStorage {
      * @param date Date value.
      * @return result add.
      */
+    @Override
     public boolean addTo(IFood food, Date date) {
         return quality(food, date) ? this.storageDecorator.addTo(food, date) : false;
     }
@@ -42,6 +43,7 @@ public abstract class StorageDecorator implements IStorage {
      * @param date Date object for calculate.
      * @return return quality.
      */
+    @Override
     public boolean quality(IFood food, Date date) {
         return this.storageDecorator.quality(food, date);
     }
