@@ -94,7 +94,6 @@ public class FoodAssistant {
      */
     public IStorage checker(String name, int date1, int date2) {
         setupDates(date1, date2);
-        System.out.println(getCq().distributor(createMilk(name), getNowInDate()));
         return getCq().distributor(createMilk(name), getNowInDate());
     }
 

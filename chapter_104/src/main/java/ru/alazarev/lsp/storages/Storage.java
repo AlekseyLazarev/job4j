@@ -7,12 +7,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Abstract Class Storage решение задачи части 004. 3.1. Хранилище продуктов [#852]
+ * Class Storage решение задачи части 004. 3.1. Хранилище продуктов [#852]
  *
  * @author Aleksey Lazarev
  * @since 27.05.2019
  */
-public abstract class Storage implements IStorage {
+public class Storage implements IStorage {
     protected final List<IFood> foods = new ArrayList<>();
     protected int acceptQualityUpper;
     protected int acceptQualityLower;
@@ -68,4 +68,11 @@ public abstract class Storage implements IStorage {
         return freshness >= acceptQualityLower && freshness < acceptQualityUpper;
     }
 
+    /**
+     * Method clear food list.
+     */
+    @Override
+    public void clearFoods() {
+        this.foods.clear();
+    }
 }

@@ -1,7 +1,7 @@
 package ru.alazarev.lsp.storages.decorator;
 
 import ru.alazarev.lsp.foods.IFood;
-import ru.alazarev.lsp.storages.Storage;
+import ru.alazarev.lsp.storages.IStorage;
 
 import java.util.Date;
 
@@ -20,7 +20,7 @@ public class ColdStorageDecorator extends StorageDecorator {
      *
      * @param storageDecorator Storage value.
      */
-    public ColdStorageDecorator(Storage storageDecorator) {
+    public ColdStorageDecorator(IStorage storageDecorator) {
         super(storageDecorator);
     }
 

@@ -7,13 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Abstract Class StorageDecorator решение задачи части 004. 3.2. Расширенное хранилище. [#853].
+ * Class StorageDecorator решение задачи части 004. 3.2. Расширенное хранилище. [#853].
  *
  * @author Aleksey Lazarev
  * @since 13.06.2019
  */
-public abstract class StorageDecorator implements IStorage {
-    protected IStorage storageDecorator;
+public class StorageDecorator implements IStorage {
+    private IStorage storageDecorator;
 
     /**
      * Constructor.
@@ -56,5 +56,10 @@ public abstract class StorageDecorator implements IStorage {
     @Override
     public List<IFood> getFoods() {
         return this.storageDecorator.getFoods();
+    }
+
+    @Override
+    public void clearFoods() {
+        storageDecorator.clearFoods();
     }
 }

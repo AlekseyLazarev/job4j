@@ -14,6 +14,9 @@ import ru.alazarev.lsp.storages.decorator.ColdStorageDecorator;
 import ru.alazarev.lsp.storages.decorator.FixCapacityStorageDecorator;
 import ru.alazarev.lsp.storages.decorator.ReproduceStorageDecorator;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -68,5 +71,25 @@ public class ControlQualityTest {
         this.fa.setupDates(14, 1);
         IFood f = new ReproduceFoodDecorator(new Grape("Reproduce food", this.fa.getDate1(), this.fa.getDate2(), this.fa.getStdPrice(), this.fa.getStdDisc()));
         assertThat(this.fa.getCq().distributor(f, this.fa.getNowInDate()) instanceof ReproduceStorageDecorator, is(true));
+    }
+
+    @Test
+    public void whenResortThen() {
+        this.fa.setupDates(30, 14);
+        IFood f = new ColdFoodDecorator(new Grape("Cold food", this.fa.getDate1(), this.fa.getDate2(), this.fa.getStdPrice(), this.fa.getStdDisc()));
+        this.fa.getCq().distributor(f, this.fa.getNowInDate());
+        this.fa.checker("Trash food", 14, 1);
+        this.fa.checker("Shop food", 30, 1);
+        this.fa.setupDates(18, 1);
+        IFood f1 = this.fa.createMilk("Shop food");
+        this.fa.getCq().distributor(f1, this.fa.getNowInDate());
+        this.fa.checker("Warehouse food", 30, 14);
+        this.fa.setupDates(14, 1);
+        IFood f2 = new ReproduceFoodDecorator(new Grape("Reproduce food", this.fa.getDate1(), this.fa.getDate2(), this.fa.getStdPrice(), this.fa.getStdDisc()));
+        this.fa.getCq().distributor(f2, this.fa.getNowInDate());
+        Calendar newDate = new GregorianCalendar();
+        newDate.set(2019, 5, 20);
+        this.fa.getCq().resort(newDate.getTime());
+        int a = 123;
     }
 }

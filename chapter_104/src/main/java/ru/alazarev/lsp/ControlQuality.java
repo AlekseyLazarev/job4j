@@ -49,4 +49,16 @@ public class ControlQuality {
         }
         return res;
     }
+
+    /**
+     * Method extracts all products and redistributes them.
+     */
+    public void resort(Date date) {
+        List<IFood> foodList = new ArrayList<>();
+        for (IStorage storage : this.storageList) {
+            storage.getFoods().stream().forEach(iFood -> foodList.add(iFood));
+            storage.clearFoods();
+        }
+        foodList.stream().forEach(iFood -> distributor(iFood, date));
+    }
 }

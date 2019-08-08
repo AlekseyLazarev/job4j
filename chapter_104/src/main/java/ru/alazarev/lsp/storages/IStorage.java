@@ -35,4 +35,9 @@ public interface IStorage {
      * @return Food list value.
      */
     List<IFood> getFoods();
+
+    /**
+     * Method clear food list.
+     */
+    void clearFoods();
 }
