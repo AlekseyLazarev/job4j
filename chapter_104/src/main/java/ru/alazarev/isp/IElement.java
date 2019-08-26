@@ -1,5 +1,7 @@
 package ru.alazarev.isp;
 
+import java.util.List;
+
 /**
  * Interface IElement  решение задачи части 004. 4.1 Создать меню. [#4748].
  *
@@ -8,31 +10,30 @@ package ru.alazarev.isp;
  */
 public interface IElement extends IElementPrint, IElementAction {
     /**
-     * Method add element into list.
+     * Method return child of elements.
      *
-     * @param element Element object.
+     * @return Elements list.
      */
-    void addElement(IElement element);
+    List<IElement> getChild();
 
     /**
-     * Method get current lvl.
+     * Method return current element name.
      *
-     * @return current lvl.
+     * @return current element name.
      */
-    int getLvl();
+    String getName();
 
     /**
-     * Method set current id.
+     * Return divider.
      *
-     * @param currentId Current id value.
+     * @return divider.
      */
-    void setCurrentId(int currentId);
+    String getDivider();
 
     /**
-     * Method find element by id.
+     * Set divider.
      *
-     * @param id Digital id.
-     * @return IElement object.
+     * @param s divider.
      */
-    IElement finder(int id);
+    void setDivider(String s);
 }
