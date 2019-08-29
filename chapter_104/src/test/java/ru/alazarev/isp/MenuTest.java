@@ -45,12 +45,12 @@ public class MenuTest {
         this.menu.printElements();
         System.out.flush();
         System.setOut(old);
-        assertThat(baos.toString(), is("----Задача 1." + LN +
-                "--------Задача 1.1." + LN  +
-                "------------Задача 1.1.2." + LN  +
-                "------------Задача 1.1.1." + LN  +
-                "--------Задача 1.2." + LN  +
-                "----Задача 2." + LN));
+        assertThat(baos.toString(), is("----Задача 1." + LN
+                + "--------Задача 1.1." + LN
+                + "------------Задача 1.1.2." + LN
+                + "------------Задача 1.1.1." + LN
+                + "--------Задача 1.2." + LN
+                + "----Задача 2." + LN));
     }
 
     @Test

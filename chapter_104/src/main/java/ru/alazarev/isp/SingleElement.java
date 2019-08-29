@@ -11,7 +11,7 @@ import java.util.List;
  * @since 30.06.2019
  */
 public class SingleElement implements IElement {
-    private static final String itemName = "Задача";
+    private static final String ITEM_NAME = "Задача";
     private final String name;
     private List<IElement> child = new ArrayList<>();
     private String divider = "----";
@@ -38,7 +38,7 @@ public class SingleElement implements IElement {
      */
     @Override
     public void printElement() {
-        System.out.println(divider + itemName + " " + this.name);
+        System.out.println(divider + ITEM_NAME + " " + this.name);
         if (!this.child.isEmpty()) {
             for (IElement e : this.child) {
                 e.printElement();
