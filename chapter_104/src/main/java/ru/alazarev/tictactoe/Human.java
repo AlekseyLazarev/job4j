@@ -11,12 +11,8 @@ import ru.alazarev.tictactoe.interfaces.ILogic;
  * @since 03.09.2019
  */
 public class Human implements ILogic {
-    private IInput input;
+    private IInput input = new Input();
     private IGraphicElement graphicElement;
-
-    public Human(IInput input) {
-        this.input = input;
-    }
 
     /**
      * Method get element for this logic.
@@ -40,12 +36,13 @@ public class Human implements ILogic {
     }
 
     /**
-     * Current step.
+     * Current human step.
      *
+     * @param pole Current pole.
      * @return result step.
      */
     @Override
-    public int step() {
+    public int step(int[] pole) {
         return this.input.getNumber();
     }
 }

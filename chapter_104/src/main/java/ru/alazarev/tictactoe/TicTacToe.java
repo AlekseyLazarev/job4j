@@ -1,9 +1,11 @@
 package ru.alazarev.tictactoe;
 
+import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import ru.alazarev.tictactoe.interfaces.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,6 +21,7 @@ public class TicTacToe implements ITicTacToe {
     private int poleSize;
     private boolean pcFirst = false;
     private List<ILogic> ways = new ArrayList<>();
+    private List<IGraphicElement> graphics = new ArrayList<>();
 
     /**
      * Method game logic.
@@ -27,16 +30,12 @@ public class TicTacToe implements ITicTacToe {
     public void game() {
         boolean exit;
         int phase = 0;
-        if (this.pcFirst) {
-            this.ways.add(new Computer(this.pole.length));
-            this.ways.add(new Human(this.input));
-        } else {
-            this.output.printSquare(this);
-            this.ways.add(new Human(this.input));
-            this.ways.add(new Computer(this.pole.length));
+        this.output.printSquare(this);
+        if (!this.pcFirst) {
+            Collections.reverse(this.ways);
         }
-        this.ways.get(0).setElement(new XGraphicElement());
-        this.ways.get(1).setElement(new OGraphicElement());
+        this.ways.get(0).setElement(this.graphics.get(0));
+        this.ways.get(1).setElement(this.graphics.get(1));
         do {
             int n;
             ILogic current;
@@ -46,7 +45,7 @@ public class TicTacToe implements ITicTacToe {
                 current = this.ways.get(1);
             }
             do {
-                n = current.step();
+                n = current.step(this.pole);
             } while (!emptyCell(n));
             insertElement(n, current.getElement());
             exit = !isGameOver(n);
@@ -76,17 +75,25 @@ public class TicTacToe implements ITicTacToe {
     /**
      * Method initiate start params.
      *
-     * @return this object.
+     * @param logic    List of logic.
+     * @param elements List of elements.
+     * @return
      */
     @Override
-    public ITicTacToe init() {
+    public ITicTacToe init(List<ILogic> logic, List<IGraphicElement> elements) {
+        this.ways = logic;
+        this.graphics = elements;
         this.pcFirst = this.input.pcFirst();
         this.poleSize = this.input.getPoleSize();
         this.pole = new int[(int) Math.pow(poleSize, 2)];
         for (int i = 0; i < this.pole.length; i++) {
             this.pole[i] = i + 1;
         }
-        this.output.init(HashBiMap.create());
+        BiMap<Integer, IGraphicElement> graphicMap = HashBiMap.create();
+        for (IGraphicElement element : elements) {
+            graphicMap.put(element.poleSymbol(), element);
+        }
+        this.output.init(graphicMap);
         String line = "";
         for (int j = 0; j < this.poleSize; j++) {
             line = line + String.format("%4s+%s", " ", " ").replace(" ", "-");
@@ -271,7 +278,16 @@ public class TicTacToe implements ITicTacToe {
      * @param args Arguments.
      */
     public static void main(String[] args) {
-        ITicTacToe t = new TicTacToe().init();
+        List<ILogic> logic = new ArrayList<>();
+        logic.add(new Computer());
+        logic.add(new Computer());
+        XGraphicElement x = new XGraphicElement();
+        OGraphicElement o = new OGraphicElement();
+        YGraphicElement y = new YGraphicElement();
+        List<IGraphicElement> graphics = new ArrayList<>();
+        graphics.add(x);
+        graphics.add(y);
+        ITicTacToe t = new TicTacToe().init(logic, graphics);
         t.game();
     }
 }

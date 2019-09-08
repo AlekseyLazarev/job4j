@@ -1,5 +1,7 @@
 package ru.alazarev.tictactoe.interfaces;
 
+import java.util.List;
+
 /**
  * Interface ITicTacToe решение задачи части 004. 7. Крестики-нолики ООД [#793]
  *
@@ -59,7 +61,9 @@ public interface ITicTacToe {
     /**
      * Method initiate start params.
      *
+     * @param logic    List of logic.
+     * @param elements List of elements.
      * @return this object.
      */
-    ITicTacToe init();
+    ITicTacToe init(List<ILogic> logic, List<IGraphicElement> elements);
 }

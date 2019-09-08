@@ -48,10 +48,6 @@ public class OutputPseudographics implements IOutputPseudographics {
     @Override
     public IOutputPseudographics init(BiMap<Integer, IGraphicElement> graphicMap) {
         this.graphicMap = graphicMap;
-        XGraphicElement x = new XGraphicElement();
-        OGraphicElement o = new OGraphicElement();
-        this.graphicMap.put(x.poleSymbol(), x);
-        this.graphicMap.put(o.poleSymbol(), o);
         return this;
     }
 

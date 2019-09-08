@@ -24,7 +24,8 @@ public interface ILogic {
     /**
      * Current step.
      *
+     * @param pole Current pole.
      * @return result step.
      */
-    int step();
+    int step(int[] pole);
 }

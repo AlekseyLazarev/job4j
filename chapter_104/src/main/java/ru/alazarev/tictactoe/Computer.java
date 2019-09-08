@@ -12,17 +12,7 @@ import java.util.Random;
  * @since 03.09.2019
  */
 public class Computer implements ILogic {
-    private int poleSize;
     private IGraphicElement graphicElement;
-
-    /**
-     * Constructor.
-     *
-     * @param poleSize pole size.
-     */
-    public Computer(int poleSize) {
-        this.poleSize = poleSize;
-    }
 
     /**
      * Method get element for this logic.
@@ -46,12 +36,13 @@ public class Computer implements ILogic {
     }
 
     /**
-     * Current step.
+     * Current computer step.
      *
+     * @param pole Current pole.
      * @return result step.
      */
     @Override
-    public int step() {
-        return new Random().nextInt(this.poleSize);
+    public int step(int[] pole) {
+        return new Random().nextInt(pole.length);
     }
 }
