@@ -107,7 +107,6 @@ public class TicTacToe implements ITicTacToe {
      *
      * @return outputPseudographic variable.
      */
-    @Override
     public IOutputPseudographics getOutputPseudographic() {
         return this.output;
     }

@@ -10,13 +10,6 @@ import java.util.List;
  */
 public interface ITicTacToe {
     /**
-     * Method return outputPseudographic variable.
-     *
-     * @return outputPseudographic variable.
-     */
-    IOutputPseudographics getOutputPseudographic();
-
-    /**
      * Method return Input variable.
      *
      * @return Input variable.
