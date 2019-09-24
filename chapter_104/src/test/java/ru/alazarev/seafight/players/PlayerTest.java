@@ -44,7 +44,7 @@ public class PlayerTest {
 
     @Test
     public void whenCheckVerticalShipThenTrue() {
-        for (int i = 0; i < this.size * this.size; i++){
+        for (int i = 0; i < this.size * this.size; i++) {
             assertTrue(this.player.placeShip(this.b, vertical, i));
         }
     }
@@ -57,7 +57,7 @@ public class PlayerTest {
 
     @Test
     public void whenCheckHorizontalShipThenTrue() {
-        for (int i = 0; i < this.size * this.size; i++){
+        for (int i = 0; i < this.size * this.size; i++) {
             assertTrue(this.player.placeShip(this.b, horizontal, i));
         }
     }

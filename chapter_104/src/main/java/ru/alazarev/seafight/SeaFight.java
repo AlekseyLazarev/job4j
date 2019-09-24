@@ -76,7 +76,7 @@ public class SeaFight implements ISeaFight {
             enemy.checkShot(cell);
             endGame = enemy.getPlacedShip().isEmpty();
             stage++;
-            if (endGame){
+            if (endGame) {
                 System.out.println("Winner = " + current.getPlayerName());
             }
         } while (!endGame);

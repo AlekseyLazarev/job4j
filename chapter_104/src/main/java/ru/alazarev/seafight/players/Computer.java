@@ -37,7 +37,10 @@ public class Computer implements IPlayer {
             IShip ship = ships.poll();
             String[] sq = new String[]{"v", "h"};
             int size = getSize();
-            while (!placeShip(ship, sq[new Random().nextInt(sq.length)], new Random().nextInt(size * size))) ;
+            boolean go = true;
+            while (go) {
+                go = !placeShip(ship, sq[new Random().nextInt(sq.length)], new Random().nextInt(size * size));
+            }
         }
         return this;
     }

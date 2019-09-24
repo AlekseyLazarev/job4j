@@ -40,7 +40,10 @@ public class Human implements IPlayer {
             IShip ship = ships.poll();
             int start = this.input.intInput();
             String way = this.input.stringInput();
-            while (!placeShip(ship, way, start)) ;
+            boolean go = true;
+            while (go) {
+                go = !placeShip(ship, way, start);
+            }
         }
         return this;
     }
