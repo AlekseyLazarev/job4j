@@ -25,6 +25,7 @@ env:
 jdk:
 - openjdk11
 
+dist: xenial
 # Использование дополнительных сервисов
 services:
 - postgresql
