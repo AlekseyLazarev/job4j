@@ -1,11 +1,13 @@
 package ru.alazarev.gc;
 
 /**
- * Class  решение задачи части
+ * Class GCDemo решение задачи части 5.1.Демонстрация работы GC.
  *
  * @author Aleksey Lazarev
  * @since 10.09.2019
  */
+
+import ru.alazarev.gc.instrumentation.InstrumentationAgent;
 
 /**
  * Создать объект User c полями и перекрытым методом finalize
@@ -19,31 +21,63 @@ package ru.alazarev.gc;
  * Объяснить поведение программы в текстовом файле.
  */
 public class GCDemo {
-    static int size = 400000;
-    static int kb = 1024;
-    static int mb = kb * kb;
+    static final long SIZE = 1000000;
+    static final int KB = 1024;
+    static final int MB = KB * KB;
 
-    public static void print(String first, long l) {
-        System.out.println(first + " memory : " + l / mb + " Mb or " + l + " b");
+
+    /**
+     * Method using Instrumentation Agent, get object size and print it.
+     *
+     * @param first Object, who size we need to get.
+     * @param name
+     */
+    public static void print(Object first, String name) {
+        System.out.println("Object " + name + " takes " + InstrumentationAgent.getObjectSize(first) + " bytes");
     }
 
-    public static void info() {
+    /**
+     * Print method.
+     *
+     * @param value Memory byte size.
+     * @param s     Type memory name.
+     */
+    public static void printMemory(long value, String s) {
+        System.out.println(s + " memory = " + value / MB + " Mb or " + value + " bytes");
+    }
+
+    /**
+     * Method gets max, total, free memory by runtime object and initiate print method.
+     *
+     * @param stage Stage name.
+     */
+    public static void info(String stage) {
         Runtime r = Runtime.getRuntime();
-        long max = r.maxMemory();
-        long free = r.freeMemory();
-        long used = max - free;
-        long memForOne = size != 0 ? used / size : 0;
-        print("Free", free);
-        print("Max", max);
-        print("Used", used);
-        System.out.println("Memory for 1 object User: " + String.format("%.2f", (double) memForOne / kb) + "Kb or " + memForOne + " b");
-        System.out.println();
+        System.out.println(stage);
+        printMemory(r.maxMemory(), "Max");
+        printMemory(r.totalMemory(), "Total");
+        printMemory(r.freeMemory(), "Free");
     }
 
+    /**
+     * Main method.
+     *
+     * @param args Arguments.
+     */
     public static void main(String[] args) {
-        for (int i = 0; i < size; i++) {
-            new User();
+        info("Before");
+        User u = new User("User " + SIZE);
+        EmptyClass e = new EmptyClass();
+        FullClass f = new FullClass();
+        print(u, "user");
+        print(e, "empty");
+        print(f, "full");
+        info("After 3 objects");
+        for (long i = 0; i < SIZE; i++) {
+            new User("User " + i);
         }
-        info();
+        info("After " + SIZE + " objects");
+        System.gc();
+        info("After garbage collector");
     }
 }

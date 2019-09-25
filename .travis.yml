@@ -1,21 +1,36 @@
+# Используемый язык
 language: java
-sudo: false # faster builds
+# Режим обычного пользователя (собирается быстрее)
+sudo: false
 
-services:
-- postgresql
-
-before_install:
-- psql -c 'create database tracker;' -U postgres
-
+# После успешного завершения выполнить
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+- bash <(curl -s https://codecov.io/bash)
 
+# Уведомления
 notifications:
   email:
     recipients:
     - aa112233445566778899@yandex.ru
     on_success: never
     on_failure: never
+
+# Окружающая среда
 env:
+  # подключение code coverage
   global:
-    - CODECOV_TOKEN="9c334fff-9caa-4459-97ea-a28454168ea1"
+  - CODECOV_TOKEN="9c334fff-9caa-4459-97ea-a28454168ea1"
+
+#Использование jdk
+jdk:
+- openjdk11
+
+# Использование дополнительных сервисов
+services:
+- postgresql
+
+# Перед запуском выполнить
+before_install:
+- psql -c 'create database tracker;' -U postgres
+
+
