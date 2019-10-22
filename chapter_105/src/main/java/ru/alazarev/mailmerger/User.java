@@ -18,6 +18,17 @@ public class User {
     }
 
     /**
+     * Constructor.
+     *
+     * @param name  User name.
+     * @param email Email.
+     */
+    public User(String name, String email) {
+        this.name = name;
+        this.emails.add(email);
+    }
+
+    /**
      * Method return this user name.
      *
      * @return User name.
@@ -45,5 +56,9 @@ public class User {
      */
     public void addList(Collection emailList) {
         this.emails.addAll(emailList);
+    }
+
+    public boolean addEmail(String email) {
+        return this.emails.add(email);
     }
 }

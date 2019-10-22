@@ -1,7 +1,5 @@
 package ru.alazarev.mailmerger;
 
-import org.apache.commons.collections4.CollectionUtils;
-
 import java.io.*;
 import java.util.*;
 
@@ -39,7 +37,7 @@ import java.util.*;
  * user3 ->xyz@pisem.net,vasya@pupkin.com
  */
 public class MailMerger {
-    private HashSet<User> users = new HashSet<>();
+    private HashMap<String, String> userEmails = new HashMap<>();
     private final String divider = " ->";
     private final String emailDivider = ",";
 
@@ -49,11 +47,16 @@ public class MailMerger {
      * @return sorted user list.
      */
     public ArrayList<User> getUsers() {
-        ArrayList<User> cur = new ArrayList<>();
-        cur.addAll(this.users);
-        Comparator<User> comparator = (User o1, User o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.getName(), o2.getName());
-        Collections.sort(cur, comparator);
-        return cur;
+        UserList users = new UserList();
+        for (Map.Entry<String, String> entry : this.userEmails.entrySet()) {
+            User current = users.find(entry.getValue());
+            if (current != null) {
+                current.addEmail(entry.getKey());
+            } else {
+                users.addUser(new User(entry.getValue(), entry.getKey()));
+            }
+        }
+        return users.getUsers();
     }
 
     /**
@@ -75,7 +78,7 @@ public class MailMerger {
      * @param output Output stream.
      */
     public void outputData(OutputStream output) {
-        for (User user : this.users) {
+        for (User user : getUsers()) {
             try {
                 StringBuilder sb = new StringBuilder();
                 user.getEmails().forEach(email -> sb.append(email).append(this.emailDivider));
@@ -95,16 +98,16 @@ public class MailMerger {
      * @param userList    User emails.
      */
     private void merge(String newUserName, Collection<String> userList) {
-        boolean newest = true;
-        for (User current : this.users) {
-            if (CollectionUtils.retainAll(current.getEmails(), userList).size() != 0) {
-                current.addList(CollectionUtils.subtract(userList, current.getEmails()));
-                newest = false;
+        String oldUser;
+        for (String email : userList) {
+            oldUser = this.userEmails.get(email);
+            if (oldUser != null) {
+                newUserName = oldUser;
                 break;
             }
         }
-        if (newest) {
-            this.users.add(new User(newUserName, userList));
+        for (String email : userList) {
+            this.userEmails.put(email, newUserName);
         }
     }
 
