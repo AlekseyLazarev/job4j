@@ -3,7 +3,6 @@ language: java
 # Режим обычного пользователя (собирается быстрее)
 sudo: false
 
-# После успешного завершения выполнить
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 
